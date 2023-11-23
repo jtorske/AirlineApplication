@@ -12,16 +12,25 @@ package Domains.Flights;
 
 public class Location{
         private String Country;
-        private String Province;
+        private String ProvDist;
         private String City;
 
-        public Location(String Country, String Province, String City){
+        public Location(String Country, String ProvDist, String City){
             this.Country = Country;
-            this.Province = Province;
+            this.ProvDist = ProvDist;
             this.City = City;
         }
+        @Override
+        public boolean equals(Object obj){
+            if (this == obj)
+                return true;
+            if (obj == null || getClass() != obj.getClass())
+                return false;
+            Location other = (Location) obj;
+            return (this.Country.equals(other.Country) && this.ProvDist.equals(other.ProvDist) && this.City.equals(other.City));
+        }
         public String getCountry(){return Country;}
-        public String getProvince(){return Province;}
+        public String getProvDist(){return ProvDist;}
         public String getCity(){return City;}
-        public String toString(){return Country + ", " + Province + ", " + City;}
+        public String toString(){return Country + ", " + ProvDist + ", " + City;}
 }
