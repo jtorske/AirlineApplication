@@ -22,4 +22,8 @@ public class Flights {
     private Location arrivalLocation;
     private Aircraft aircraft;
     private ArrayList<Passenger> passengerList;
+
+    public String getFlightNum(){
+        return this.flightNumber;
+    }
 }
