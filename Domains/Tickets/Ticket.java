@@ -17,7 +17,7 @@ public class Ticket {
         this.passenger = owner;
         this.policy = null;
         ID++;
-        this.ticketReceipt = new Receipt(ID, owner.getName().toString(), cardNumber);
+        this.ticketReceipt = new Receipt(ID, owner.getName().toString(), cardNumber, this);
     }
 
     public Ticket(Flights flight, Seat seat, Passenger owner, Insurance policy, int cardNumber){
@@ -26,7 +26,7 @@ public class Ticket {
         this.passenger = owner;
         this.policy = policy;
         ID++;
-        this.ticketReceipt = new Receipt(ID, owner.getName().toString(), cardNumber);
+        this.ticketReceipt = new Receipt(ID, owner.getName().toString(), cardNumber, this);
     }
 
     public Flights getFlight(){

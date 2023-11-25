@@ -7,12 +7,14 @@ public class Receipt {
     private String userName;
     private TimeDate transactionTime;
     private int cardNum;
+    private Ticket ticket;
 
-    public Receipt(int num, String name, int cardNum){
+    public Receipt(int num, String name, int cardNum, Ticket ticket){
         this.receiptNum = num;
         this.userName = name;
         this.cardNum = cardNum;
         this.transactionTime = new TimeDate();
+        this.ticket = ticket;
     }
 
     public String Display(){
@@ -26,9 +28,10 @@ public class Receipt {
         }
 
         return "Receipt for ticket number: " + Integer.toString(this.receiptNum) 
-        + ", with passenger: " + userName
-        + ", and card: " + cardString
-        + ". Dated: " + transactionTime.toString();
+        + "\n Passenger: " + userName
+        + "\n Card: " + cardString
+        + "\n Ticket Details: \n" + ticket.Display()
+        + "\n Dated: " + transactionTime.toString();
     }
 
     public void Email(){
