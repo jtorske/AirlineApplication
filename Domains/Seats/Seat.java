@@ -14,6 +14,8 @@ public interface Seat {
     //Returns a string containing the Seat number, row and column. E.g. 1A2
     public String Display();
     public boolean booked();
+    public double GetPrice();
+    public void Book();
     public int getRow();
     public char getColumn();
 }

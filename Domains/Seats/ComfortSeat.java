@@ -13,11 +13,11 @@ package Domains.Seats;
 public class ComfortSeat implements Seat{
     double Price = 70.00;
     int SeatNum;
-    char SeatRow;
-    int SeatColumn;
+    int SeatRow;
+    char SeatColumn;
     boolean isBooked;
 
-    public ComfortSeat(int SeatNum, char SeatRow, int SeatColumn){
+    public ComfortSeat(int SeatNum, int SeatRow, char SeatColumn){
         this.SeatNum = SeatNum;
         this.SeatRow = SeatRow;
         this.SeatColumn = SeatColumn;
@@ -26,14 +26,17 @@ public class ComfortSeat implements Seat{
     @Override
     public int getRow(){return SeatNum;}
     @Override
-    public char getColumn(){return SeatRow;}
+    public char getColumn(){return SeatColumn;}
+    @Override
     public double GetPrice(){
         return Price;
     }
     @Override
+    public void Book(){isBooked = !isBooked;}
+    @Override
     public boolean booked(){return isBooked;}
     @Override
     public String Display(){
-        return Integer.toString(SeatNum) + SeatRow + Integer.toString(SeatColumn);
+        return  Integer.toString(SeatRow) + Character.toString(SeatColumn);
     }
 }

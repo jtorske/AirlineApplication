@@ -10,7 +10,10 @@ Logan Nightingale
 
 package Domains.User;
 
-import Domains.Passenger.Name;
+import java.util.ArrayList;
+import Domains.Passenger.*;
+
+
 
 public class CrewMember {
     private Name name;
@@ -30,4 +33,9 @@ public class CrewMember {
     public String getPassword(){return password;}
     public void setPassword(String password){this.password = password;}
     public String toString(){return "Crew member\nName:"+name + "\n Role:"+role + "\n ID:"+id+"\n";}
+    public ArrayList<Passenger> BrowsePassengers(String flightNum){ 
+        //TODO: Connect to the dabaase and return the list of passengers
+        ArrayList<Passenger> passengers = new ArrayList<Passenger>();
+        return passengers;
+    }
 }

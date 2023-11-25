@@ -13,28 +13,30 @@ package Domains.Seats;
 public class OrdinarySeat implements Seat{
     double Price = 50.00;
     int SeatNum;
-    char SeatRow;
-    int SeatColumn;
+    int SeatRow;
+    char SeatColumn;
     boolean isBooked;
 
-    public OrdinarySeat(int SeatNum, char SeatRow, int SeatColumn){
+    public OrdinarySeat(int SeatNum, int SeatRow, char SeatColumn){
         this.SeatNum = SeatNum;
         this.SeatRow = SeatRow;
         this.SeatColumn = SeatColumn;
         isBooked = false;
     }
-
+    @Override
     public double GetPrice(){
         return Price;
     }
     @Override
-    public int getRow(){return SeatNum;}
+    public int getRow(){return SeatRow;}
     @Override
-    public char getColumn(){return SeatRow;}
+    public char getColumn(){return SeatColumn;}
     @Override
     public boolean booked(){return isBooked;}
     @Override
+    public void Book(){isBooked = !isBooked;}
+    @Override
     public String Display(){
-        return Integer.toString(SeatNum) + SeatRow + Integer.toString(SeatColumn);
+        return  Integer.toString(SeatRow) + Character.toString(SeatColumn);
     }
 }

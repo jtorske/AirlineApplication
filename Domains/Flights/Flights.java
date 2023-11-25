@@ -36,10 +36,11 @@ public class Flights {
         this.passengerList = new ArrayList<Passenger>();
         this.seatList = new ArrayList<Seat>();
         this.crewList = new ArrayList<CrewMember>();
+        int seatNum = 1;
         if (aircraft.getType()==1){ //if aircraft is a small plane, like a 737, only have odinary seats, 30 rows of 6 seats
             for (int i = 1; i <= 30; i++){
                 for (int j = 1; j <= 6; j++){
-                    seatList.add(new OrdinarySeat(i, (char)(j+64), j));
+                    seatList.add(new OrdinarySeat(seatNum++, i, (char)(j+64)));
                 }
             }
         }
@@ -47,19 +48,19 @@ public class Flights {
             //have 5 rows of 6seats for bussiness
             for (int i = 1; i <= 5; i++){
                 for (int j = 1; j <= 6; j++){
-                    seatList.add(new BusinessSeat(i, (char)(j+64), j));
+                    seatList.add(new BusinessSeat(seatNum++, i, (char)(j+64)));
                 }
             }
             //have 4 rows of 6 seats for comfort
             for (int i = 6; i <= 9; i++){
                 for (int j = 1; j <= 6; j++){
-                    seatList.add(new ComfortSeat(i, (char)(j+64), j));
+                    seatList.add(new ComfortSeat(seatNum++, i, (char)(j+64)));
                 }
             }
             //have 29 rows of 9 seats for ordinary
             for (int i = 10; i <= 38; i++){
                 for (int j = 1; j <= 9; j++){
-                    seatList.add(new OrdinarySeat(i, (char)(j+64), j));
+                    seatList.add(new OrdinarySeat(seatNum++, i, (char)(j+64)));
                 }
             }
         }
@@ -83,10 +84,10 @@ public class Flights {
                 row = seatList.get(i).getRow();
             }
             if (seatList.get(i).booked()){
-                seatMap += "|X";
+                seatMap += "|X ";
             }
             else{
-                seatMap += "|O";
+                seatMap += "|O ";
             }
             seatMap += seatList.get(i).Display();
         }

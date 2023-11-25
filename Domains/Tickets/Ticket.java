@@ -9,11 +9,13 @@ public class Ticket {
     private Seat seat;
     private Passenger passenger;
     private Insurance policy;
+    private double price;
     private final Receipt ticketReceipt;
 
     public Ticket(Flights flight, Seat seat, Passenger owner, int cardNumber){
         this.flight = flight;
         this.seat = seat;
+        price = seat.GetPrice();
         this.passenger = owner;
         this.policy = null;
         ID++;
@@ -49,6 +51,7 @@ public class Ticket {
         return "Ticket ID: " + Integer.toString(ID)
         + "Flight: " + this.flight.getFlightNum() 
         + "Seat: " + this.seat.Display() 
+        + "Price: " + Double.toString(this.price)
         + "Passenger: " + this.passenger.getName().toString() 
         + "Insurance Policy: " + (this.policy != null ? this.policy.getPolicy() : "No policy");
     }
