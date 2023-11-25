@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import Domains.Passenger.*;
 import Domains.Seats.*;
+import Domains.User.CrewMember;
 
 public class Flights {
     private String flightNumber;
@@ -23,6 +24,7 @@ public class Flights {
     private Aircraft aircraft;
     private ArrayList<Passenger> passengerList;
     private ArrayList<Seat> seatList;
+    private ArrayList<CrewMember> crewList;
 
     public Flights(String flightNumber, TimeDate departureDate, TimeDate arrivalDate, Location departureLocation, Location arrivalLocation, Aircraft aircraft){
         this.flightNumber = flightNumber;
@@ -33,6 +35,7 @@ public class Flights {
         this.aircraft = aircraft;
         this.passengerList = new ArrayList<Passenger>();
         this.seatList = new ArrayList<Seat>();
+        this.crewList = new ArrayList<CrewMember>();
         if (aircraft.getType()==1){ //if aircraft is a small plane, like a 737, only have odinary seats, 30 rows of 6 seats
             for (int i = 1; i <= 30; i++){
                 for (int j = 1; j <= 6; j++){
@@ -90,5 +93,6 @@ public class Flights {
         return seatMap;
     }
     public void addPassenger(Passenger passenger){this.passengerList.add(passenger);}
+    public void addCrewMember(CrewMember crewMember){this.crewList.add(crewMember);}
 
 }

@@ -8,7 +8,7 @@ Logan Nightingale
 @since: 2023-11-23
  */
 
-package Domains.Flights;
+package Domains.User;
 
 import Domains.Passenger.Name;
 
@@ -16,14 +16,18 @@ public class CrewMember {
     private Name name;
     private String role;
     private String id;
+    private String password;
 
-    public CrewMember(String firstname, String middlename, String lastname, String role, String id){
+    public CrewMember(String firstname, String middlename, String lastname, String role, String id, String password){
         this.name = new Name(firstname, middlename, lastname);
         this.role = role;
         this.id = id;
+        this.password = password;
     }
     public Name getName(){return name;}
     public String getRole(){return role;}
     public String getId(){return id;}
+    public String getPassword(){return password;}
+    public void setPassword(String password){this.password = password;}
     public String toString(){return "Crew member\nName:"+name + "\n Role:"+role + "\n ID:"+id+"\n";}
 }
