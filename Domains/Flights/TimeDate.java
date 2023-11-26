@@ -10,6 +10,8 @@ Logan Nightingale
 
 package Domains.Flights;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.time.ZoneId;
 
 public class TimeDate {
     private int year;
@@ -32,6 +34,12 @@ public class TimeDate {
         this.day = now.getDayOfMonth();
         this.hour = now.getHour();
         this.minute = now.getMinute();
+    }
+
+    public TimeDate(Date departureDate) {
+        this.year = departureDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear();
+        this.month = departureDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getMonthValue();
+        this.day = departureDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getDayOfMonth();
     }
     public int getYear(){return year;}
     public int getMonth(){return month;}
