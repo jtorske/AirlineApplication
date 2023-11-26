@@ -24,7 +24,7 @@ public class Ticket {
     private Receipt ticketReceipt;
     //private final Receipt ticketReceipt;
 
-    public Ticket(Flights flight, Seat seat, Passenger owner, int cardNumber){
+    public Ticket(Flights flight, Seat seat, Passenger owner, String cardNumber){
         this.flight = flight;
         this.seat = seat;
         price = seat.GetPrice();
@@ -42,7 +42,7 @@ public class Ticket {
         this.ticketReceipt = null;
     }
 
-    public Ticket(Flights flight, Seat seat, Passenger owner, Insurance policy, int cardNumber){
+    public Ticket(Flights flight, Seat seat, Passenger owner, Insurance policy, String cardNumber){
         this.flight = flight;
         this.seat = seat;
         this.passenger = owner;
