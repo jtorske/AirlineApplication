@@ -1,10 +1,15 @@
 package Domains;
 
 import javax.swing.*;
+
+import Domains.Flights.*;
+import Domains.User.User;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -139,6 +144,13 @@ public class GUI extends JFrame {
         int numberOfGuests = (Integer) guestNumberSpinner.getValue();
         Date departureDate = (Date) departureDateField.getValue();
         Date returnDate = (Date) returnDateField.getValue();
+
+        Location origin = new Location(originCountry, originProvince, originCity);
+        Location destination = new Location(destinationCountry, destinationProvince, destinationCity);
+        TimeDate departure = new TimeDate(departureDate);
+
+        ArrayList<Flights> flights = User.BrowseFlights(departure, origin, destination);
+
 
         // Temporarily displaying gathered info in terminal for testing
         System.out.println("Origin: " + originCity + ", " + originProvince + ", " + originCountry);
