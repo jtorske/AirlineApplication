@@ -1,6 +1,7 @@
 package Domains;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import Domains.Flights.*;
 import Domains.User.User;
@@ -150,6 +151,72 @@ public class GUI extends JFrame {
         TimeDate departure = new TimeDate(departureDate);
 
         ArrayList<Flights> flights = User.BrowseFlights(departure, origin, destination);
+
+        //display the flights in same window as table
+        // Create column names
+        String[] columnNames = {"Flight Number", "Departure Time", "Arrival Time"};
+
+        // Create a table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+
+        // Add a row for each flight
+        for (Flights flight : flights) {
+            Object[] row = new Object[3];
+            row[0] = flight.getFlightNum();
+            row[1] = flight.getDepartureDate().toString();
+            row[2] = flight.getArrivalDate().toString();
+            model.addRow(row);
+        }
+        JFrame frame = new JFrame("Flight Search Results");
+        //add a input box on top of the table
+        JTextField input = new JTextField(20);
+        JPanel panel = new JPanel();
+        panel.add(input);
+        input.setBounds(0, 0, 100, 50);
+        frame.add(panel, BorderLayout.NORTH);
+
+        JTable table = new JTable(model);
+
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        // Add the scroll pane to the frame
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        // Set frame properties
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
+        //get the value from the input box when user press enter
+        String flightNum = input.getText();
+        //get the flight object from the flight number
+        Flights flight;
+        for (int i = 0; i < flights.size(); i++){
+            if (flights.get(i).getFlightNum().equals(flightNum)){
+                flight = flights.get(i);
+                break;
+            }
+        }
+        //fix when go to database
+        User.SelectFlight(flight);
+        //get the seat map from the flight
+        String seatMap = User.BrowseSeat(flight);
+
+        //clear the frame
+        frame.getContentPane().removeAll();
+        //add in input box for seat selection
+        
+        JTextField inputSeat = new JTextField(20);
+        panel = new JPanel();
+        panel.add(input);
+        input.setBounds(0, 0, 100, 50);
+        frame.add(panel, BorderLayout.NORTH);
+
+        //add in the seat map
+        JTextArea seatMapArea = new JTextArea(seatMap);
+
+
 
 
         // Temporarily displaying gathered info in terminal for testing
