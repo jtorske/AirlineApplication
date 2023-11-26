@@ -14,13 +14,15 @@ import Domains.Flights.Flights;
 import Domains.Passenger.Passenger;
 
 public class Ticket {
-    private static int ID = 0;
+    private static int TicNum = 0;
+    private int ID;
     private Flights flight;
     private Seat seat;
     private Passenger passenger;
     private Insurance policy;
     private double price;
-    private final Receipt ticketReceipt;
+    private Receipt ticketReceipt;
+    //private final Receipt ticketReceipt;
 
     public Ticket(Flights flight, Seat seat, Passenger owner, int cardNumber){
         this.flight = flight;
@@ -28,8 +30,16 @@ public class Ticket {
         price = seat.GetPrice();
         this.passenger = owner;
         this.policy = null;
-        ID++;
-        this.ticketReceipt = new Receipt(ID, owner.getName().toString(), cardNumber, this);
+        this.ID=TicNum++;
+        this.ticketReceipt = new Receipt(TicNum, owner.getName().toString(), cardNumber, this);
+    }
+    public Ticket(){
+        this.ID = 0;
+        this.flight = null;
+        this.seat = null;
+        this.passenger = null;
+        this.policy = null;
+        this.ticketReceipt = null;
     }
 
     public Ticket(Flights flight, Seat seat, Passenger owner, Insurance policy, int cardNumber){
@@ -37,10 +47,21 @@ public class Ticket {
         this.seat = seat;
         this.passenger = owner;
         this.policy = policy;
-        ID++;
-        this.ticketReceipt = new Receipt(ID, owner.getName().toString(), cardNumber, this);
+        this.ID=TicNum++;
+        this.ticketReceipt = new Receipt(TicNum, owner.getName().toString(), cardNumber, this);
     }
 
+    public int getID(){return this.ID;}
+    public void setID(int ID){this.ID = ID;}
+    public void setFlight(Flights flight){this.flight = flight;}
+    public void setSeat(Seat seat){this.seat = seat;}
+    public void setPassenger(Passenger passenger){this.passenger = passenger;}
+    public void setPolicy(Insurance policy){this.policy = policy;}
+    public void setPrice(double price){this.price = price;}
+    public void setReceipt(Receipt ticketReceipt){this.ticketReceipt = ticketReceipt;}
+
+    static public void setTicNum(int num){TicNum = num;}
+    
     public Flights getFlight(){
         return this.flight;
     }
@@ -58,7 +79,7 @@ public class Ticket {
     }
 
     public String Display(){
-        return "Ticket ID: " + Integer.toString(ID)
+        return "Ticket ID: " + Integer.toString(TicNum)
         + "Flight: " + this.flight.getFlightNum() 
         + "Seat: " + this.seat.Display() 
         + "Price: " + Double.toString(this.price)

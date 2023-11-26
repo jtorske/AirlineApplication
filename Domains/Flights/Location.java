@@ -20,6 +20,15 @@ public class Location{
             this.ProvDist = ProvDist;
             this.City = City;
         }
+        public Location(){
+            this.Country = "";
+            this.ProvDist = "";
+            this.City = "";
+        }
+        public void setCountry(String Country){this.Country = Country;}
+        public void setProvDist(String ProvDist){this.ProvDist = ProvDist;}
+        public void setCity(String City){this.City = City;}
+        
         @Override
         public boolean equals(Object obj){
             if (this == obj)

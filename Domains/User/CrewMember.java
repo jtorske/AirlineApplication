@@ -27,6 +27,16 @@ public class CrewMember {
         this.id = id;
         this.password = password;
     }
+    public CrewMember(){
+        this.name = new Name();
+        this.role = "";
+        this.id = "";
+        this.password = "";
+    }
+
+    public void setName(String firstname, String middlename, String lastname){this.name = new Name(firstname, middlename, lastname);}
+    public void setRole(String role){this.role = role;}
+    public void setId(String id){this.id = id;}
     public Name getName(){return name;}
     public String getRole(){return role;}
     public String getId(){return id;}

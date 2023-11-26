@@ -26,6 +26,24 @@ public class Receipt {
         this.transactionTime = new TimeDate();
         this.ticket = ticket;
     }
+    public Receipt(){
+        this.receiptNum = 0;
+        this.userName = "";
+        this.cardNum = 0;
+        this.transactionTime = new TimeDate();
+        this.ticket = null;
+    }
+    public int getReceiptNum(){return receiptNum;}
+    public String getUserName(){return userName;}
+    public TimeDate getTransactionTime(){return transactionTime;}
+    public int getCardNum(){return cardNum;}
+    public Ticket getTicket(){return ticket;}
+
+    public void setReceiptNum(int num){this.receiptNum = num;}
+    public void setUserName(String name){this.userName = name;}
+    public void setTransactionTime(TimeDate time){this.transactionTime = time;}
+    public void setCardNum(int num){this.cardNum = num;}
+    public void setTicket(Ticket ticket){this.ticket = ticket;}
 
     public String Display(){
         String cardString = Integer.toString(this.cardNum);

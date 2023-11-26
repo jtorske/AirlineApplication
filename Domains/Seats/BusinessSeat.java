@@ -23,6 +23,18 @@ public class BusinessSeat implements Seat{
         this.SeatColumn = SeatColumn;
         isBooked = false;
     }
+    public BusinessSeat(){
+        SeatNum = 0;
+        SeatRow = 0;
+        SeatColumn = ' ';
+        isBooked = false;
+    }
+    public BusinessSeat(int SeatNum, int SeatRow, char SeatColumn, boolean isBooked){
+        this.SeatNum = SeatNum;
+        this.SeatRow = SeatRow;
+        this.SeatColumn = SeatColumn;
+        this.isBooked = isBooked;
+    }
     @Override
     public double GetPrice(){
         return Price;

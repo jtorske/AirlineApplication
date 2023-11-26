@@ -66,6 +66,17 @@ public class Flights {
         }
     }
 
+    public Flights(){
+        this.flightNumber = "";
+        this.departureDate = new TimeDate();
+        this.arrivalDate = new TimeDate();
+        this.departureLocation = new Location();
+        this.arrivalLocation = new Location();
+        this.aircraft = new Aircraft();
+        this.passengerList = new ArrayList<Passenger>();
+        this.seatList = new ArrayList<Seat>();
+        this.crewList = new ArrayList<CrewMember>();
+    }
     public String getFlightNum(){return this.flightNumber;}
     public TimeDate getDepartureDate(){return this.departureDate;}
     public TimeDate getArrivalDate(){return this.arrivalDate;}
@@ -93,6 +104,14 @@ public class Flights {
         }
         return seatMap;
     }
+    public void setFlightNum(String flightNumber){this.flightNumber = flightNumber;}
+    public void setDepartureDate(TimeDate departureDate){this.departureDate = departureDate;}
+    public void setArrivalDate(TimeDate arrivalDate){this.arrivalDate = arrivalDate;}
+    public void setDepartureLocation(Location departureLocation){this.departureLocation = departureLocation;}
+    public void setArrivalLocation(Location arrivalLocation){this.arrivalLocation = arrivalLocation;}
+    public void setAircraft(Aircraft aircraft){this.aircraft = aircraft;}
+    public void setPassengerList(ArrayList<Passenger> passengerList){this.passengerList = passengerList;}
+    public void setSeatList(ArrayList<Seat> seatList){this.seatList = seatList;}
     public void addPassenger(Passenger passenger){this.passengerList.add(passenger);}
     public void addCrewMember(CrewMember crewMember){this.crewList.add(crewMember);}
 

@@ -34,6 +34,19 @@ public class Passenger {
         this.email = email;
         this.phoneNumber = phoneNumber;
     }
+    public Passenger(){
+        this.name = new Name();
+        this.passport = new Passport();
+        this.address = new Address();
+        this.email = "";
+        this.phoneNumber = new PhoneNumber();
+    }
+    public void setName(Name name){this.name = name;}
+    public void setPassport(Passport passport){this.passport = passport;}
+    public void setAddress(Address address){this.address = address;}
+    public void setEmail(String email){this.email = email;}
+    public void setPhoneNumber(PhoneNumber phoneNumber){this.phoneNumber = phoneNumber;}
+    
     public Name getName(){return name;}
     public Passport getPassport(){return passport;}
     public Address getAddress(){return address;}

@@ -23,6 +23,27 @@ public class Passport {
 
         this.name = new Name(firstName, middleName, lastName);
     }
+    public Passport(){
+        this.passportNumber = "";
+        this.country = "";
+        this.expiryDate = new Date();
+        this.issueDate = new Date();
+        this.name = new Name();
+    }
+    public void setPassportNumber(String passportNumber){this.passportNumber = passportNumber;}
+    public void setCountry(String country){this.country = country;}
+    public void setExpiryDate(int expiryYear, int expiryMonth, int expiryDay){
+        Calendar expiryCalendar = Calendar.getInstance();
+        expiryCalendar.set(expiryYear, expiryMonth, expiryDay);
+        this.expiryDate = expiryCalendar.getTime();
+    }
+    public void setIssueDate(int issueYear, int issueMonth, int issueDay){
+        Calendar issueCalendar = Calendar.getInstance();
+        issueCalendar.set(issueYear, issueMonth, issueDay);
+        this.issueDate = issueCalendar.getTime();
+    }
+    public void setName(Name name){this.name = name;}
+    
     public String getPassportNumber(){return passportNumber;}
     public String getCountry(){return country;}
     public Date getExpiryDate(){return expiryDate;}

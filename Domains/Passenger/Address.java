@@ -22,6 +22,16 @@ public class Address extends Location{
         this.streetNumber = streetNumber;
         this.postalCode = postalCode;
     }
+    public Address(){
+        super();
+        this.streetName = "";
+        this.streetNumber = "";
+        this.postalCode = "";
+    }
+    public void setStreetName(String streetName){this.streetName = streetName;}
+    public void setStreetNumber(String streetNumber){this.streetNumber = streetNumber;}
+    public void setPostalCode(String postalCode){this.postalCode = postalCode;}
+    
     public String getStreetName(){return streetName;}
     public String getStreetNumber(){return streetNumber;}
     public String getPostalCode(){return postalCode;}
