@@ -16,10 +16,10 @@ public class Receipt {
     private int receiptNum;
     private String userName;
     private TimeDate transactionTime;
-    private int cardNum;
+    private String cardNum;
     private Ticket ticket;
 
-    public Receipt(int num, String name, int cardNum, Ticket ticket){
+    public Receipt(int num, String name, String cardNum, Ticket ticket){
         this.receiptNum = num;
         this.userName = name;
         this.cardNum = cardNum;
@@ -29,24 +29,24 @@ public class Receipt {
     public Receipt(){
         this.receiptNum = 0;
         this.userName = "";
-        this.cardNum = 0;
+        this.cardNum = "";
         this.transactionTime = new TimeDate();
         this.ticket = null;
     }
     public int getReceiptNum(){return receiptNum;}
     public String getUserName(){return userName;}
     public TimeDate getTransactionTime(){return transactionTime;}
-    public int getCardNum(){return cardNum;}
+    public String getCardNum(){return cardNum;}
     public Ticket getTicket(){return ticket;}
 
     public void setReceiptNum(int num){this.receiptNum = num;}
     public void setUserName(String name){this.userName = name;}
     public void setTransactionTime(TimeDate time){this.transactionTime = time;}
-    public void setCardNum(int num){this.cardNum = num;}
+    public void setCardNum(String num){this.cardNum = num;}
     public void setTicket(Ticket ticket){this.ticket = ticket;}
 
     public String Display(){
-        String cardString = Integer.toString(this.cardNum);
+        String cardString = this.cardNum;
         int length = cardString.length();
 
         if (length > 4) {
