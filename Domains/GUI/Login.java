@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Domains.Login.LoginVerify;
+
 public class Login extends JFrame {
     private JTextField usernameField;
     private JPasswordField passwordField;
@@ -40,6 +42,16 @@ public class Login extends JFrame {
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 
+                if (!LoginVerify.verifyUser(username, password)){
+                    JOptionPane.showMessageDialog(Login.this, "Incorrect username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
+                    return;}
+                //change the username of main page
+                GUI.setUsername(username);
+
+                //close the login window
+                dispose();                    
+                
+
                 // Print username and password to the terminal
                 System.out.println("Username: " + username);
                 System.out.println("Password: " + password);

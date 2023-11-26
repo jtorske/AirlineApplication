@@ -31,7 +31,13 @@ public class GUI extends JFrame {
     private JButton loginButton;
     private JButton signUpButton;
 
-
+    static private String username=null;
+    static public void setUsername(String u){
+        username = u;
+        //refresh the page
+        GUI gui = new GUI();
+        gui.setVisible(true);
+    }
     public GUI() {
         createView();
         setupFrame();
@@ -60,6 +66,15 @@ public class GUI extends JFrame {
         });
     }
 
+    // Sets up the logout button
+    private void createLogoutButton() {
+        loginButton = new JButton("Logout");
+        loginButton.setPreferredSize(new Dimension(80, 30)); 
+        loginButton.setFont(new Font("Arial", Font.PLAIN, 10)); 
+        loginButton.addActionListener(e -> {
+            setUsername(null);
+        });
+    }
     // Sets up the Sign Up button
     private void createSignUpButton() {
         signUpButton = new JButton("Sign Up");
@@ -76,18 +91,26 @@ public class GUI extends JFrame {
         // Main container with BorderLayout
         JPanel mainContainer = new JPanel(new BorderLayout());
         getContentPane().add(mainContainer);
-
-        // Login button
-        createLoginButton();
+        
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        topPanel.add(loginButton);
-        mainContainer.add(topPanel, BorderLayout.NORTH);
-
-        // Sign Up button
-        createSignUpButton();
-        topPanel.add(signUpButton);
-        topPanel.add(loginButton);
-        mainContainer.add(topPanel, BorderLayout.NORTH);
+        if (username == null){
+            // Login button
+            createLoginButton();
+            topPanel.add(loginButton);
+            mainContainer.add(topPanel, BorderLayout.NORTH);
+            // Sign Up button
+            createSignUpButton();
+            topPanel.add(signUpButton);
+            topPanel.add(loginButton);
+            mainContainer.add(topPanel, BorderLayout.NORTH);
+        }
+        else{
+            createLogoutButton();
+            topPanel.add(loginButton);
+            mainContainer.add(topPanel, BorderLayout.NORTH);
+            //add in the username
+            topPanel.add(new JLabel(username));
+        }
 
         // Main panel
         JPanel panel = new JPanel();
