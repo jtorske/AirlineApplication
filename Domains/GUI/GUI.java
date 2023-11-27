@@ -30,6 +30,7 @@ public class GUI extends JFrame {
     
     private JButton loginButton;
     private JButton signUpButton;
+    private JButton cancelButton;
 
     static private String username=null;
     static public void setUsername(String u){
@@ -76,6 +77,17 @@ public class GUI extends JFrame {
         });
     }
     // Sets up the Sign Up button
+    private void createCancelButton() {
+        cancelButton = new JButton("Cancel Flight");
+        cancelButton.setPreferredSize(new Dimension(160, 30));
+        cancelButton.setFont(new Font("Arial", Font.PLAIN, 10));
+        cancelButton.addActionListener(e -> {
+            Cancel CancelWindow = new Cancel();
+            CancelWindow.setVisible(true);
+        });
+    }
+
+    // Sets up the Sign Up button
     private void createSignUpButton() {
         signUpButton = new JButton("Sign Up");
         signUpButton.setPreferredSize(new Dimension(80, 30));
@@ -85,7 +97,6 @@ public class GUI extends JFrame {
             signUpWindow.setVisible(true);
         });
     }
-
     // Creates and adds components to the frame
     private void createView() {
         // Main container with BorderLayout
@@ -93,6 +104,11 @@ public class GUI extends JFrame {
         getContentPane().add(mainContainer);
         
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+                // Cancel button
+        createCancelButton();
+        topPanel.add(cancelButton);
+        mainContainer.add(topPanel, BorderLayout.NORTH);
+
         if (username == null){
             // Login button
             createLoginButton();
@@ -112,6 +128,7 @@ public class GUI extends JFrame {
             topPanel.add(new JLabel(username));
         }
 
+        
         // Main panel
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
