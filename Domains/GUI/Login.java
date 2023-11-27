@@ -20,7 +20,7 @@ public class Login extends JFrame {
         setResizable(false);
     }
 
-     private void createView() {
+     protected void createView() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2, 5, 5));
 

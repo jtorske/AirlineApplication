@@ -31,6 +31,8 @@ public class GUI extends JFrame {
     private JButton loginButton;
     private JButton signUpButton;
     private JButton cancelButton;
+    private JButton crewMemberLoginButton;
+    private JButton adminLoginButton;
 
     static private String username=null;
     static public void setUsername(String u){
@@ -67,6 +69,28 @@ public class GUI extends JFrame {
         });
     }
 
+    // Sets up the flight attendent login button
+    private void createFALoginButton() {
+        crewMemberLoginButton = new JButton("Flight Attendant Login");
+        crewMemberLoginButton.setPreferredSize(new Dimension(160, 30)); 
+        crewMemberLoginButton.setFont(new Font("Arial", Font.PLAIN, 10)); 
+        crewMemberLoginButton.addActionListener(e -> {
+            Login loginWindow = new FlightAttendantLogin();
+            loginWindow.setVisible(true);
+        });
+    }
+
+        // Sets up the admin login button
+    private void createAdminLoginButton() {
+        adminLoginButton = new JButton("Admin Login");
+        adminLoginButton.setPreferredSize(new Dimension(100, 30)); 
+        adminLoginButton.setFont(new Font("Arial", Font.PLAIN, 10)); 
+        adminLoginButton.addActionListener(e -> {
+            Login loginWindow = new AdminLogin();
+            loginWindow.setVisible(true);
+        });
+    }
+
     // Sets up the logout button
     private void createLogoutButton() {
         loginButton = new JButton("Logout");
@@ -76,7 +100,7 @@ public class GUI extends JFrame {
             setUsername(null);
         });
     }
-    // Sets up the Sign Up button
+    // Sets up the cancel button
     private void createCancelButton() {
         cancelButton = new JButton("Cancel Flight");
         cancelButton.setPreferredSize(new Dimension(160, 30));
@@ -103,8 +127,10 @@ public class GUI extends JFrame {
         JPanel mainContainer = new JPanel(new BorderLayout());
         getContentPane().add(mainContainer);
         
+        JPanel loginPanel = new JPanel(new BorderLayout());
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-                // Cancel button
+        JPanel otherPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        // Cancel button
         createCancelButton();
         topPanel.add(cancelButton);
         mainContainer.add(topPanel, BorderLayout.NORTH);
@@ -113,12 +139,23 @@ public class GUI extends JFrame {
             // Login button
             createLoginButton();
             topPanel.add(loginButton);
-            mainContainer.add(topPanel, BorderLayout.NORTH);
+            loginPanel.add(topPanel, BorderLayout.NORTH);
+            mainContainer.add(loginPanel, BorderLayout.NORTH);
             // Sign Up button
             createSignUpButton();
             topPanel.add(signUpButton);
-            topPanel.add(loginButton);
-            mainContainer.add(topPanel, BorderLayout.NORTH);
+            loginPanel.add(topPanel, BorderLayout.NORTH);
+            mainContainer.add(loginPanel, BorderLayout.NORTH);
+            // Flight Attendent Button
+            createFALoginButton();
+            otherPanel.add(crewMemberLoginButton);
+            loginPanel.add(otherPanel, BorderLayout.SOUTH);
+            mainContainer.add(loginPanel, BorderLayout.NORTH);
+            // Admin Button
+            createAdminLoginButton();
+            otherPanel.add(adminLoginButton);
+            loginPanel.add(otherPanel, BorderLayout.SOUTH);
+            mainContainer.add(loginPanel, BorderLayout.NORTH);
         }
         else{
             createLogoutButton();
