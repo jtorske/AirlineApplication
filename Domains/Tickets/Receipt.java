@@ -10,6 +10,8 @@ Logan Nightingale
 
 package Domains.Tickets;
 
+import javax.mail.MessagingException;
+
 import Domains.Flights.TimeDate;
 
 public class Receipt {
@@ -62,9 +64,10 @@ public class Receipt {
         + "\n Dated: " + transactionTime.toString();
     }
 
-    public void Email(){
+    public void Email() throws MessagingException{
         //Send the ticket receipt via email
         String receiptInfo = Display();
-        //TODO: implement this function
+        Email email = new Email("Airline Ticket Receipt", receiptInfo);
+        email.send(this.ticket.getPassenger().getEmail());
     }
 }

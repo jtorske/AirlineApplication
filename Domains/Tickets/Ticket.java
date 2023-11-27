@@ -10,6 +10,9 @@ Logan Nightingale
 
 package Domains.Tickets;
 import Domains.Seats.Seat;
+
+import javax.mail.MessagingException;
+
 import Domains.Flights.Flights;
 import Domains.Passenger.Passenger;
 
@@ -85,5 +88,12 @@ public class Ticket {
         + "Price: " + Double.toString(this.price)
         + "Passenger: " + this.passenger.getName().toString() 
         + "Insurance Policy: " + (this.policy != null ? this.policy.getPolicy() : "No policy");
+    }
+
+    public void Email() throws MessagingException{
+        //Send the ticket via email
+        String ticketInfo = Display();
+        Email email = new Email("Airline Ticket", ticketInfo);
+        email.send(this.passenger.getEmail());
     }
 }
