@@ -80,7 +80,7 @@ public class GUI extends JFrame {
         });
     }
 
-        // Sets up the admin login button
+    // Sets up the admin login button
     private void createAdminLoginButton() {
         adminLoginButton = new JButton("Admin Login");
         adminLoginButton.setPreferredSize(new Dimension(100, 30)); 
