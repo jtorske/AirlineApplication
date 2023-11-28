@@ -125,60 +125,64 @@ public class GUI extends JFrame {
     private void createView() {
         // Main container with BorderLayout
         JPanel mainContainer = new JPanel(new BorderLayout());
-        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         getContentPane().add(mainContainer);
         
         JPanel loginPanel = new JPanel(new BorderLayout());
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JPanel otherPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         if (username == null){
             // Login button
             createLoginButton();
-            topPanel.add(loginButton);
-            loginPanel.add(topPanel, BorderLayout.NORTH);
+            leftPanel.add(loginButton);
+            loginPanel.add(leftPanel, BorderLayout.NORTH);
             mainContainer.add(loginPanel, BorderLayout.NORTH);
             // Sign Up button
             createSignUpButton();
-            topPanel.add(signUpButton);
-            loginPanel.add(topPanel, BorderLayout.NORTH);
+            leftPanel.add(signUpButton);
+            loginPanel.add(leftPanel, BorderLayout.NORTH);
             mainContainer.add(loginPanel, BorderLayout.NORTH);
             // Flight Attendent Button
             createFALoginButton();
-            otherPanel.add(crewMemberLoginButton);
-            loginPanel.add(otherPanel, BorderLayout.SOUTH);
+            leftPanel.add(crewMemberLoginButton);
+            loginPanel.add(leftPanel, BorderLayout.SOUTH);
             mainContainer.add(loginPanel, BorderLayout.NORTH);
             // Admin Button
             createAdminLoginButton();
-            otherPanel.add(adminLoginButton);
-            loginPanel.add(otherPanel, BorderLayout.SOUTH);
+            leftPanel.add(adminLoginButton);
+            loginPanel.add(leftPanel, BorderLayout.SOUTH);
             mainContainer.add(loginPanel, BorderLayout.NORTH);
+
+                    
+            // Cancel button
+            createCancelButton();
+            leftPanel.add(cancelButton);
+            mainContainer.add(leftPanel, BorderLayout.NORTH);
         }
-        else{
-            // For the left-aligned username label
-            topPanel.setLayout(new BorderLayout());
+        else {
+            JPanel topPanel = new JPanel(new BorderLayout());
+        
+            leftPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             JLabel userLabel = new JLabel("Welcome: " + username);
-            topPanel.add(userLabel, BorderLayout.WEST);
-
-            // Panel for right-aligned components
-
-            // Assuming createLogoutButton() creates a button named 'logoutButton'
+            leftPanel.add(userLabel);
+        
+            topPanel.add(leftPanel, BorderLayout.WEST);
+        
             createLogoutButton();
-            rightPanel.add(loginButton); // Add logout button to the right panel
-
-            // Add rightPanel to the topPanel
+            rightPanel.add(loginButton);  
+        
+            createCancelButton();
+            rightPanel.add(cancelButton);
+        
+            rightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
             topPanel.add(rightPanel, BorderLayout.EAST);
-
-            // Add topPanel to the main container
+        
             mainContainer.add(topPanel, BorderLayout.NORTH);
-
         }
         
-        // Cancel button
-        createCancelButton();
-        rightPanel.add(cancelButton);
-        mainContainer.add(topPanel, BorderLayout.NORTH);
+
+
 
                 
         // Main panel
