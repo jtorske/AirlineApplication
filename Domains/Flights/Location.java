@@ -29,7 +29,6 @@ public class Location{
         public void setProvDist(String ProvDist){this.ProvDist = ProvDist;}
         public void setCity(String City){this.City = City;}
         
-        @Override
         public boolean equals(Object obj){
             if (this == obj)
                 return true;
