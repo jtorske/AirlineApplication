@@ -5,7 +5,8 @@ import javax.swing.table.DefaultTableModel;
 
 import Domains.Flights.Flights;
 import Domains.Flights.TimeDate;
-import Domains.User.User;
+import Domains.Passenger.Passenger;
+import Domains.User.*;
 import Domains.Flights.Location;
 
 
@@ -19,7 +20,7 @@ import java.util.Date;
 
 public class GUI extends JFrame {
     //Component declarations
-    private JTextArea originCountryTextArea, destinationCountryTextArea, originProvinceTextArea, destinationProvinceTextArea, originCityTextArea, destinationCityTextArea;
+    private JTextArea originCountryTextArea, destinationCountryTextArea, originProvinceTextArea, destinationProvinceTextArea, originCityTextArea, destinationCityTextArea, FlightNumArea;
 
     private JComboBox<String> tripTypeComboBox;
 
@@ -33,13 +34,24 @@ public class GUI extends JFrame {
     private JButton cancelButton;
     private JButton crewMemberLoginButton;
     private JButton adminLoginButton;
+    private JButton browsePassengerButton;
 
     static private String username=null;
+    static private String identity=null;
+    static private User user=null;
+    static public void setIdentity(String i){
+        identity = i;
+        GUI gui = new GUI();
+        gui.setVisible(true);
+    }
     static public void setUsername(String u){
         username = u;
         //refresh the page
         GUI gui = new GUI();
         gui.setVisible(true);
+    }
+    static public void setUser(User u){
+        user = u;
     }
     public GUI() {
         createView();
@@ -121,8 +133,25 @@ public class GUI extends JFrame {
             signUpWindow.setVisible(true);
         });
     }
+        // Sets up the Sign Up button
+    private void createBrowsePassengerPanel(JPanel panel) {
+        JPanel BrowsePassengerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        FlightNumArea = new JTextArea(1, 20);
+        BrowsePassengerPanel.add(new JLabel("Flight Number:"));
+        BrowsePassengerPanel.add(originCountryTextArea);
+
+        panel.add(BrowsePassengerPanel);
+        browsePassengerButton = new JButton("Browse Passenger");
+        browsePassengerButton.setPreferredSize(new Dimension(80, 30));
+        browsePassengerButton.setFont(new Font("Arial", Font.PLAIN, 10));
+        browsePassengerButton.addActionListener(e -> {
+           searchPassenger(); 
+        });
+    }
     // Creates and adds components to the frame
     private void createView() {
+        System.out.println("Username: " + username);
+        System.out.println("Identity: " + identity);
         // Main container with BorderLayout
         JPanel mainContainer = new JPanel(new BorderLayout());
         getContentPane().add(mainContainer);
@@ -254,6 +283,10 @@ public class GUI extends JFrame {
             }
         });
         panel.add(buttonSearch);
+        if (identity == "FA"){
+            createBrowsePassengerPanel(panel);
+            panel.add(browsePassengerButton);
+        }
     }
 
     // TODO: Implement actual flight search
@@ -364,6 +397,50 @@ public class GUI extends JFrame {
         // Placeholder for actual flight search functionality
         JOptionPane.showMessageDialog(this, "Searching flights...");
     }
+
+    private void searchPassenger() {
+        // Collecting values inputted by user
+        String flightNum = FlightNumArea.getText();
+        //fix when go to database
+        ArrayList<Passenger> passengers = CrewMember.BrowsePassengers(flightNum);
+        JFrame frame = new JFrame("Passenger Search Results");
+
+        JButton button = new JButton("Go Back");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close only the current window
+                frame.dispose();
+            }
+        });
+        frame.add(button, BorderLayout.SOUTH);
+        //display the passengers in same window as table
+        // Create column names
+        String[] columnNames = {"Name", "Passport Number", "Country", "Expiry Date", "address", "Email", "Phone Number"};
+        // Create a table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        // Add a row for each passenger
+        for (Passenger p:passengers){
+            Object[] row = new Object[7];
+            row[0] = p.getName().toString();
+            row[1] = p.getPassport().getPassportNumber();
+            row[2] = p.getPassport().getCountry();
+            row[3] = p.getPassport().getExpiryDate().toString();
+            row[4] = p.getAddress().toString();
+            row[5] = p.getEmail();
+            row[6] = p.getPhoneNumber().toString();
+            model.addRow(row);
+        }
+        JTable table = new JTable(model);
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        // Add the scroll pane to the frame
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {

@@ -72,4 +72,8 @@ public class User {
         //connect to the database to delete the ticket
 
     }
+
+    static public ArrayList<Passenger> BrowsePassengers(String flightNum){ 
+        return null;
+    }
 }

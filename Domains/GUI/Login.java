@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 import Domains.Login.LoginVerify;
 
 public class Login extends JFrame {
-    private JTextField usernameField;
-    private JPasswordField passwordField;
-    private JButton loginButton;
+    protected JTextField usernameField;
+    protected JPasswordField passwordField;
+    protected JButton loginButton;
 
     public Login() {
         createView();
