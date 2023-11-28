@@ -125,15 +125,13 @@ public class GUI extends JFrame {
     private void createView() {
         // Main container with BorderLayout
         JPanel mainContainer = new JPanel(new BorderLayout());
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+
         getContentPane().add(mainContainer);
         
         JPanel loginPanel = new JPanel(new BorderLayout());
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JPanel otherPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        // Cancel button
-        createCancelButton();
-        topPanel.add(cancelButton);
-        mainContainer.add(topPanel, BorderLayout.NORTH);
 
         if (username == null){
             // Login button
@@ -158,14 +156,31 @@ public class GUI extends JFrame {
             mainContainer.add(loginPanel, BorderLayout.NORTH);
         }
         else{
-            createLogoutButton();
-            topPanel.add(loginButton);
-            mainContainer.add(topPanel, BorderLayout.NORTH);
-            //add in the username
-            topPanel.add(new JLabel(username));
-        }
+            // For the left-aligned username label
+            topPanel.setLayout(new BorderLayout());
+            JLabel userLabel = new JLabel("Welcome: " + username);
+            topPanel.add(userLabel, BorderLayout.WEST);
 
+            // Panel for right-aligned components
+
+            // Assuming createLogoutButton() creates a button named 'logoutButton'
+            createLogoutButton();
+            rightPanel.add(loginButton); // Add logout button to the right panel
+
+            // Add rightPanel to the topPanel
+            topPanel.add(rightPanel, BorderLayout.EAST);
+
+            // Add topPanel to the main container
+            mainContainer.add(topPanel, BorderLayout.NORTH);
+
+        }
         
+        // Cancel button
+        createCancelButton();
+        rightPanel.add(cancelButton);
+        mainContainer.add(topPanel, BorderLayout.NORTH);
+
+                
         // Main panel
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
