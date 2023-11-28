@@ -1,7 +1,7 @@
 -- Adding sample data to Aircraft Table
 INSERT INTO Aircraft (AircraftID, Company, Model, SeatCapacity, Type)
-VALUES (1, 'Boeing', '737', 800, 'Narrow-body'),
-       (2, 'Boeing', '777', 300, 'Wide-body');
+VALUES (1, 'Boeing', '737', 800, 1),
+       (2, 'Boeing', '777', 300, 2);
 
 -- Adding sample data to Location Table
 INSERT INTO Location (LocationID, Country, Province, City)
@@ -14,27 +14,12 @@ VALUES   (1, 'USA', 'California', 'Los Angeles'),
         (7, 'Canada', 'Quebec', 'Montreal'),
         (8, 'Canada', 'British Columbia', 'Vancouver'),
         (9, 'Canada', 'Alberta', 'Calgary'),
-        (10, 'Canada', 'Manitoba', 'Winnipeg'),
-        (11, 'USA', 'Pennsylvania', 'Philadelphia'),
-        (12, 'USA', 'Georgia', 'Atlanta'),
-        (13, 'USA', 'Massachusetts', 'Boston'),
-        (14, 'Canada', 'Nova Scotia', 'Halifax'),
-        (15, 'USA', 'Washington', 'Seattle'),
-        (16, 'USA', 'Michigan', 'Detroit'),
-        (17, 'Canada', 'Saskatchewan', 'Regina'),
-        (18, 'USA', 'Arizona', 'Phoenix'),
-        (19, 'Canada', 'Newfoundland and Labrador', 'St. Johns'),
-        (20, 'USA', 'North Carolina', 'Charlotte'),
-        (21, 'Canada', 'New Brunswick', 'Fredericton'),
-        (22, 'USA', 'Tennessee', 'Nashville'),
-        (23, 'Canada', 'Prince Edward Island', 'Charlottetown'),
-        (24, 'USA', 'Minnesota', 'Minneapolis'),
-        (25, 'Canada', 'Quebec', 'Quebec City');
+        (10, 'Canada', 'Manitoba', 'Winnipeg');
 
 -- Adding sample data to Flight Table
 INSERT INTO Flight (FlightID, AircraftID, DepartureLocationID, ArrivalLocationID, DepartureDate, ArrivalDate)
 VALUES (1, 1, 1, 2, '2023-12-01 08:00:00', '2023-12-01 10:00:00'),
-       (2, 2, 2, 1, '2023-12-02 12:00:00', '2023-12-02 14:00:00'),
+        (2, 2, 2, 1, '2023-12-02 12:00:00', '2023-12-02 14:00:00'),
         (3, 1, 3, 4, '2023-12-03 15:30:00', '2023-12-03 17:30:00'),
         (4, 2, 4, 3, '2023-12-04 18:45:00', '2023-12-04 20:45:00'),
         (5, 1, 5, 6, '2023-12-05 09:15:00', '2023-12-05 11:15:00'),
@@ -42,33 +27,27 @@ VALUES (1, 1, 1, 2, '2023-12-01 08:00:00', '2023-12-01 10:00:00'),
         (7, 1, 7, 8, '2023-12-07 21:00:00', '2023-12-07 23:00:00'),
         (8, 2, 8, 7, '2023-12-08 10:30:00', '2023-12-08 12:30:00'),
         (9, 1, 9, 10, '2023-12-09 16:45:00', '2023-12-09 18:45:00'),
-        (10, 2, 10, 9, '2023-12-10 07:30:00', '2023-12-10 09:30:00'),
-        (11, 1, 11, 12, '2023-12-11 14:00:00', '2023-12-11 16:00:00'),
-        (12, 2, 12, 11, '2023-12-12 19:20:00', '2023-12-12 21:20:00'),
-        (13, 1, 13, 14, '2023-12-13 11:45:00', '2023-12-13 13:45:00'),
-        (14, 2, 14, 13, '2023-12-14 22:10:00', '2023-12-15 00:10:00'),
-        (15, 1, 15, 16, '2023-12-15 16:30:00', '2023-12-15 18:30:00'),
-        (16, 2, 16, 15, '2023-12-16 03:45:00', '2023-12-16 05:45:00'),
-        (17, 1, 17, 18, '2023-12-17 14:20:00', '2023-12-17 16:20:00'),
-        (18, 2, 18, 17, '2023-12-18 09:00:00', '2023-12-18 11:00:00'),
-        (19, 1, 19, 20, '2023-12-19 20:15:00', '2023-12-19 22:15:00'),
-        (20, 2, 20, 19, '2023-12-20 12:30:00', '2023-12-20 14:30:00'),
-        (21, 1, 21, 22, '2023-12-21 17:45:00', '2023-12-21 19:45:00'),
-        (22, 2, 22, 21, '2023-12-22 08:00:00', '2023-12-22 10:00:00'),
-        (23, 1, 23, 24, '2023-12-23 13:30:00', '2023-12-23 15:30:00'),
-        (24, 2, 24, 23, '2023-12-24 18:00:00', '2023-12-24 20:00:00'),
-        (25, 1, 25, 6, '2023-12-25 09:45:00', '2023-12-25 11:45:00');
+        (10, 2, 10, 9, '2023-12-10 07:30:00', '2023-12-10 09:30:00');
 
 -- Adding sample data to CrewMember Table
 INSERT INTO CrewMember (CrewMemberID, Name, Role)
 VALUES (1, 'John Smith', 'Pilot'),
-       (2, 'Jane Doe', 'Flight Attendant');
+        (2, 'Jane White', 'Flight Attendant'),
+        (3, 'Emily Davis', 'Flight Attendant'),
+        (4, 'Robert Brown', 'Pilot');
 
 -- Adding sample data to CrewSchedule Table
 INSERT INTO CrewSchedule (FlightID, CrewMemberID)
-VALUES (1, 1),
-       (1, 2),
-       (2, 1);
+VALUES   (1, 1), (1, 2),  -- Flight 1
+        (2, 4), (2, 3),  -- Flight 2
+        (3, 1), (3, 2),  -- Flight 3
+        (4, 4), (4, 3),  -- Flight 4
+        (5, 1), (5, 2),  -- Flight 5
+        (6, 4), (6, 3),  -- Flight 6
+        (7, 1), (7, 2),  -- Flight 7
+        (8, 4), (8, 3),  -- Flight 8
+        (9, 1), (9, 2),  -- Flight 9
+        (10, 4), (10, 3); -- Flight 10
 
 -- Adding sample data to User Table
 INSERT INTO User (UserID, CreditID, Username, Password)
