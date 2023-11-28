@@ -51,13 +51,19 @@ VALUES   (1, 1), (1, 2),  -- Flight 1
 
 -- Adding sample data to User Table
 INSERT INTO User (UserID, CreditID, Username, Password)
-VALUES (1, 1, 'john_doe', 'password123'),
-       (2, 2, 'jane_smith', 'securepass');
+VALUES (1, 1, 'james_white', 'password123'),
+        (2, 2, 'jane_smith', 'securepass'),
+        (3, 3, 'emma_jones', 'pass123'),
+        (4, 4, 'sam_roberts', 'strongpass'),
+        (5, 5, 'lily_williams', 'secure123');
 
 -- Adding sample data to CreditCard Table
 INSERT INTO CreditCard (CreditCardID, CardNumber, CvvNumber, ExpiryDate)
 VALUES (1, '1234-5678-9101-1121', 123, '2025-12-31'),
-       (2, '5678-9101-1121-3141', 456, '2024-06-30');
+        (2, '5678-9101-1121-3141', 456, '2024-06-30'),
+        (3, '9876-5432-1098-7654', 789, '2023-11-30'),
+        (4, '4321-8765-2109-8765', 321, '2024-09-30'),
+        (5, '8765-4321-0987-6543', 654, '2025-05-31');
 
 -- Adding sample data to Admin Table
 INSERT INTO Admin (AdminID, Username, Password)
@@ -66,40 +72,62 @@ VALUES (1, 'admin1', 'adminpass'),
 
 -- Adding sample data to Name Table
 INSERT INTO Name (NameID, FirstName, LastName, MiddleName)
-VALUES (1, 'John', 'Doe', 'A'),
-       (2, 'Jane', 'Smith', 'B');
+VALUES (1, 'James', 'White', 'A'),
+        (2, 'Jane', 'Smith', 'B'),
+        (3, 'Emma', 'Jones', 'C'),
+        (4, 'Sam', 'Roberts', 'D'),
+        (5, 'Lily', 'Williams', 'E');
 
 -- Adding sample data to Phone Table
 INSERT INTO Phone (PhoneID, CountryCode, DistrictCode, Number)
 VALUES (1, '+1', '123', '456-7890'),
-       (2, '+1', '456', '789-0123');
+        (2, '+1', '456', '789-0123'),
+        (3, '+1', '789', '012-3456'),
+        (4, '+1', '012', '345-6789'),
+        (5, '+1', '234', '567-8901');
 
 -- Adding sample data to Address Table
 INSERT INTO Address (AddressID, StreetName, District, PostalCode)
 VALUES (1, '123 Main St', 'Downtown', '12345'),
-       (2, '456 Oak St', 'Uptown', '56789');
+        (2, '456 Oak St', 'Uptown', '56789'),
+        (3, '789 Pine St', 'Midtown', '67890'),
+        (4, '210 Maple St', 'Westside', '78901'),
+        (5, '345 Elm St', 'East End', '01234');
 
 -- Adding sample data to Passport Table
 INSERT INTO Passport (PassportID, IssueCountry, IssueDate, ExpiryDate)
 VALUES (1, 'USA', '2020-01-01', '2030-01-01'),
-       (2, 'Canada', '2019-05-15', '2029-05-15');
+        (2, 'Canada', '2019-05-15', '2029-05-15'),
+        (3, 'USA', '2022-03-01', '2032-03-01'),
+        (4, 'Canada', '2021-08-10', '2031-08-10'),
+        (5, 'USA', '2023-06-15', '2033-06-15');
 
 -- Adding sample data to Passenger Table
 INSERT INTO Passenger (PassengerID, NameID, PhoneID, AddressID, PassportID, Email)
-VALUES (1, 1, 1, 1, 1, 'john.doe@email.com'),
-       (2, 2, 2, 2, 2, 'jane.smith@email.com');
+VALUES (1, 1, 1, 1, 1, 'james.white@email.com'),
+        (2, 2, 2, 2, 2, 'jane.smith@email.com'),
+        (3, 3, 3, 3, 3, 'emma.jones@email.com'),
+        (4, 4, 4, 4, 4, 'sam.roberts@email.com'),
+        (5, 5, 5, 5, 5, 'lily.williams@email.com');
 
 -- Adding sample data to Ticket Table
 INSERT INTO Ticket (TicketID, FlightID, PassengerID, InsuranceID, SeatType, SeatRow, SeatColumn)
-VALUES (1, 1, 1, 1, 'Economy', 10, 'A'),
-       (2, 2, 2, 2, 'Business', 5, 'C');
+VALUES (1, 1, 1, 1, 'Ordinary', 10, 'A'),
+        (2, 2, 2, 2, 'Business', 5, 'C'),
+        (3, 3, 3, 3, 'Comfort', 8, 'B'),
+        (4, 4, 4, 4, 'Ordinary', 15, 'D'),
+        (5, 5, 5, 5, 'Business', 3, 'A');
 
 -- Adding sample data to Insurance Table
 INSERT INTO Insurance (InsuranceID, Policy)
 VALUES (1, 'Basic Coverage'),
-       (2, 'Premium Coverage');
+       (2, 'Premium Coverage'),
+       (3, 'Basic Coverage'),
+       (4, NULL),
+       (5, 'Basic Coverage');
 
 -- Adding sample data to SeatType Table
 INSERT INTO SeatType (SeatTypeID, Price)
-VALUES (1, 100.00),
-       (2, 200.00);
+VALUES   (1, 50.00), -- Ordinary
+        (2, 70.00), -- Comfort
+        (3, 100.00); -- Business
