@@ -163,9 +163,12 @@ public class GUI extends JFrame {
         else {
             JPanel topPanel = new JPanel(new BorderLayout());
         
-            leftPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
             JLabel userLabel = new JLabel("Welcome: " + username);
+
+            userLabel.setFont(new Font("Arial", Font.BOLD, 20)); 
+
             leftPanel.add(userLabel);
+            
         
             topPanel.add(leftPanel, BorderLayout.WEST);
         
