@@ -146,7 +146,7 @@ CREATE TABLE Ticket (
     InsuranceID INT,
     SeatType VARCHAR(255),
     SeatRow INT,
-    SeatColumn INT,
+    SeatColumn CHAR,
     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID),
     FOREIGN KEY (PassengerID) REFERENCES Passenger(PassengerID)
 );
