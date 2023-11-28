@@ -135,30 +135,30 @@ public class GUI extends JFrame {
         if (username == null){
             // Login button
             createLoginButton();
-            leftPanel.add(loginButton);
+            rightPanel.add(loginButton);
             loginPanel.add(leftPanel, BorderLayout.NORTH);
             mainContainer.add(loginPanel, BorderLayout.NORTH);
             // Sign Up button
             createSignUpButton();
-            leftPanel.add(signUpButton);
+            rightPanel.add(signUpButton);
             loginPanel.add(leftPanel, BorderLayout.NORTH);
             mainContainer.add(loginPanel, BorderLayout.NORTH);
             // Flight Attendent Button
             createFALoginButton();
-            leftPanel.add(crewMemberLoginButton);
+            rightPanel.add(crewMemberLoginButton);
             loginPanel.add(leftPanel, BorderLayout.SOUTH);
             mainContainer.add(loginPanel, BorderLayout.NORTH);
             // Admin Button
             createAdminLoginButton();
-            leftPanel.add(adminLoginButton);
+            rightPanel.add(adminLoginButton);
             loginPanel.add(leftPanel, BorderLayout.SOUTH);
             mainContainer.add(loginPanel, BorderLayout.NORTH);
 
                     
             // Cancel button
             createCancelButton();
-            leftPanel.add(cancelButton);
-            mainContainer.add(leftPanel, BorderLayout.NORTH);
+            rightPanel.add(cancelButton);
+            mainContainer.add(rightPanel, BorderLayout.NORTH);
         }
         else {
             JPanel topPanel = new JPanel(new BorderLayout());
