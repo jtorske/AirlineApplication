@@ -31,6 +31,7 @@ CREATE TABLE Flight (
     ArrivalLocationID INT,
     DepartureDate DATETIME,
     ArrivalDate DATETIME,
+    SeatMap VARCHAR(4096),
     FOREIGN KEY (AircraftID) REFERENCES Aircraft(AircraftID),
     FOREIGN KEY (DepartureLocationID) REFERENCES Location(LocationID),
     FOREIGN KEY (ArrivalLocationID) REFERENCES Location(LocationID)
