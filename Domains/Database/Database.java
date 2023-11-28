@@ -35,4 +35,23 @@ public class Database {
 
     }
 
+    public static void main(String[] args) {
+        Database db = new Database();
+        Connection con;
+        try{
+            con = db.getConnection();
+            Statement statement = con.createStatement();
+            ResultSet queryResult = statement.executeQuery("SELECT * FROM ANIMALS");
+
+            // while (queryResult.next()) {
+
+            // }
+
+
+        } catch(SQLException e){
+            System.out.println("Could not get connections");
+            System.exit(1);
+        }
+        
+    }
 }
