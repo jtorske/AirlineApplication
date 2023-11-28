@@ -12,6 +12,9 @@ package Domains.User;
 import Domains.Flights.*;
 import Domains.Seats.*;
 import java.util.ArrayList;
+
+import javax.mail.MessagingException;
+
 import Domains.Tickets.*;
 import Domains.Passenger.*;
 
@@ -32,7 +35,7 @@ public class User {
         String country, int expiryYear, int expiryMonth, int expiryDay, 
         int issueYear, int issueMonth, int issueDay, String streetNumber, String streetName, 
         String city, String province, String countryAddress, String postalCode, String email, 
-        int countryCode, int areaCode, int phoneNumber, int cardNumber, Insurance policy){
+        int countryCode, int areaCode, int phoneNumber, String cardNumber, Insurance policy) throws MessagingException{
             double price = seat.GetPrice();
             //connect to the billingport to pay
 
