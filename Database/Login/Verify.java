@@ -31,7 +31,8 @@ public class Verify {
 
     static public boolean verifyCrewMember(String username, String password) {
         // connect to database to check if username and password are correct
-        String query = String.format("SELECT * FROM Admin WHERE Username = \"%s\" AND Password = \"%s\"", username,
+        String query = String.format("SELECT * FROM CrewMember WHERE Username = \"%s\" AND Password = \"%s\" AND Role = \"Flight Attendant\"", 
+                username,
                 password);
         List<List<String>> result = Database.dbExecute(query);
         if (result.size() > 0) {
