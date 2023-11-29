@@ -1,17 +1,12 @@
 /* This is to grant permissions to user*/
-DROP user 'oop'@'%';
-
-CREATE USER 'oop'@'%' IDENTIFIED BY 'password';
-GRANT ALL PRIVILEGES ON *.* TO 'oop'@'%';
-
+DROP user 'oop' @'%';
+CREATE USER 'oop' @'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'oop' @'%';
 FLUSH privileges;
-
 /* This is to initialize database */
-
 DROP DATABASE IF EXISTS AIRLINE;
 CREATE DATABASE AIRLINE;
 USE AIRLINE;
-
 -- Aircraft Table
 DROP TABLE IF EXISTS Aircraft;
 CREATE TABLE Aircraft (
@@ -29,7 +24,6 @@ CREATE TABLE Location (
     Province VARCHAR(255),
     City VARCHAR(255)
 );
-
 -- Flight Table
 DROP TABLE IF EXISTS Flight;
 CREATE TABLE Flight (
@@ -44,16 +38,14 @@ CREATE TABLE Flight (
     FOREIGN KEY (DepartureLocationID) REFERENCES Location(LocationID),
     FOREIGN KEY (ArrivalLocationID) REFERENCES Location(LocationID)
 );
-
 -- FlightSchedule Table (Assuming it's a junction table for many-to-many relationship)
-DROP TABLE IF EXISTS FlightSchedule;
-CREATE TABLE FlightSchedule (
-    FlightID INT,
-    FlightScheduleID INT,
-    PRIMARY KEY (FlightID, FlightScheduleID),
-    FOREIGN KEY (FlightID) REFERENCES Flight(FlightID)
-);
-
+-- DROP TABLE IF EXISTS FlightSchedule;
+-- CREATE TABLE FlightSchedule (
+--     FlightID INT,
+--     FlightScheduleID INT,
+--     PRIMARY KEY (FlightID, FlightScheduleID),
+--     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID)
+-- );
 -- CrewMember Table
 DROP TABLE IF EXISTS CrewMember;
 CREATE TABLE CrewMember (
@@ -61,7 +53,6 @@ CREATE TABLE CrewMember (
     Name VARCHAR(255),
     Role VARCHAR(255)
 );
-
 -- CrewSchedule Table
 DROP TABLE IF EXISTS CrewSchedule;
 CREATE TABLE CrewSchedule (
@@ -71,33 +62,14 @@ CREATE TABLE CrewSchedule (
     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID),
     FOREIGN KEY (CrewMemberID) REFERENCES CrewMember(CrewMemberID)
 );
-
--- User Table
-DROP TABLE IF EXISTS User;
-CREATE TABLE User (
-    UserID INT PRIMARY KEY,
-    CreditID INT,
-    Username VARCHAR(255),
-    Password VARCHAR(255)
-);
-
 -- CreditCard Table
-DROP TABLE IF EXISTS CreditCard;
-CREATE TABLE CreditCard (
-    CreditCardID INT PRIMARY KEY,
-    CardNumber VARCHAR(255),
-    CvvNumber INT,
-    ExpiryDate DATE
-);
-
--- Admin Table
-DROP TABLE IF EXISTS Admin;
-CREATE TABLE Admin (
-    AdminID INT PRIMARY KEY,
-    Username VARCHAR(255),
-    Password VARCHAR(255)
-);
-
+-- DROP TABLE IF EXISTS CreditCard;
+-- CREATE TABLE CreditCard (
+--     CreditCardID INT PRIMARY KEY,
+--     CardNumber VARCHAR(255),
+--     CvvNumber INT,
+--     ExpiryDate DATE
+-- );
 -- Name Table
 DROP TABLE IF EXISTS Name;
 CREATE TABLE Name (
@@ -106,7 +78,23 @@ CREATE TABLE Name (
     LastName VARCHAR(255),
     MiddleName VARCHAR(255)
 );
-
+-- User Table
+DROP TABLE IF EXISTS User;
+CREATE TABLE User (
+    UserID INT PRIMARY KEY,
+    -- CreditID INT,
+    NameID INT,
+    Username VARCHAR(255),
+    Password VARCHAR(255),
+    FOREIGN KEY (NameID) REFERENCES Name(NameID)
+);
+-- Admin Table
+DROP TABLE IF EXISTS Admin;
+CREATE TABLE Admin (
+    AdminID INT PRIMARY KEY,
+    Username VARCHAR(255),
+    Password VARCHAR(255)
+);
 -- Passenger Table
 DROP TABLE IF EXISTS Passenger;
 CREATE TABLE Passenger (
@@ -118,7 +106,6 @@ CREATE TABLE Passenger (
     Email VARCHAR(255),
     FOREIGN KEY (NameID) REFERENCES Name(NameID)
 );
-
 -- Phone Table
 DROP TABLE IF EXISTS Phone;
 CREATE TABLE Phone (
@@ -127,7 +114,6 @@ CREATE TABLE Phone (
     DistrictCode VARCHAR(255),
     Number VARCHAR(255)
 );
-
 -- Address Table
 DROP TABLE IF EXISTS Address;
 CREATE TABLE Address (
@@ -136,7 +122,6 @@ CREATE TABLE Address (
     District VARCHAR(255),
     PostalCode VARCHAR(255)
 );
-
 -- Passport Table
 DROP TABLE IF EXISTS Passport;
 CREATE TABLE Passport (
@@ -145,7 +130,6 @@ CREATE TABLE Passport (
     IssueDate DATE,
     ExpiryDate DATE
 );
-
 -- Ticket Table
 DROP TABLE IF EXISTS Ticket;
 CREATE TABLE Ticket (
@@ -159,14 +143,12 @@ CREATE TABLE Ticket (
     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID),
     FOREIGN KEY (PassengerID) REFERENCES Passenger(PassengerID)
 );
-
 -- Insurance Table
 DROP TABLE IF EXISTS Insurance;
 CREATE TABLE Insurance (
     InsuranceID INT PRIMARY KEY,
     Policy VARCHAR(255)
 );
-
 -- SeatType Table
 DROP TABLE IF EXISTS SeatType;
 CREATE TABLE SeatType (
