@@ -31,10 +31,10 @@ VALUES (1, 1, 1, 2, '2023-12-01 08:00:00', '2023-12-01 10:00:00'),
 
 -- Adding sample data to CrewMember Table
 INSERT INTO CrewMember (CrewMemberID, Name, Role)
-VALUES (1, 'John Smith', 'Pilot'),
-        (2, 'Jane White', 'Flight Attendant'),
-        (3, 'Emily Davis', 'Flight Attendant'),
-        (4, 'Robert Brown', 'Pilot');
+VALUES (1, 'John Smith', 'Pilot', 'john.smith', 'pass123'),
+        (2, 'Jane White', 'Flight Attendant', 'jane.white', 'secure123'),
+        (3, 'Emily Davis', 'Flight Attendant', 'emily.davis', 'securepass'),
+        (4, 'Robert Brown', 'Pilot', 'robert.brown', 'password123');
 
 -- Adding sample data to CrewSchedule Table
 INSERT INTO CrewSchedule (FlightID, CrewMemberID)

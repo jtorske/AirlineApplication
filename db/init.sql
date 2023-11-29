@@ -51,7 +51,9 @@ DROP TABLE IF EXISTS CrewMember;
 CREATE TABLE CrewMember (
     CrewMemberID INT PRIMARY KEY,
     Name VARCHAR(255),
-    Role VARCHAR(255)
+    Role VARCHAR(255),
+    Username VARCHAR(255),
+    Password VARCHAR(255)
 );
 -- CrewSchedule Table
 DROP TABLE IF EXISTS CrewSchedule;
