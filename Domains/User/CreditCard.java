@@ -31,12 +31,23 @@ public class CreditCard {
         return stringBuilder.toString();
     }
 
+    private String insertHyphen(String input, int interval) {
+        StringBuilder result = new StringBuilder(input);
+
+        for (int i = interval; i < result.length(); i += interval + 1) {
+            result.insert(i, '-');
+        }
+
+        return result.toString();
+    }
+
     public CreditCard(RegisteredUser owner){
         this.owner = owner;
-        this.cardNum = RandomNum(16);
+        String numbers = RandomNum(16);
+        this.cardNum = insertHyphen(numbers, 4);
         this.cvvNum = RandomNum(3);
         TimeDate td = new TimeDate();
-        this.expDate = td.getMonth() + "/" + td.getYear();
+        this.expDate = td.displayDate().replace('/', '-');
     }
 
     public String Display(){
