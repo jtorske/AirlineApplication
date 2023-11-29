@@ -17,7 +17,7 @@ import Domains.User.CreditCard;
 import Domains.User.RegisteredUser;
 
 public class ApplyCreditCard implements Forms{
-    static int cardID = 1;
+    static int cardID = 6;
 
     public static String ApplyforCreditCard(String userID, RegisteredUser user){
         try{
