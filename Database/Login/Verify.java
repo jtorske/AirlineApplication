@@ -8,7 +8,7 @@ public class Verify {
         //connect to database to check if username and password are correct
         List<List<String>> result = Database.dbExecute("select * from user"
         + "where username = " + username
-        + " AND password = " + password
+        + " and password = " + password
         );
         if (result.size() > 0){
             return true;
@@ -19,7 +19,11 @@ public class Verify {
     }
     static public boolean verifyAdmin(String username, String password){
         //connect to database to check if username and password are correct
-        if (true){
+        List<List<String>> result = Database.dbExecute("select * from admin"
+        + "where username = " + username
+        + " and password = " + password
+        );
+        if (result.size() > 0){
             return true;
         }
         else{
@@ -30,7 +34,7 @@ public class Verify {
         //connect to database to check if username and password are correct
         List<List<String>> result = Database.dbExecute("select * from crewmember"
         + "where username = " + username
-        + " AND password = " + password
+        + " and password = " + password
         );
         if (result.size() > 0){
             return true;
