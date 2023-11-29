@@ -66,12 +66,12 @@ VALUES (1, 1, 'james_white', 'password123'),
         (5, 5, 'lily_williams', 'secure123');
 
 -- Adding sample data to CreditCard Table
--- INSERT INTO CreditCard (CreditCardID, CardNumber, CvvNumber, ExpiryDate)
--- VALUES (1, '1234-5678-9101-1121', 123, '2025-12-31'),
---         (2, '5678-9101-1121-3141', 456, '2024-06-30'),
---         (3, '9876-5432-1098-7654', 789, '2023-11-30'),
---         (4, '4321-8765-2109-8765', 321, '2024-09-30'),
---         (5, '8765-4321-0987-6543', 654, '2025-05-31');
+INSERT INTO CreditCard (CreditCardID, UserID,CardNumber, CvvNumber, ExpiryDate)
+VALUES (1, 1, '1234-5678-9101-1121', 123, '2025-12-31'),
+        (2, 2, '5678-9101-1121-3141', 456, '2024-06-30'),
+        (3, 3, '9876-5432-1098-7654', 789, '2023-11-30'),
+        (4, 4, '4321-8765-2109-8765', 321, '2024-09-30'),
+        (5, 5, '8765-4321-0987-6543', 654, '2025-05-31');
 
 -- Adding sample data to Admin Table
 INSERT INTO Admin (AdminID, Username, Password)
