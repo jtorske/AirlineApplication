@@ -33,13 +33,12 @@ public class User {
 
         String query = String.format(
                 "SELECT f.FlightID, l.Country, l.Province, l.City, " +
-                    "l2.Country, l2.Province, l2.City, f.DepartureDate, f.ArrivalDate, " +
-                    "a.AircraftID, a.Company, a.Model, a.SeatCapacity, a.Type " +
+                    "l2.Country as Country2, l2.Province as Province2, l2.City as City2, " +
+                    "f.DepartureDate, f.ArrivalDate, a.AircraftID, a.Company, a.Model, a.SeatCapacity, a.Type " +
                 "FROM flight AS f " +
                 "JOIN Location AS l ON f.DepartureLocationID = l.LocationID " +
                 "LEFT JOIN Location AS l2 ON f.ArrivalLocationID = l2.LocationID " +
-                "LEFT JOIN Aircraft AS a ON f.AircraftID = a.AircraftID"
-            );
+                "LEFT JOIN Aircraft AS a ON f.AircraftID = a.AircraftID");
 
         List<List<String>> dbResult = Database.dbExecute(query);
 
@@ -48,14 +47,16 @@ public class User {
             String flightID = row.get(0);
             Location originLocation = new Location(row.get(1), row.get(2), row.get(3));
             Location destinationLocation = new Location(row.get(4), row.get(5), row.get(6));
-            
+
             // Date objs
             TimeDate departureDate = new TimeDate(row.get(7));
             TimeDate arrivalDate = new TimeDate(row.get(8));
 
             // Aircraft
-            Aircraft aircraft = new Aircraft(row.get(9), row.get(10), row.get(11), Integer.parseInt(row.get(12)), Integer.parseInt(row.get(13)));
-            Flights flight = new Flights(flightID, departureDate, arrivalDate, originLocation, destinationLocation, aircraft);
+            Aircraft aircraft = new Aircraft(row.get(9), row.get(10), row.get(11), Integer.parseInt(row.get(12)),
+                    Integer.parseInt(row.get(13)));
+            Flights flight = new Flights(flightID, departureDate, arrivalDate, originLocation, destinationLocation,
+                    aircraft);
             flights.add(flight);
         }
 
@@ -65,12 +66,15 @@ public class User {
     static public void SelectFlight(Flights f) {
         flight = f;
     }
+
     static public Flights GetFlight() {
         return flight;
     }
+
     static public Seat GetSeat() {
         return seat;
     }
+
     static public String BrowseSeat(Flights flight) {
         return flight.getSeatMapString();
     }
