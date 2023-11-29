@@ -54,14 +54,14 @@ public class Database {
             int columnCount = queryResult.getMetaData().getColumnCount();
 
             for (int i = 1; i <= columnCount; i++) {
-                columnNames.add(queryResult.getMetaData().getColumnName(i));
+                columnNames.add(queryResult.getMetaData().getColumnLabel(i));
             }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not get column names");
             System.exit(1);
         }
-
+        System.out.println(columnNames);
         return columnNames;
     }
 
