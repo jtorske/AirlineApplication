@@ -33,7 +33,7 @@ public class User {
 
         String query = String.format(
                 "SELECT f.FlightID, l.Country, l.Province, l.City, " +
-                    "l2.Country, l2.Province, l2.City, f.DepartureDate, f.ArrivalDate" +
+                    "l2.Country, l2.Province, l2.City, f.DepartureDate, f.ArrivalDate, " +
                     "a.AircraftID, a.Company, a.Model, a.SeatCapacity, a.Type " +
                 "FROM flight AS f " +
                 "JOIN Location AS l ON f.DepartureLocationID = l.LocationID " +
