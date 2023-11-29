@@ -73,7 +73,7 @@ public class User {
     static public void BuyTicket(String firstName, String middleName, String lastName, String passportNumber, 
         String country, int expiryYear, int expiryMonth, int expiryDay, 
         int issueYear, int issueMonth, int issueDay, String streetNumber, String streetName, 
-
+        String city, String province, String countryAddress, String postalCode, String email, 
         int countryCode, int areaCode, int phoneNumber, String cardNumber, Insurance policy) throws MessagingException{
       
             double price = seat.GetPrice();
