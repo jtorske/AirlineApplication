@@ -1,3 +1,11 @@
+/* This is to grant permissions to user*/
+DROP user 'oop'@'%';
+
+CREATE USER 'oop'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'oop'@'%';
+
+FLUSH privileges;
+
 /* This is to initialize database */
 
 DROP DATABASE IF EXISTS AIRLINE;
@@ -31,6 +39,7 @@ CREATE TABLE Flight (
     ArrivalLocationID INT,
     DepartureDate DATETIME,
     ArrivalDate DATETIME,
+    SeatMap VARCHAR(4096),
     FOREIGN KEY (AircraftID) REFERENCES Aircraft(AircraftID),
     FOREIGN KEY (DepartureLocationID) REFERENCES Location(LocationID),
     FOREIGN KEY (ArrivalLocationID) REFERENCES Location(LocationID)
@@ -146,7 +155,7 @@ CREATE TABLE Ticket (
     InsuranceID INT,
     SeatType VARCHAR(255),
     SeatRow INT,
-    SeatColumn INT,
+    SeatColumn CHAR,
     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID),
     FOREIGN KEY (PassengerID) REFERENCES Passenger(PassengerID)
 );

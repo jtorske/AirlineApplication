@@ -50,6 +50,9 @@ public class GUI extends JFrame {
         GUI gui = new GUI();
         gui.setVisible(true);
     }
+    static public String getUsername(){
+        return username;
+      
     static public void setUser(User u){
         user = u;
     }

@@ -53,4 +53,10 @@ public class TimeDate {
     public boolean compareTime(int hour, int minute){
         return (this.hour == hour && this.minute == minute);
     }
+    public String displayDate(){
+        return year + "/" + month + "/" + day;
+    }
+    public String displayTime(){
+        return hour + ":" + minute;
+    }
 }
