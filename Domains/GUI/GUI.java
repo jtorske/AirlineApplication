@@ -52,7 +52,7 @@ public class GUI extends JFrame {
     }
     static public String getUsername(){
         return username;
-      
+    }  
     static public void setUser(User u){
         user = u;
     }
