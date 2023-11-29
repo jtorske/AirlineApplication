@@ -67,7 +67,7 @@ CREATE TABLE CrewSchedule (
 -- Name Table
 DROP TABLE IF EXISTS Name;
 CREATE TABLE Name (
-    NameID INT PRIMARY KEY,
+    NameID INT AUTO_INCREMENT PRIMARY KEY,
     FirstName VARCHAR(255),
     LastName VARCHAR(255),
     MiddleName VARCHAR(255)
@@ -80,6 +80,7 @@ CREATE TABLE User (
     NameID INT,
     Username VARCHAR(255),
     Password VARCHAR(255),
+    Email VARCHAR(255),
     FOREIGN KEY (NameID) REFERENCES Name(NameID)
 );
 -- CreditCard Table
@@ -159,3 +160,8 @@ CREATE TABLE SeatType (
     SeatTypeID INT PRIMARY KEY,
     Price DECIMAL(10, 2)
 );
+-- Adding initializing data to Name and User Table
+INSERT INTO Name (NameID, FirstName, LastName, MiddleName)
+VALUES (1, '-----------', '-----------', '-----------');
+INSERT INTO User (UserID, NameID, Username, Password)
+VALUES (1, 1, '-----------', '-----------');

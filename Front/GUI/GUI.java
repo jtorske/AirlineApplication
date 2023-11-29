@@ -154,7 +154,7 @@ public class GUI extends JFrame implements LoginCallback{
         JPanel BrowsePassengerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         FlightNumArea = new JTextArea(1, 20);
         BrowsePassengerPanel.add(new JLabel("Flight Number:"));
-        BrowsePassengerPanel.add(originCountryTextArea);
+        BrowsePassengerPanel.add(FlightNumArea);
 
         panel.add(BrowsePassengerPanel);
         browsePassengerButton = new JButton("Browse Passenger");
@@ -784,10 +784,9 @@ public class GUI extends JFrame implements LoginCallback{
 
     private void searchPassenger() {
         // Collecting values inputted by user
-        String flightNum = FlightNumArea.getText();
-        System.out.println(flightNum);
-        //fix when go to database
-        ArrayList<Passenger> passengers = CrewMember.BrowsePassengers("1");
+        String flightNum = FlightNumArea.getText().toString();
+
+        ArrayList<Passenger> passengers = CrewMember.BrowsePassengers(flightNum);
         JFrame frame = new JFrame("Passenger Search Results");
 
         JButton button = new JButton("Go Back");

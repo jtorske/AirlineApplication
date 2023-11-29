@@ -41,6 +41,30 @@ public class Database {
 
     }
 
+    /**
+     * To get the column names of a query result
+     * 
+     * @param queryResult is the result of a query
+     */
+    private List<String> getColumnNames(ResultSet queryResult) {
+        List<String> columnNames = new ArrayList<>();
+
+        try {
+            // Get column names
+            int columnCount = queryResult.getMetaData().getColumnCount();
+
+            for (int i = 1; i <= columnCount; i++) {
+                columnNames.add(queryResult.getMetaData().getColumnLabel(i));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not get column names");
+            System.exit(1);
+        }
+        System.out.println(columnNames);
+        return columnNames;
+    }
+
     public static List<List<String>> dbExecute(String command) {
         Database db = new Database();
         Connection con;
@@ -51,12 +75,7 @@ public class Database {
             Statement statement = con.createStatement();
             ResultSet queryResult = statement.executeQuery(command);
 
-            // Get column names
-            int columnCount = queryResult.getMetaData().getColumnCount();
-            List<String> columnNames = new ArrayList<>();
-            for (int i = 1; i <= columnCount; i++) {
-                columnNames.add(queryResult.getMetaData().getColumnName(i));
-            }
+            List<String> columnNames = db.getColumnNames(queryResult);
 
             // List to store rows
 
@@ -86,17 +105,20 @@ public class Database {
         return rows;
     }
 
-    /*
+    /**
      * This function is for inserting into the database
      * 
      * @param tableName is the name of the table
      * 
-     * @param values is a list of values to be inserted
+     * @param values    is a list of values to be inserted
+     * @return the automaticly updated primary key id of the inserted row
      */
-    public static void dbInsert(String tableName, List<String> values) {
+
+    public static String dbInsert(String tableName, List<String> values) {
         Database db = new Database();
         Connection con;
 
+        String idGenerated = "";
         try {
             con = db.getConnection();
             String command = "INSERT INTO " + tableName + " VALUES (";
@@ -106,17 +128,30 @@ public class Database {
             command = command.substring(0, command.length() - 1);
             command += ");";
 
-            PreparedStatement statement = con.prepareStatement(command);
+            PreparedStatement statement = con.prepareStatement(command, PreparedStatement.RETURN_GENERATED_KEYS);
             for (int i = 0; i < values.size(); i++) {
                 statement.setString(i + 1, values.get(i));
             }
+
+            System.out.println(statement.toString());
             statement.executeUpdate();
+
+            // Checking for generated keys
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs.next()) {
+                idGenerated = rs.getString(1);
+            } else {
+                System.out.println("No rows in the result set");
+            }
+
             con.close();
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not get connections");
             System.exit(1);
         }
+
+        return idGenerated;
     }
 
     // Make a run function for running sql commands
