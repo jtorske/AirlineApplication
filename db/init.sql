@@ -1,3 +1,11 @@
+/* This is to grant permissions to user*/
+DROP user 'oop'@'%';
+
+CREATE USER 'oop'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'oop'@'%';
+
+FLUSH privileges;
+
 /* This is to initialize database */
 
 DROP DATABASE IF EXISTS AIRLINE;
