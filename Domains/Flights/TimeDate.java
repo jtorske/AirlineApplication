@@ -35,6 +35,13 @@ public class TimeDate {
         this.hour = now.getHour();
         this.minute = now.getMinute();
     }
+    public TimeDate(String dbDate) {
+        this.year = Integer.parseInt(dbDate.substring(0, 4));
+        this.month = Integer.parseInt(dbDate.substring(5, 7));
+        this.day = Integer.parseInt(dbDate.substring(8, 10));
+        this.hour = Integer.parseInt(dbDate.substring(11, 13));
+        this.minute = Integer.parseInt(dbDate.substring(14, 16));
+    }
 
     public TimeDate(Date departureDate) {
         this.year = departureDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().getYear();
