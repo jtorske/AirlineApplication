@@ -75,7 +75,7 @@ CREATE TABLE Name (
 -- User Table
 DROP TABLE IF EXISTS User;
 CREATE TABLE User (
-    UserID INT PRIMARY KEY,
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
     -- CreditID INT,
     NameID INT,
     Username VARCHAR(255),
