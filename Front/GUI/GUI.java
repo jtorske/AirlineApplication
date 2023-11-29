@@ -8,6 +8,7 @@ import Domains.Flights.Flights;
 import Domains.Flights.TimeDate;
 import Domains.Passenger.Passenger;
 import Domains.User.*;
+import Front.GUI.GUI.LoginCallback;
 import Domains.Flights.Location;
 
 
@@ -19,7 +20,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class GUI extends JFrame {
+
+public class GUI extends JFrame implements LoginCallback{
     //Component declarations
     private JTextArea originCountryTextArea, destinationCountryTextArea, originProvinceTextArea, destinationProvinceTextArea, originCityTextArea, destinationCityTextArea, FlightNumArea;
 
@@ -40,6 +42,11 @@ public class GUI extends JFrame {
     static private String username=null;
     static private String identity=null;
     static private User user=null;
+
+    @Override
+    public void onLoginSuccess() {
+        this.dispose(); 
+    }
     static public void setIdentity(String i){
         identity = i;
         GUI gui = new GUI();
@@ -62,6 +69,7 @@ public class GUI extends JFrame {
         setupFrame();
         createLoginButton();
         createSignUpButton();
+
     }
 
     // Sets up the main frame
@@ -81,10 +89,10 @@ public class GUI extends JFrame {
         loginButton.setFont(new Font("Arial", Font.PLAIN, 10)); 
         loginButton.addActionListener(e -> {
             Login loginWindow = new Login();
+            loginWindow.setLoginCallback(this); // Set the callback
             loginWindow.setVisible(true);
         });
     }
-
     // Sets up the flight attendent login button
     private void createFALoginButton() {
         crewMemberLoginButton = new JButton("Flight Attendant Login");
@@ -108,12 +116,13 @@ public class GUI extends JFrame {
     }
 
     // Sets up the logout button
-    private void createLogoutButton() {
+    private void createLogoutButton(GUI gui) {
         loginButton = new JButton("Logout");
         loginButton.setPreferredSize(new Dimension(80, 30)); 
         loginButton.setFont(new Font("Arial", Font.PLAIN, 10)); 
         loginButton.addActionListener(e -> {
             setUsername(null);
+            gui.dispose();
         });
     }
     // Sets up the cancel button
@@ -205,7 +214,7 @@ public class GUI extends JFrame {
         
             topPanel.add(leftPanel, BorderLayout.WEST);
         
-            createLogoutButton();
+            createLogoutButton(this);
             rightPanel.add(loginButton);  
         
             createCancelButton();
