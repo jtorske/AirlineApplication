@@ -1,7 +1,5 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "External Packages/javax.activation_1.1.0.v201211130549.jar",
-        "External Packages/javax.mail.jar"
+        "lib/**/*.jar"
     ]
 }

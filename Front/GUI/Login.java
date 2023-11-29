@@ -11,6 +11,16 @@ public class Login extends JFrame {
     protected JTextField usernameField;
     protected JPasswordField passwordField;
     protected JButton loginButton;
+    private LoginCallback callback;
+
+    public void setLoginCallback(LoginCallback callback) {
+        this.callback = callback;
+    }
+    private void successfulLogin() {
+        if(callback != null) {
+            callback.onLoginSuccess();
+        }
+    }
 
     public Login() {
         createView();
@@ -46,7 +56,7 @@ public class Login extends JFrame {
                     return;}
                 //change the username of main page
                 GUI.setUsername(username);
-
+                successfulLogin();
                 //close the login window
                 dispose();                    
                 
@@ -55,8 +65,6 @@ public class Login extends JFrame {
                 System.out.println("Username: " + username);
                 System.out.println("Password: " + password);
 
-                // Placeholder for actual login logic
-                JOptionPane.showMessageDialog(Login.this, "Login attempt...");
             }
         });
         panel.add(loginButton);

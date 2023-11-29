@@ -47,26 +47,27 @@ public class CrewMember {
     public void setPassword(String password){this.password = password;}
     public String toString(){return "Crew member\nName:"+name + "\n Role:"+role + "\n ID:"+id+"\n";}
     static public ArrayList<Passenger> BrowsePassengers(String flightNum){ 
+        int fn = Integer.valueOf(flightNum);
         //Query database to get relevant information
         List<List<String>> flightNames = Database.dbExecute(
         "select n.FirstName, n.MiddleName, n.LastName " 
         + "from ticket as t, passenger as p, name as n "
-        + "where t.FlightID = " + flightNum + " and t.PassengerID = p.PassengerID"
+        + "where t.FlightID = " + fn + " and t.PassengerID = p.PassengerID and p.NameID = n.NameID"
         );
         List<List<String>> flightAddresses = Database.dbExecute(
         "select a.StreetName, a.District, a.PostalCode " 
         + "from ticket as t, passenger as p, address as a "
-        + "where t.FlightID = " + flightNum + " and t.PassengerID = p.PassengerID"
+        + "where t.FlightID = " + fn + " and t.PassengerID = p.PassengerID and p.AddressID = a.AddressID"
         );
         List<List<String>> flightPassports = Database.dbExecute(
         "select b.IssueCountry, b.IssueDate, b.ExpiryDate " 
         + "from ticket as t, passenger as p, passport as b "
-        + "where t.FlightID = " + flightNum + " and t.PassengerID = p.PassengerID"
+        + "where t.FlightID = " + fn + " and t.PassengerID = p.PassengerID and p.PassportID = b.PassportID"
         );
         List<List<String>> flightPhones = Database.dbExecute(
         "select c.CountryCode, c.DistrictCode, c.Number "
         + "from ticket as t, passenger as p, phone as c "
-        + "where t.FlightID = " + flightNum + " and t.PassengerID = p.PassengerID"
+        + "where t.FlightID = " + fn + " and t.PassengerID = p.PassengerID and p.PhoneID = c.PhoneID"
         );
 
         ArrayList<Passenger> passengers = new ArrayList<Passenger>();
@@ -91,7 +92,7 @@ public class CrewMember {
 
             PhoneNumber pn = new PhoneNumber(Integer.valueOf(currPhone.get(0).substring(1)), 
             Integer.valueOf(currPhone.get(1)), 
-            Integer.valueOf(currPhone.get(2)));
+            Integer.valueOf(currPhone.get(2).replace("-", "")));
 
             Passenger p = new Passenger(n, pt, a, "me@email.com", pn);
             passengers.add(p);

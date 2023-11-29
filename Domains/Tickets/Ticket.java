@@ -94,6 +94,7 @@ public class Ticket {
         //Send the ticket via email
         String ticketInfo = Display();
         Email email = new Email("Airline Ticket", ticketInfo);
+        System.out.println("Sending email to " + this.passenger.getEmail());
         email.send(this.passenger.getEmail());
     }
 }
