@@ -6,7 +6,11 @@ import Database.Database.Database;
 public class Verify {
     static public boolean verifyUser(String username, String password){
         //connect to database to check if username and password are correct
-        if (true){
+        List<List<String>> result = Database.dbExecute("select * from user"
+        + "where username = " + username
+        + " AND password = " + password
+        );
+        if (result.size() > 0){
             return true;
         }
         else{

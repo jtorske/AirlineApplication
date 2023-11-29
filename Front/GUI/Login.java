@@ -35,7 +35,6 @@ public class Login extends JFrame {
         panel.add(new JLabel());
         loginButton = new JButton("Login");
 
-        //TODO: Actual Login Implementation
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

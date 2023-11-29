@@ -32,7 +32,7 @@ public class FlightAttendantLogin extends Login{
         panel.add(new JLabel());
         loginButton = new JButton("Login");
         System.out.println("Login button created");
-        //TODO: Actual Login Implementation
+
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -30,7 +30,7 @@ VALUES (1, 1, 1, 2, '2023-12-01 08:00:00', '2023-12-01 10:00:00'),
         (10, 2, 10, 9, '2023-12-10 07:30:00', '2023-12-10 09:30:00');
 
 -- Adding sample data to CrewMember Table
-INSERT INTO CrewMember (CrewMemberID, Name, Role)
+INSERT INTO CrewMember (CrewMemberID, Name, Role, Username, Password)
 VALUES (1, 'John Smith', 'Pilot', 'john.smith', 'pass123'),
         (2, 'Jane White', 'Flight Attendant', 'jane.white', 'secure123'),
         (3, 'Emily Davis', 'Flight Attendant', 'emily.davis', 'securepass'),
