@@ -39,15 +39,12 @@ public class FlightAttendantLogin extends Login{
                 String username = usernameField.getText();
                 String password = new String(passwordField.getPassword());
                 
-                if (!Verify.verifyUser(username, password)){
+                if (!Verify.verifyCrewMember(username, password)){
                     JOptionPane.showMessageDialog(FlightAttendantLogin.this, "Incorrect username or password", "Login Failed", JOptionPane.ERROR_MESSAGE);
                     return;}
                 //change the username of main page
                 GUI.setUsername(username);
                 GUI.setIdentity("FA");
-                
-                //go to database to get info to make a new crew member
-                
 
                 //close the login window
                 dispose();                    
