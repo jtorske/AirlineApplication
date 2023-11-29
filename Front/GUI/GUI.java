@@ -8,7 +8,7 @@ import Domains.Flights.Flights;
 import Domains.Flights.TimeDate;
 import Domains.Passenger.Passenger;
 import Domains.User.*;
-import Front.GUI.GUI.LoginCallback;
+import Front.GUI.LoginCallback;
 import Domains.Flights.Location;
 
 
@@ -443,8 +443,9 @@ public class GUI extends JFrame implements LoginCallback{
     private void searchPassenger() {
         // Collecting values inputted by user
         String flightNum = FlightNumArea.getText();
+        System.out.println(flightNum);
         //fix when go to database
-        ArrayList<Passenger> passengers = CrewMember.BrowsePassengers(flightNum);
+        ArrayList<Passenger> passengers = CrewMember.BrowsePassengers("1");
         JFrame frame = new JFrame("Passenger Search Results");
 
         JButton button = new JButton("Go Back");
