@@ -2,6 +2,7 @@ package Front.GUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.DefaultTableCellRenderer;
 
 import Domains.Flights.Flights;
 import Domains.Flights.TimeDate;
@@ -344,8 +345,10 @@ public class GUI extends JFrame {
         for (Flights flight : flights) {
             Object[] row = new Object[3];
             row[0] = flight.getFlightNum();
-            row[1] = flight.getDepartureDate().toString();
-            row[2] = flight.getArrivalDate().toString();
+            row[1] = flight.getDepartureLocation().toString();
+            row[2] = flight.getArrivalLocation().toString();
+            row[3] = flight.getDepartureDate().toString();
+            row[4] = flight.getArrivalDate().toString();
             model.addRow(row);
         }
         JFrame frame = new JFrame("Flight Search Results");
@@ -399,6 +402,11 @@ public class GUI extends JFrame {
 
         JTable table = new JTable(model);
 
+        // Center first column
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
 
