@@ -31,13 +31,7 @@ public class RegisteredUser extends User{
     }
 
     public String RegisterForCreditCard(){
-        String applicationResult = ApplyCreditCard.ApplyforCreditCard(name, address, email);
-        if(applicationResult == "Card will be sent to your address"){
-            this.Card = new CreditCard(this);
-        }
-        else{
-            this.Card = null;
-        }
+        String applicationResult = ApplyCreditCard.ApplyforCreditCard(this.ID, this);
         return applicationResult;
     }
 

@@ -10,12 +10,21 @@ Logan Nightingale
 
 package Front.Forms;
 
-import Domains.Passenger.*;
+import java.util.List;
+
+import Database.Database.Database;
+import Domains.User.CreditCard;
+import Domains.User.RegisteredUser;
 
 public class ApplyCreditCard implements Forms{
-    public static String ApplyforCreditCard(Name name, Address address, String email){
+    static int cardID = 1;
+
+    public static String ApplyforCreditCard(String userID, RegisteredUser user){
         try{
-            //call the database to add the user
+            CreditCard card = new CreditCard(user);
+            List<String> cardValues = List.of(String.valueOf(cardID), userID, card.getCardNum(), card.getCvvNum(), card.getExpDate());
+            Database.dbInsert("CreditCard", cardValues);
+            cardID++;
         }
         catch (Exception e){
             return "Fail to apply for credit card";
