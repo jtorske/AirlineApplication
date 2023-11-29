@@ -26,7 +26,6 @@ public class Ticket {
     private double price;
     private Receipt ticketReceipt;
     //private final Receipt ticketReceipt;
-
     public Ticket(Flights flight, Seat seat, Passenger owner, String cardNumber){
         this.flight = flight;
         this.seat = seat;
@@ -52,7 +51,7 @@ public class Ticket {
         this.policy = policy;
         this.price = seat.GetPrice();
         this.ID=TicNum++;
-        this.ticketReceipt = new Receipt(TicNum, owner.getName().toString(), cardNumber, this);
+        this.ticketReceipt = new Receipt(TicNum+Integer.parseInt(cardNumber.substring(0,4)), owner.getName().toString(), cardNumber, this);
     }
 
     public int getID(){return this.ID;}
