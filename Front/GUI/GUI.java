@@ -335,7 +335,7 @@ public class GUI extends JFrame {
 
         //display the flights in same window as table
         // Create column names
-        String[] columnNames = {"Flight Number", "Departure Time", "Arrival Time"};
+        String[] columnNames = {"Flight Number", "Origin", "Destination", "Departure Time", "Arrival Time"};
 
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
