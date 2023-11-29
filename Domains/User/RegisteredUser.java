@@ -40,4 +40,6 @@ public class RegisteredUser extends User{
     public String getPassword() {return this.Password;}
     public String getName() {return this.name.toString();}
     public String getCard() {return this.Card != null ? this.Card.Display() : "No credit card registered";}
+    public Address getAddress() {return this.address;}
+    public String getEmail() {return this.email;}
 }
