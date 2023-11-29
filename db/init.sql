@@ -160,3 +160,8 @@ CREATE TABLE SeatType (
     SeatTypeID INT PRIMARY KEY,
     Price DECIMAL(10, 2)
 );
+-- Adding initializing data to Name and User Table
+INSERT INTO Name (NameID, FirstName, LastName, MiddleName)
+VALUES (1, '-----------', '-----------', '-----------');
+INSERT INTO User (UserID, NameID, Username, Password)
+VALUES (1, 1, '-----------', '-----------');
