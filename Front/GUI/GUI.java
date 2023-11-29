@@ -7,6 +7,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import Domains.Flights.Flights;
 import Domains.Flights.TimeDate;
 import Domains.Passenger.Passenger;
+import Domains.Seats.Seat;
+import Domains.Tickets.Insurance;
+import Domains.Tickets.Ticket;
 import Domains.User.*;
 import Domains.Flights.Location;
 
@@ -365,35 +368,42 @@ public class GUI extends JFrame {
                 String flightNum = input.getText();
                 //get the flight object from the flight number
                 Flights flight=null;
+                System.out.println(flightNum);
                 for (int i = 0; i < flights.size(); i++){
                     if (flights.get(i).getFlightNum().equals(flightNum)){
                         flight = flights.get(i);
                         break;
                     }
                 }
-                if (flight == null){
-                    //display error message
-                    return;
-                }
+                if (flight == null){return;}//display error message
                 //fix when go to database
                 User.SelectFlight(flight);
                 //get the seat map from the flight
                 String seatMap = User.BrowseSeat(flight);
-
+                System.out.println(seatMap);
                 //clear the frame
                 frame.getContentPane().removeAll();
                 //add in input box for seat selection
-                
+                System.out.println(flights.size());
+
                 JTextField inputSeat = new JTextField(20);
                 JPanel panel = new JPanel();
                 panel.add(inputSeat);
                 input.setBounds(0, 0, 100, 50);
                 frame.add(panel, BorderLayout.NORTH);
-
+                JButton button = new JButton("Select");
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        SelectSeat(inputSeat.getText());
+                    }
+                });
+                panel.add(button);
                 //add in the seat map
                 JTextArea seatMapArea = new JTextArea(seatMap);
                 seatMapArea.setEditable(false);
                 frame.add(seatMapArea, BorderLayout.CENTER);
+                frame.revalidate();
 
             }
         });
@@ -430,6 +440,231 @@ public class GUI extends JFrame {
         // Placeholder for actual flight search functionality
         JOptionPane.showMessageDialog(this, "Searching flights...");
     }
+
+    private void SelectSeat(String seatNum) {
+        //get the seat object from the seat number
+        if (User.SelectSeat(seatNum)!=0){return;}//display error message};
+        //create a new window for asking passenger information
+        JFrame frame = new JFrame("Passenger Information");
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        frame.add(panel, BorderLayout.CENTER);
+        //create a text field for each information, need to add in the passenger class
+        //Name panel in horizontal box layout
+        JPanel namePanel = new JPanel();
+        namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
+        JTextField firstNameField = new JTextField(20);
+        JTextField middleNameField = new JTextField(20);
+        JTextField lastNameField = new JTextField(20);
+        namePanel.add(new JLabel("First Name:"));
+        namePanel.add(firstNameField);
+        namePanel.add(new JLabel("Middle Name:"));
+        namePanel.add(middleNameField);
+        namePanel.add(new JLabel("Last Name:"));
+        namePanel.add(lastNameField);
+        panel.add(namePanel);
+        //Passport panel in horizontal box layout
+        JPanel passportPanel = new JPanel();
+        passportPanel.setLayout(new BoxLayout(passportPanel, BoxLayout.X_AXIS));
+        JTextField passportNumberField = new JTextField(20);
+        JTextField countryField = new JTextField(20);
+        //int year, int month, int day
+        JTextField expiryYearField = new JTextField(4);
+        JTextField expiryMonthField = new JTextField(2);
+        JTextField expiryDayField = new JTextField(2);
+        JTextField issueYearField = new JTextField(4);
+        JTextField issueMonthField = new JTextField(2);
+        JTextField issueDayField = new JTextField(2);
+        passportPanel.add(new JLabel("Passport Number:"));
+        passportPanel.add(passportNumberField);
+        passportPanel.add(new JLabel("Country:"));
+        passportPanel.add(countryField);
+        passportPanel.add(new JLabel("Expiry Date:"));
+        passportPanel.add(expiryYearField);
+        passportPanel.add(expiryMonthField);
+        passportPanel.add(expiryDayField);
+        passportPanel.add(new JLabel("Issue Date:"));
+        passportPanel.add(issueYearField);
+        passportPanel.add(issueMonthField);
+        passportPanel.add(issueDayField);
+        panel.add(passportPanel);
+        //Address panel in horizontal box layout
+        JPanel addressPanel = new JPanel();
+        addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.X_AXIS));
+        JTextField streetNumberField = new JTextField(20);
+        JTextField streetNameField = new JTextField(20);
+        JTextField cityField = new JTextField(20);
+        JTextField provinceField = new JTextField(20);
+        JTextField countryAddressField = new JTextField(20);
+        JTextField postalCodeField = new JTextField(20);
+        addressPanel.add(new JLabel("Street Number:"));
+        addressPanel.add(streetNumberField);
+        addressPanel.add(new JLabel("Street Name:"));
+        addressPanel.add(streetNameField);
+        addressPanel.add(new JLabel("City:"));
+        addressPanel.add(cityField);
+        addressPanel.add(new JLabel("Province:"));
+        addressPanel.add(provinceField);
+        addressPanel.add(new JLabel("Country:"));
+        addressPanel.add(countryAddressField);
+        addressPanel.add(new JLabel("Postal Code:"));
+        addressPanel.add(postalCodeField);
+        panel.add(addressPanel);
+        //Contact panel in horizontal box layout
+        JPanel contactPanel = new JPanel();
+        contactPanel.setLayout(new BoxLayout(contactPanel, BoxLayout.X_AXIS));
+        JTextField emailField = new JTextField(20);
+        JTextField countryCodeField = new JTextField(20);
+        JTextField areaCodeField = new JTextField(20);
+        JTextField phoneNumberField = new JTextField(20);
+        contactPanel.add(new JLabel("Email:"));
+        contactPanel.add(emailField);
+        contactPanel.add(new JLabel("Country Code:"));
+        contactPanel.add(countryCodeField);
+        contactPanel.add(new JLabel("Area Code:"));
+        contactPanel.add(areaCodeField);
+        contactPanel.add(new JLabel("Phone Number:"));
+        contactPanel.add(phoneNumberField);
+        panel.add(contactPanel);
+        //Insurance panel in horizontal box layout
+        //ony 3 types, 1. basic 2. premium 3. premium plus
+        JPanel insurancePanel = new JPanel();
+        insurancePanel.setLayout(new BoxLayout(insurancePanel, BoxLayout.X_AXIS));
+        JTextField insuranceTypeField = new JTextField(20);
+        insurancePanel.add(new JLabel("Insurance Type:\n 1. Basic\n 2. Premium\n 3. Premium Plus"));
+        insurancePanel.add(insuranceTypeField);
+        panel.add(insurancePanel);
+
+        //create a button for submit
+        JButton button = new JButton("Submit");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //get the value from the input box when user press enter
+                String firstName = firstNameField.getText();
+                String middleName = middleNameField.getText();
+                String lastName = lastNameField.getText();
+                String passportNumber = passportNumberField.getText();
+                String country = countryField.getText();
+                int expiryYear = Integer.parseInt(expiryYearField.getText());
+                int expiryMonth = Integer.parseInt(expiryMonthField.getText());
+                int expiryDay = Integer.parseInt(expiryDayField.getText());
+                int issueYear = Integer.parseInt(issueYearField.getText());
+                int issueMonth = Integer.parseInt(issueMonthField.getText());
+                int issueDay = Integer.parseInt(issueDayField.getText());
+                String streetNumber = streetNumberField.getText();
+                String streetName = streetNameField.getText();
+                String city = cityField.getText();
+                String province = provinceField.getText();
+                String countryAddress = countryAddressField.getText();
+                String postalCode = postalCodeField.getText();
+                String email = emailField.getText();
+                int countryCode = Integer.parseInt(countryCodeField.getText());
+                int areaCode = Integer.parseInt(areaCodeField.getText());
+                int phoneNumber = Integer.parseInt(phoneNumberField.getText());
+                String insuranceType = insuranceTypeField.getText();
+                //clean the window and display the ticket
+                
+                JFrame frame = new JFrame("Ticket Preview");
+                //remover the submit button
+                frame.getContentPane().removeAll();
+                JPanel panel = new JPanel();
+                panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                frame.add(panel, BorderLayout.CENTER);
+                //create a text field for each information, need to add in the passenger class
+                //Name panel in horizontal box layout
+                JPanel namePanel = new JPanel();
+                namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
+                namePanel.add(new JLabel("Name:"));
+                namePanel.add(new JLabel(firstName + " " + middleName + " " + lastName));
+                panel.add(namePanel);
+                //Passport panel in horizontal box layout
+                JPanel passportPanel = new JPanel();
+                passportPanel.setLayout(new BoxLayout(passportPanel, BoxLayout.X_AXIS));
+                passportPanel.add(new JLabel("Passport Number:"));
+                passportPanel.add(new JLabel(passportNumber));
+                panel.add(passportPanel);
+                //flight info, seat panel in vertical box layout
+                JPanel flightPanel = new JPanel();
+                flightPanel.setLayout(new BoxLayout(flightPanel, BoxLayout.Y_AXIS));
+                flightPanel.add(new JLabel("Flight Number:"));
+                flightPanel.add(new JLabel(User.GetFlight().getFlightNum()));
+                flightPanel.add(new JLabel("Departure Time:"));
+                flightPanel.add(new JLabel(User.GetFlight().getDepartureDate().toString()));
+                flightPanel.add(new JLabel("Arrival Time:"));
+                flightPanel.add(new JLabel(User.GetFlight().getArrivalDate().toString()));
+                flightPanel.add(new JLabel("Origin:"));
+                flightPanel.add(new JLabel(User.GetFlight().getDepartureLocation().toString()));
+                flightPanel.add(new JLabel("Destination:"));
+                flightPanel.add(new JLabel(User.GetFlight().getArrivalLocation().toString()));
+                flightPanel.add(new JLabel("Seat Number:"));
+                flightPanel.add(new JLabel(User.GetSeat().Display()));
+                flightPanel.add(new JLabel("Price:"));
+                flightPanel.add(new JLabel(Double.toString(User.GetSeat().GetPrice())));
+                flightPanel.add(new JLabel("Insurance Type:"));
+                flightPanel.add(new JLabel(insuranceType));
+                panel.add(flightPanel);
+                //contect panel in horizontal box layout
+                JPanel contactPanel = new JPanel();
+                contactPanel.setLayout(new BoxLayout(contactPanel, BoxLayout.Y_AXIS));
+                contactPanel.add(new JLabel("Email:"));
+                contactPanel.add(new JLabel(email));
+                contactPanel.add(new JLabel("Phone Number:"));
+                contactPanel.add(new JLabel(Integer.toString(countryCode) + Integer.toString(areaCode) + Integer.toString(phoneNumber)));
+                contactPanel.add(button);
+                panel.add(contactPanel);
+
+                //Ask for Credit card info
+                JPanel creditCardPanel = new JPanel();
+                creditCardPanel.setLayout(new BoxLayout(creditCardPanel, BoxLayout.X_AXIS));
+                JTextField cardNumberField = new JTextField(20);
+                creditCardPanel.add(new JLabel("Credit Card Number:"));
+                creditCardPanel.add(cardNumberField);
+                panel.add(creditCardPanel);
+                JPanel expiryPanel = new JPanel();
+                expiryPanel.setLayout(new BoxLayout(expiryPanel, BoxLayout.X_AXIS));
+                JTextField expiryYearField = new JTextField(4);
+                JTextField expiryMonthField = new JTextField(2);
+                JTextField cvvField = new JTextField(3);
+                expiryPanel.add(new JLabel("Expiry Date:"));
+                expiryPanel.add(expiryYearField);
+                expiryPanel.add(expiryMonthField);
+                expiryPanel.add(new JLabel("CVV:"));
+                expiryPanel.add(cvvField);
+                panel.add(expiryPanel);
+
+                //create a button for confirm
+                JButton button = new JButton("Confirm");
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        Passenger p=new Passenger(firstName, middleName, lastName, passportNumber, country, expiryYear, expiryMonth, expiryDay, issueYear, issueMonth, issueDay, streetNumber, streetName, city, province, countryAddress, postalCode, email, countryCode, areaCode, phoneNumber);
+                        Insurance i=new Insurance(insuranceType);
+
+                        BuyTicket(p,i,cardNumberField.getText());
+                    }
+                });
+                panel.add(button);
+                //display the ticket
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.pack();
+                frame.repaint();
+                frame.setVisible(true);
+            }
+        });
+        panel.add(button);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+    private void BuyTicket(Passenger p, Insurance i, String cardString){
+        try{
+            User.BuyTicket(p,cardString,i);
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    };
 
     private void searchPassenger() {
         // Collecting values inputted by user

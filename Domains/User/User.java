@@ -65,7 +65,12 @@ public class User {
     static public void SelectFlight(Flights f) {
         flight = f;
     }
-
+    static public Flights GetFlight() {
+        return flight;
+    }
+    static public Seat GetSeat() {
+        return seat;
+    }
     static public String BrowseSeat(Flights flight) {
         return flight.getSeatMapString();
     }
@@ -109,28 +114,19 @@ public class User {
         return 0;
     }
 
-    static public void BuyTicket(String firstName, String middleName, String lastName, String passportNumber,
-            String country, int expiryYear, int expiryMonth, int expiryDay,
-            int issueYear, int issueMonth, int issueDay, String streetNumber, String streetName,
-            String city, String province, String countryAddress, String postalCode, String email,
-            int countryCode, int areaCode, int phoneNumber, String cardNumber, Insurance policy)
+    static public void BuyTicket(Passenger p, String cardNumber, Insurance policy)
             throws MessagingException {
 
         double price = seat.GetPrice();
         if (GUI.getUsername() != null) {
             price = price * 0.9; // discount for members
         }
-        // connect to the billingport to pay
-
-        Passenger p = new Passenger(firstName, middleName, lastName, passportNumber,
-                country, expiryYear, expiryMonth, expiryDay, issueYear, issueMonth, issueDay,
-                streetNumber, streetName, city, province, countryAddress, postalCode, email,
-                countryCode, areaCode, phoneNumber);
 
         Ticket t = new Ticket(flight, seat, p, policy, cardNumber);
         // connect to the database to store the ticket
 
         t.getReceipt().Email();
+        t.Email();
         seat.booked();
         String mapString = flight.getSeatMapString();
         // find the location of seat.Display() in the string seatMap and changed the "O"
