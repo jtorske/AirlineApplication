@@ -7,7 +7,7 @@ Logan Nightingale
 @version: 1.0
 @since: 2023-11-23
  */
-package Domains.Forms;
+package Front.Forms;
 
 public interface Forms {
     

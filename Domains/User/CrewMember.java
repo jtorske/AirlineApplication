@@ -13,7 +13,7 @@ package Domains.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import Domains.Database.Database;
+import Database.Database.Database;
 import Domains.Passenger.*;
 
 

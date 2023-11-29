@@ -9,7 +9,7 @@ Logan Nightingale
  */
 
 package Domains.User;
-import Domains.Forms.*;
+import Front.Forms.*;
 import Domains.Passenger.*;
 
 public class RegisteredUser extends User{

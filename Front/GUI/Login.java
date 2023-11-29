@@ -1,11 +1,11 @@
-package Domains.GUI;
+package Front.GUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import Domains.Login.Verify;
+import Database.Login.Verify;
 
 public class Login extends JFrame {
     protected JTextField usernameField;

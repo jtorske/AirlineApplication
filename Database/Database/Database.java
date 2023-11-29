@@ -1,4 +1,4 @@
-package Domains.Database;
+package Database.Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

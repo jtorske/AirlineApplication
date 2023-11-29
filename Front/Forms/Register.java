@@ -8,10 +8,10 @@ Logan Nightingale
 @since: 2023-11-23
  */
 
-package Domains.Forms;
+package Front.Forms;
 import java.util.List;
 
-import Domains.Database.Database;
+import Database.Database.*;
 import Domains.Passenger.*;
 
 public class Register implements Forms{

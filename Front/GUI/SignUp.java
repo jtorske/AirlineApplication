@@ -1,4 +1,4 @@
-package Domains.GUI;
+package Front.GUI;
 
 import javax.swing.*;
 import java.awt.*;

@@ -8,7 +8,7 @@ Logan Nightingale
 @since: 2023-11-23
  */
 
-package Domains.Forms;
+package Front.Forms;
 
 import Domains.Passenger.*;
 

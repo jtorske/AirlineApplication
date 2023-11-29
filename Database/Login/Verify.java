@@ -1,4 +1,4 @@
-package Domains.Login;
+package Database.Login;
 
 public class Verify {
     static public boolean verifyUser(String username, String password){

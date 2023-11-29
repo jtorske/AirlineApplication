@@ -10,7 +10,7 @@ Logan Nightingale
 
 package Domains.User;
 import Domains.Flights.*;
-import Domains.GUI.GUI;
+import Front.GUI.GUI;
 import Domains.Seats.*;
 import java.util.ArrayList;
 
