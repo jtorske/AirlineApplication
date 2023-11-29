@@ -13,6 +13,9 @@ import Domains.Flights.*;
 import Domains.GUI.GUI;
 import Domains.Seats.*;
 import java.util.ArrayList;
+
+import javax.mail.MessagingException;
+
 import Domains.Tickets.*;
 import Domains.Passenger.*;
 
@@ -70,8 +73,9 @@ public class User {
     static public void BuyTicket(String firstName, String middleName, String lastName, String passportNumber, 
         String country, int expiryYear, int expiryMonth, int expiryDay, 
         int issueYear, int issueMonth, int issueDay, String streetNumber, String streetName, 
-        String city, String province, String countryAddress, String postalCode, String email, 
-        int countryCode, int areaCode, int phoneNumber, String cardNumber, Insurance policy){
+
+        int countryCode, int areaCode, int phoneNumber, String cardNumber, Insurance policy) throws MessagingException{
+      
             double price = seat.GetPrice();
             if (GUI.getUsername()!=null){
                 price = price * 0.9;    // discount for members
@@ -129,5 +133,9 @@ public class User {
         //connect to the database to update the seat map of plane
         //connect to the database to delete the ticket
 
+    }
+
+    static public ArrayList<Passenger> BrowsePassengers(String flightNum){ 
+        return null;
     }
 }
