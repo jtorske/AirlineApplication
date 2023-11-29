@@ -50,6 +50,7 @@ public class Ticket {
         this.seat = seat;
         this.passenger = owner;
         this.policy = policy;
+        this.price = seat.GetPrice();
         this.ID=TicNum++;
         this.ticketReceipt = new Receipt(TicNum, owner.getName().toString(), cardNumber, this);
     }

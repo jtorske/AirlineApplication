@@ -384,7 +384,27 @@ public class GUI extends JFrame implements LoginCallback{
                         break;
                     }
                 }
-                if (flight == null){return;}//display error message
+                if (flight == null){
+                    System.out.println("Flight Not Found");
+                    //pop up a window to display error message
+                    //create a new window to show error message
+                    JFrame frame = new JFrame("Error");
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                    frame.add(panel, BorderLayout.CENTER);
+                    panel.add(new JLabel("Error: Flight Not Found"));
+                    JButton button = new JButton("Go Back");
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            frame.dispose();
+                        }
+                    });
+                    panel.add(button);
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.pack();
+                    frame.setVisible(true);
+                    return;}//display error message
                 //fix when go to database
                 User.SelectFlight(flight);
                 //get the seat map from the flight
@@ -452,7 +472,30 @@ public class GUI extends JFrame implements LoginCallback{
 
     private void SelectSeat(String seatNum) {
         //get the seat object from the seat number
-        if (User.SelectSeat(seatNum)!=0){return;}//display error message};
+        if (User.SelectSeat(seatNum)!=0){
+            System.out.println("Seat Not Available");
+            //pop up a window to display error message
+            //create a new window to show error message
+            JFrame frame = new JFrame("Error");
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            frame.add(panel, BorderLayout.CENTER);
+            panel.add(new JLabel("Error: Seat Not Available"));
+            JButton button = new JButton("Go Back");
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    frame.dispose();
+                }
+            });
+            panel.add(button);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setVisible(true);
+            return;
+        }//display error message};
+        System.out.println(User.GetSeat().Display());
+
         //create a new window for asking passenger information
         JFrame frame = new JFrame("Passenger Information");
         JPanel panel = new JPanel();
@@ -555,12 +598,27 @@ public class GUI extends JFrame implements LoginCallback{
                 String lastName = lastNameField.getText();
                 String passportNumber = passportNumberField.getText();
                 String country = countryField.getText();
-                int expiryYear = Integer.parseInt(expiryYearField.getText());
+                int expireYear = Integer.parseInt(expiryYearField.getText());
                 int expiryMonth = Integer.parseInt(expiryMonthField.getText());
                 int expiryDay = Integer.parseInt(expiryDayField.getText());
                 int issueYear = Integer.parseInt(issueYearField.getText());
                 int issueMonth = Integer.parseInt(issueMonthField.getText());
                 int issueDay = Integer.parseInt(issueDayField.getText());
+
+                Calendar expiryCalendar = Calendar.getInstance();
+                expiryCalendar.set(expireYear, expiryMonth - 1, expiryDay);
+                Date expiryDate = expiryCalendar.getTime();
+
+                Calendar issueCalendar = Calendar.getInstance();
+                issueCalendar.set(issueYear, issueMonth - 1, issueDay);
+                Date issueDate = issueCalendar.getTime();
+
+                Date today = new Date();
+                if (expiryDate.before(today) || issueDate.after(today) || expiryDate.before(issueDate)) {
+                    System.out.println("Passport Date Invalid");
+                    return;
+                }
+
                 String streetNumber = streetNumberField.getText();
                 String streetName = streetNameField.getText();
                 String city = cityField.getText();
@@ -568,6 +626,11 @@ public class GUI extends JFrame implements LoginCallback{
                 String countryAddress = countryAddressField.getText();
                 String postalCode = postalCodeField.getText();
                 String email = emailField.getText();
+                //check if the email is valid
+                if (!email.contains("@")){
+                    System.out.println("Invalid Email");
+                    return;
+                }
                 int countryCode = Integer.parseInt(countryCodeField.getText());
                 int areaCode = Integer.parseInt(areaCodeField.getText());
                 int phoneNumber = Integer.parseInt(phoneNumberField.getText());
@@ -647,7 +710,10 @@ public class GUI extends JFrame implements LoginCallback{
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        Passenger p=new Passenger(firstName, middleName, lastName, passportNumber, country, expiryYear, expiryMonth, expiryDay, issueYear, issueMonth, issueDay, streetNumber, streetName, city, province, countryAddress, postalCode, email, countryCode, areaCode, phoneNumber);
+                        Passenger p=new Passenger(firstName, middleName, lastName, 
+                            passportNumber, country, expireYear, expiryMonth, expiryDay, issueYear, issueMonth, issueDay, 
+                            streetNumber, streetName, city, province, countryAddress, postalCode, 
+                            email, countryCode, areaCode, phoneNumber);
                         Insurance i=new Insurance(insuranceType);
 
                         BuyTicket(p,i,cardNumberField.getText());
@@ -668,11 +734,52 @@ public class GUI extends JFrame implements LoginCallback{
     }
     private void BuyTicket(Passenger p, Insurance i, String cardString){
         try{
+            System.out.println(User.GetSeat().GetPrice());
             User.BuyTicket(p,cardString,i);
         }
         catch(Exception e){
             System.out.println(e);
+            //display error message
+            //create a new window to show error message
+            JFrame frame = new JFrame("Error");
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            frame.add(panel, BorderLayout.CENTER);
+            panel.add(new JLabel("Error: " + e));
+            JButton button = new JButton("Go Back");
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //close only the current window
+                    frame.dispose();
+                }
+            });
+            panel.add(button);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.pack();
+            frame.setVisible(true);
+            return;
         }
+        //display "email sent"
+        //create a new window 
+        JFrame frame = new JFrame("Email Sent");
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        frame.add(panel, BorderLayout.CENTER);
+        panel.add(new JLabel("Email Sent"));
+        JButton button = new JButton("Go Back");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close only the current window
+                frame.dispose();
+            }
+        });
+        panel.add(button);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+
     };
 
     private void searchPassenger() {
