@@ -343,7 +343,7 @@ public class GUI extends JFrame {
 
         // Add a row for each flight
         for (Flights flight : flights) {
-            Object[] row = new Object[3];
+            Object[] row = new Object[columnNames.length];
             row[0] = flight.getFlightNum();
             row[1] = flight.getDepartureLocation().toString();
             row[2] = flight.getArrivalLocation().toString();
@@ -406,7 +406,7 @@ public class GUI extends JFrame {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        
+
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(table);
 
