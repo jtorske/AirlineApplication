@@ -77,14 +77,17 @@ public class User {
 
     static public int SelectSeat(String s) {
         String map = flight.getSeatMapString();
+        System.out.println(map);
         String[] seatRow = map.split("\n");
+        System.out.println(seatRow[0]);
         int SeatNum = 0;
         int SeatRow = 0;
         char SeatColumn = 0;
         boolean isBooked = false;
         boolean found = false;
+        System.out.println(s);
         for (int i = 0; i < seatRow.length; i++) {
-            String[] seatCol = seatRow[i].split("|");
+            String[] seatCol = seatRow[i].split("\\|");
             for (int j = 0; j < seatCol.length; j++) {
                 SeatNum++;
                 if (seatCol[j].contains(s)) {
@@ -98,7 +101,7 @@ public class User {
             if (found)
                 break;
         }
-        if (isBooked)
+        if (isBooked || found == false)
             return -1;
         if (flight.getAircraft().getType() == 1) {
             seat = new OrdinarySeat(SeatNum, SeatRow, SeatColumn, isBooked);
