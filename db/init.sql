@@ -62,14 +62,16 @@ CREATE TABLE CrewSchedule (
     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID),
     FOREIGN KEY (CrewMemberID) REFERENCES CrewMember(CrewMemberID)
 );
--- CreditCard Table
--- DROP TABLE IF EXISTS CreditCard;
--- CREATE TABLE CreditCard (
---     CreditCardID INT PRIMARY KEY,
---     CardNumber VARCHAR(255),
---     CvvNumber INT,
---     ExpiryDate DATE
--- );
+CreditCard Table
+DROP TABLE IF EXISTS CreditCard;
+CREATE TABLE CreditCard (
+    CreditCardID INT PRIMARY KEY,
+    UserID INT,
+    CardNumber VARCHAR(255),
+    CvvNumber INT,
+    ExpiryDate DATE,
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
 -- Name Table
 DROP TABLE IF EXISTS Name;
 CREATE TABLE Name (
