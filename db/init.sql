@@ -67,7 +67,7 @@ CREATE TABLE CrewSchedule (
 -- Name Table
 DROP TABLE IF EXISTS Name;
 CREATE TABLE Name (
-    NameID INT PRIMARY KEY,
+    NameID INT AUTO_INCREMENT PRIMARY KEY,
     FirstName VARCHAR(255),
     LastName VARCHAR(255),
     MiddleName VARCHAR(255)
@@ -75,11 +75,12 @@ CREATE TABLE Name (
 -- User Table
 DROP TABLE IF EXISTS User;
 CREATE TABLE User (
-    UserID INT PRIMARY KEY,
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
     -- CreditID INT,
     NameID INT,
     Username VARCHAR(255),
     Password VARCHAR(255),
+    Email VARCHAR(255),
     FOREIGN KEY (NameID) REFERENCES Name(NameID)
 );
 -- CreditCard Table
