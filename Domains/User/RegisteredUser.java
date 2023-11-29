@@ -22,13 +22,12 @@ public class RegisteredUser extends User{
     private String email;
 
     public RegisteredUser(String id, String user, String pass, Name name, Address addr, String email){
-        this.ID = id;
         this.Username = user;
         this.Password = pass;
         this.name = name;
         this.address = addr;
         this.email = email;
-        //TODO: Send the registered user's info to the database
+        this.ID = Register.RegisterMembership(name, addr, email, pass);
     }
 
     public String RegisterForCreditCard(){

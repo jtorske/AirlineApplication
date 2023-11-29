@@ -47,7 +47,6 @@ public class CrewMember {
     public void setPassword(String password){this.password = password;}
     public String toString(){return "Crew member\nName:"+name + "\n Role:"+role + "\n ID:"+id+"\n";}
     static public ArrayList<Passenger> BrowsePassengers(String flightNum){ 
-        //TODO: Connect to the dabaase and return the list of passengers
         //Query database to get relevant information
         List<List<String>> flightNames = Database.dbExecute(
         "select n.FirstName, n.MiddleName, n.LastName " 
@@ -79,7 +78,7 @@ public class CrewMember {
             List<String> currPassp = flightPassports.get(i);
             List<String> currPhone = flightPhones.get(i);
 
-            Name n = new Name(currName.get(0), currName.get(1), currName.get(2));
+            Name n = new Name(currName.get(0), currName.get(2), currName.get(1));
 
             Address a = new Address(currAddr.get(0), currAddr.get(1), currAddr.get(2));
 
