@@ -32,11 +32,10 @@ public class Database {
         }
     }
 
-    public Connection getConnection() throws SQLException{
-        if (connectionAvailable()){
+    public Connection getConnection() throws SQLException {
+        if (connectionAvailable()) {
             return dbConnection;
-        }
-        else {
+        } else {
             throw new SQLException();
         }
 
@@ -47,11 +46,11 @@ public class Database {
         Connection con;
         List<List<String>> rows = new ArrayList<>();
 
-        try{
+        try {
             con = db.getConnection();
             Statement statement = con.createStatement();
             ResultSet queryResult = statement.executeQuery(command);
-            
+
             // Get column names
             int columnCount = queryResult.getMetaData().getColumnCount();
             List<String> columnNames = new ArrayList<>();
@@ -75,25 +74,57 @@ public class Database {
                 // Add the row to the list of rows
                 rows.add(rowValues);
             }
-            
+            con.close();
             // System.out.print(rows);
 
-
-        } catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not get connections");
             System.exit(1);
         }
 
         return rows;
-    }  
+    }
+
+    /*
+     * This function is for inserting into the database
+     * 
+     * @param tableName is the name of the table
+     * 
+     * @param values is a list of values to be inserted
+     */
+    public static void dbInsert(String tableName, List<String> values) {
+        Database db = new Database();
+        Connection con;
+
+        try {
+            con = db.getConnection();
+            String command = "INSERT INTO " + tableName + " VALUES (";
+            for (int i = 0; i < values.size(); i++) {
+                command += "?,";
+            }
+            command = command.substring(0, command.length() - 1);
+            command += ");";
+
+            PreparedStatement statement = con.prepareStatement(command);
+            for (int i = 0; i < values.size(); i++) {
+                statement.setString(i + 1, values.get(i));
+            }
+            statement.executeUpdate();
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not get connections");
+            System.exit(1);
+        }
+    }
 
     // Make a run function for running sql commands
     /*
      * This is for testing purposes
      */
     public static void main(String[] args) {
-        
+
         // This is an example
         List<List<String>> result = dbExecute("select username from admin");
         System.out.print(result);
