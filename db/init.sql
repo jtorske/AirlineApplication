@@ -108,8 +108,10 @@ CREATE TABLE Passenger (
     PhoneID INT,
     AddressID INT,
     PassportID INT,
+    UserID INT,
     Email VARCHAR(255),
-    FOREIGN KEY (NameID) REFERENCES Name(NameID)
+    FOREIGN KEY (NameID) REFERENCES Name(NameID),
+    FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
 -- Phone Table
 DROP TABLE IF EXISTS Phone;

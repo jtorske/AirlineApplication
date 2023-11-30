@@ -51,16 +51,14 @@ VALUES   (1, 1), (1, 2),  -- Flight 1
 
 -- Adding sample data to Name Table
 INSERT INTO Name (NameID, FirstName, LastName, MiddleName)
-VALUES (1, 'James', 'White', 'A'),
-        (2, 'Jane', 'Smith', 'B'),
+VALUES (2, 'Jane', 'Smith', 'B'),
         (3, 'Emma', 'Jones', 'C'),
         (4, 'Sam', 'Roberts', 'D'),
         (5, 'Lily', 'Williams', 'E');
 
 -- Adding sample data to User Table
 INSERT INTO User (UserID, NameID, Username, Password)
-VALUES (1, 1, 'james_white', 'password123'),
-        (2, 2, 'jane_smith', 'securepass'),
+VALUES  (2, 2, 'jane_smith', 'securepass'),
         (3, 3, 'emma_jones', 'pass123'),
         (4, 4, 'sam_roberts', 'strongpass'),
         (5, 5, 'lily_williams', 'secure123');
@@ -77,8 +75,6 @@ VALUES (1, 1, '1234-5678-9101-1121', 123, '2025-12-31'),
 INSERT INTO Admin (AdminID, Username, Password)
 VALUES (1, 'admin1', 'adminpass'),
        (2, 'admin2', 'adminpass2');
-
-
 
 -- Adding sample data to Phone Table
 INSERT INTO Phone (PhoneID, CountryCode, DistrictCode, Number)
@@ -105,12 +101,12 @@ VALUES (1, 'USA', '2020-01-01', '2030-01-01'),
         (5, 'USA', '2023-06-15', '2033-06-15');
 
 -- Adding sample data to Passenger Table
-INSERT INTO Passenger (PassengerID, NameID, PhoneID, AddressID, PassportID, Email)
-VALUES (1, 1, 1, 1, 1, 'james.white@email.com'),
-        (2, 2, 2, 2, 2, 'jane.smith@email.com'),
-        (3, 3, 3, 3, 3, 'emma.jones@email.com'),
-        (4, 4, 4, 4, 4, 'sam.roberts@email.com'),
-        (5, 5, 5, 5, 5, 'lily.williams@email.com');
+INSERT INTO Passenger (PassengerID, NameID, PhoneID, AddressID, PassportID, UserID, Email)
+VALUES (1, 1, 1, 1, 1, 1, 'james.white@email.com'),
+        (2, 2, 2, 2, 2, 2, 'jane.smith@email.com'),
+        (3, 3, 3, 3, 3, 3, 'emma.jones@email.com'),
+        (4, 4, 4, 4, 4, 4, 'sam.roberts@email.com'),
+        (5, 5, 5, 5, 5, 5, 'lily.williams@email.com');
 
 -- Adding sample data to Ticket Table
 INSERT INTO Ticket (TicketID, FlightID, PassengerID, InsuranceID, SeatType, SeatRow, SeatColumn)
