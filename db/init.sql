@@ -160,6 +160,7 @@ CREATE TABLE Insurance (
 DROP TABLE IF EXISTS SeatType;
 CREATE TABLE SeatType (
     SeatTypeID INT PRIMARY KEY,
+    Type VARCHAR(255),
     Price DECIMAL(10, 2)
 );
 -- Adding initializing data to AUTO_INCREMENT tables

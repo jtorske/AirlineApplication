@@ -127,7 +127,7 @@ VALUES (1, 'Basic Coverage'),
        (5, 'Basic Coverage');
 
 -- Adding sample data to SeatType Table
-INSERT INTO SeatType (SeatTypeID, Price)
-VALUES   (1, 50.00), -- Ordinary
-        (2, 70.00), -- Comfort
-        (3, 100.00); -- Business
+INSERT INTO SeatType (SeatTypeID, Type, Price)
+VALUES   (1, 'Ordinary', 50.00), -- Ordinary
+        (2, 'Comfort', 70.00), -- Comfort
+        (3, 'Business', 100.00); -- Business
