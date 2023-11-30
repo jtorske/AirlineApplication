@@ -179,8 +179,8 @@ public class GUI extends JFrame implements LoginCallback{
         manageTicketsButton.setPreferredSize(new Dimension(160, 30));
         manageTicketsButton.setFont(new Font("Arial", Font.PLAIN, 10));
         manageTicketsButton.addActionListener(e -> {
-            // ManageTickets manageTicketsWindow = new ManageTickets();
-            // manageTicketsWindow.setVisible(true);
+            ManageTickets manageTicketsWindow = new ManageTickets();
+            manageTicketsWindow.setVisible(true);
         });
     
         JPanel bottomLeftPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
@@ -210,26 +210,26 @@ public class GUI extends JFrame implements LoginCallback{
         aircraftPanel.add(browseAircraftButton);
         aircraftPanel.add(manageAircraftButton);
 
-        // //TODO:
-        // //Implement buttons
-        // browseCrewsButton.addActionListener(e -> {
-        //     browseCrews();
-        // });
-        // manageCrewsButton.addActionListener(e -> {
-        //     //manageCrews();
-        // });
-        // browseAircraftButton.addActionListener(e -> {
-        //     browseAircrafts();
-        // });
-        // manageAircraftButton.addActionListener(e -> {
-        //     //manageAircrafts();
-        // });
-        // browseFlightButton.addActionListener(e -> {
-        //     browseFlights();
-        // });
-        // manageFlightButton.addActionListener(e -> {
-        //     //manageFlights();
-        // });
+        //TODO:
+        //Implement buttons
+        browseCrewsButton.addActionListener(e -> {
+            browseCrews();
+        });
+        manageCrewsButton.addActionListener(e -> {
+            //manageCrews();
+        });
+        browseAircraftButton.addActionListener(e -> {
+            browseAircrafts();
+        });
+        manageAircraftButton.addActionListener(e -> {
+            //manageAircrafts();
+        });
+        browseFlightButton.addActionListener(e -> {
+            browseFlights();
+        });
+        manageFlightButton.addActionListener(e -> {
+            //manageFlights();
+        });
 
         panel.add(crewPanel);
         panel.add(flightPanel);
@@ -899,123 +899,123 @@ public class GUI extends JFrame implements LoginCallback{
         frame.setVisible(true);
     }
 
-    // private void browseCrews(){
-    //     SystemAdmin admin = new SystemAdmin(username);
-    //     ArrayList<CrewMember> crewList = admin.getCrewList();
-    //     JFrame frame = new JFrame("Current Crew Members");
+    private void browseCrews(){
+        SystemAdmin admin = new SystemAdmin(username);
+        ArrayList<CrewMember> crewList = admin.getCrewList();
+        JFrame frame = new JFrame("Current Crew Members");
 
-    //     JButton button = new JButton("Go Back");
-    //     button.addActionListener(new ActionListener() {
-    //         @Override
-    //         public void actionPerformed(ActionEvent e) {
-    //             //close only the current window
-    //             frame.dispose();
-    //         }
-    //     });
-    //     frame.add(button, BorderLayout.SOUTH);
-    //     //display the passengers in same window as table
-    //     // Create column names
-    //     String[] columnNames = {"Name", "Role", "ID", "FlightsWorking"};
-    //     // Create a table model
-    //     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-    //     int i = 1;
-    //     // Add a row for each passenger
-    //     for (CrewMember c : crewList){
-    //         Object[] row = new Object[4];
-    //         row[0] = c.getName().toString();
-    //         row[1] = c.getRole();
-    //         row[2] = i++;
-    //         row[3] = c.getFlightsWorking();
-    //         model.addRow(row);
-    //     }
-    //     JTable table = new JTable(model);
-    //     // Add the table to a scroll pane
-    //     JScrollPane scrollPane = new JScrollPane(table);
-    //     // Add the scroll pane to the frame
-    //     frame.add(scrollPane, BorderLayout.CENTER);
-    //     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    //     frame.pack();
-    //     frame.setVisible(true);
-    // }
+        JButton button = new JButton("Go Back");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close only the current window
+                frame.dispose();
+            }
+        });
+        frame.add(button, BorderLayout.SOUTH);
+        //display the passengers in same window as table
+        // Create column names
+        String[] columnNames = {"Name", "Role", "ID", "FlightsWorking"};
+        // Create a table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        int i = 1;
+        // Add a row for each passenger
+        for (CrewMember c : crewList){
+            Object[] row = new Object[4];
+            row[0] = c.getName().toString();
+            row[1] = c.getRole();
+            row[2] = i++;
+            row[3] = c.getFlightsWorking();
+            model.addRow(row);
+        }
+        JTable table = new JTable(model);
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        // Add the scroll pane to the frame
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
 
-    // private void browseFlights(){
-    //     SystemAdmin admin = new SystemAdmin(username);
-    //     ArrayList<Flights> flightList = admin.getFlightList();
-    //     JFrame frame = new JFrame("Current List of Flights");
+    private void browseFlights(){
+        SystemAdmin admin = new SystemAdmin(username);
+        ArrayList<Flights> flightList = admin.getFlightList();
+        JFrame frame = new JFrame("Current List of Flights");
 
-    //     JButton button = new JButton("Go Back");
-    //     button.addActionListener(new ActionListener() {
-    //         @Override
-    //         public void actionPerformed(ActionEvent e) {
-    //             //close only the current window
-    //             frame.dispose();
-    //         }
-    //     });
-    //     frame.add(button, BorderLayout.SOUTH);
-    //     //display the passengers in same window as table
-    //     // Create column names
-    //     String[] columnNames = {"Flight Number", "Aircraft ID", "Departure Location", "Arrival Location", "Departure Date", "Arrival Date"};
-    //     // Create a table model
-    //     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-    //     // Add a row for each passenger
-    //     for (Flights f : flightList){
-    //         Object[] row = new Object[6];
-    //         row[0] = f.getFlightNum();
-    //         row[1] = f.getAircraft().getId();
-    //         row[2] = f.getDepartureLocation().toString();
-    //         row[3] = f.getArrivalLocation().toString();
-    //         row[4] = f.getDepartureDate().toString();
-    //         row[5] = f.getArrivalDate().toString();
-    //         model.addRow(row);
-    //     }
-    //     JTable table = new JTable(model);
-    //     // Add the table to a scroll pane
-    //     JScrollPane scrollPane = new JScrollPane(table);
-    //     // Add the scroll pane to the frame
-    //     frame.add(scrollPane, BorderLayout.CENTER);
-    //     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //     frame.pack();
-    //     frame.setVisible(true);
-    // }
+        JButton button = new JButton("Go Back");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close only the current window
+                frame.dispose();
+            }
+        });
+        frame.add(button, BorderLayout.SOUTH);
+        //display the passengers in same window as table
+        // Create column names
+        String[] columnNames = {"Flight Number", "Aircraft ID", "Departure Location", "Arrival Location", "Departure Date", "Arrival Date"};
+        // Create a table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        // Add a row for each passenger
+        for (Flights f : flightList){
+            Object[] row = new Object[6];
+            row[0] = f.getFlightNum();
+            row[1] = f.getAircraft().getId();
+            row[2] = f.getDepartureLocation().toString();
+            row[3] = f.getArrivalLocation().toString();
+            row[4] = f.getDepartureDate().toString();
+            row[5] = f.getArrivalDate().toString();
+            model.addRow(row);
+        }
+        JTable table = new JTable(model);
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        // Add the scroll pane to the frame
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
 
-    // private void browseAircrafts(){
-    //     SystemAdmin admin = new SystemAdmin(username);
-    //     ArrayList<Aircraft> acList = admin.getAircraftList();
-    //     JFrame frame = new JFrame("Current List of Flights");
+    private void browseAircrafts(){
+        SystemAdmin admin = new SystemAdmin(username);
+        ArrayList<Aircraft> acList = admin.getAircraftList();
+        JFrame frame = new JFrame("Current List of Flights");
 
-    //     JButton button = new JButton("Go Back");
-    //     button.addActionListener(new ActionListener() {
-    //         @Override
-    //         public void actionPerformed(ActionEvent e) {
-    //             //close only the current window
-    //             frame.dispose();
-    //         }
-    //     });
-    //     frame.add(button, BorderLayout.SOUTH);
-    //     //display the passengers in same window as table
-    //     // Create column names
-    //     String[] columnNames = {"Aircraft ID", "Manufacturer", "Model", "Seat Capacity", "Type"};
-    //     // Create a table model
-    //     DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-    //     // Add a row for each passenger
-    //     for (Aircraft a : acList){
-    //         Object[] row = new Object[5];
-    //         row[0] = a.getId();
-    //         row[1] = a.getCompany();
-    //         row[2] = a.getModel();
-    //         row[3] = a.getCapacity();
-    //         row[4] = a.getType() == 1 ? "Narrow Body" : "Wide Body";
-    //         model.addRow(row);
-    //     }
-    //     JTable table = new JTable(model);
-    //     // Add the table to a scroll pane
-    //     JScrollPane scrollPane = new JScrollPane(table);
-    //     // Add the scroll pane to the frame
-    //     frame.add(scrollPane, BorderLayout.CENTER);
-    //     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    //     frame.pack();
-    //     frame.setVisible(true);
-    // }
+        JButton button = new JButton("Go Back");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close only the current window
+                frame.dispose();
+            }
+        });
+        frame.add(button, BorderLayout.SOUTH);
+        //display the passengers in same window as table
+        // Create column names
+        String[] columnNames = {"Aircraft ID", "Manufacturer", "Model", "Seat Capacity", "Type"};
+        // Create a table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        // Add a row for each passenger
+        for (Aircraft a : acList){
+            Object[] row = new Object[5];
+            row[0] = a.getId();
+            row[1] = a.getCompany();
+            row[2] = a.getModel();
+            row[3] = a.getCapacity();
+            row[4] = a.getType() == 1 ? "Narrow Body" : "Wide Body";
+            model.addRow(row);
+        }
+        JTable table = new JTable(model);
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        // Add the scroll pane to the frame
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
 
 
     public static void main(String[] args) {
