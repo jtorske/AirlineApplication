@@ -109,12 +109,12 @@ VALUES (1, 1, 1, 1, 1, 1, 'james.white@email.com'),
         (5, 5, 5, 5, 5, 5, 'lily.williams@email.com');
 
 -- Adding sample data to Ticket Table
-INSERT INTO Ticket (TicketID, FlightID, PassengerID, InsuranceID, SeatType, SeatRow, SeatColumn)
-VALUES (1, 1, 1, 1, 'Ordinary', 10, 'A'),
-        (2, 2, 2, 2, 'Business', 5, 'C'),
-        (3, 3, 3, 3, 'Comfort', 8, 'B'),
-        (4, 4, 4, 4, 'Ordinary', 15, 'D'),
-        (5, 5, 5, 5, 'Business', 3, 'A');
+INSERT INTO Ticket (TicketID, FlightID, PassengerID, InsuranceID, SeatTypeID, SeatRow, SeatColumn)
+VALUES (1, 1, 1, 1, 1, 10, 'A'),
+        (2, 2, 2, 2, 3, 5, 'C'),
+        (3, 3, 3, 3, 2, 8, 'B'),
+        (4, 4, 4, 4, 1, 15, 'D'),
+        (5, 5, 5, 5, 3, 3, 'A');
 
 -- Adding sample data to Insurance Table
 INSERT INTO Insurance (InsuranceID, Policy)
