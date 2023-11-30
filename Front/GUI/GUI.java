@@ -229,7 +229,7 @@ public class GUI extends JFrame implements LoginCallback{
             browseFlights();
         });
         manageFlightButton.addActionListener(e -> {
-            //manageFlights();
+            manageFlights();
         });
 
         panel.add(crewPanel);
@@ -1114,6 +1114,98 @@ public class GUI extends JFrame implements LoginCallback{
                 if (table.getSelectedRow() != -1) {
                     // remove selected row from the model
                     admin.removeCrewMember(table.getValueAt(table.getSelectedRow(), 2).toString());
+                    model.removeRow(table.getSelectedRow());
+                }
+            }
+        });
+
+        JPanel modPanel = new JPanel(new BorderLayout());
+        modPanel.add(rm, BorderLayout.NORTH);
+
+        //Panel and inputs for adding a new crew member
+        JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JTextArea nameArea = new JTextArea(1, 20);
+        JTextArea roleArea = new JTextArea(1, 20);
+        JTextArea usernameArea = new JTextArea(1, 20);
+        JTextArea passwordArea = new JTextArea(1, 20);
+        JButton addCrewButton = new JButton("Add");
+
+        addCrewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String n = nameArea.getText().toString();
+                String r = roleArea.getText().toString();
+                String u = usernameArea.getText().toString();
+                String p = passwordArea.getText().toString();
+                admin.addCrewMember(n, r, u, p);
+            }
+        });
+
+        addPanel.add(new JLabel("Name:"));
+        addPanel.add(nameArea);
+        addPanel.add(new JLabel("Role:"));
+        addPanel.add(roleArea);
+        addPanel.add(new JLabel("Username:"));
+        addPanel.add(usernameArea);
+        addPanel.add(new JLabel("Password:"));
+        addPanel.add(passwordArea);
+        addPanel.add(addCrewButton);
+
+        modPanel.add(new JLabel("Add a new user:"), BorderLayout.CENTER);
+        modPanel.add(addPanel, BorderLayout.SOUTH);
+
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        // Add the scroll pane to the frame
+        frame.add(scrollPane, BorderLayout.NORTH);
+        frame.add(modPanel, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private void manageFlights(){
+        SystemAdmin admin = new SystemAdmin(username);
+        ArrayList<Flights> flightList = admin.getFlightList();
+        JFrame frame = new JFrame("Current List of Flights");
+
+        JButton button = new JButton("Go Back");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close only the current window
+                frame.dispose();
+            }
+        });
+        frame.add(button, BorderLayout.SOUTH);
+        //display the passengers in same window as table
+        // Create column names
+        String[] columnNames = {"Flight Number", "Aircraft ID", "Departure Location", "Arrival Location", "Departure Date", "Arrival Date"};
+        // Create a table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        // Add a row for each passenger
+        for (Flights f : flightList){
+            Object[] row = new Object[6];
+            row[0] = f.getFlightNum();
+            row[1] = f.getAircraft().getId();
+            row[2] = f.getDepartureLocation().toString();
+            row[3] = f.getArrivalLocation().toString();
+            row[4] = f.getDepartureDate().toString();
+            row[5] = f.getArrivalDate().toString();
+            model.addRow(row);
+        }
+        JTable table = new JTable(model);
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+
+        //Add a button to remove selected entries
+        JButton rm = new JButton("Remove Selected Row");
+        rm.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // check for selected row first
+                if (table.getSelectedRow() != -1) {
+                    // remove selected row from the model
+                    admin.removeFlight(table.getValueAt(table.getSelectedRow(), 0).toString());
                     model.removeRow(table.getSelectedRow());
                 }
             }
