@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import Domains.Flights.Aircraft;
 import Domains.Flights.Flights;
 import Domains.Flights.TimeDate;
 import Domains.Passenger.Passenger;
@@ -218,7 +219,7 @@ public class GUI extends JFrame implements LoginCallback{
             //manageCrews();
         });
         browseAircraftButton.addActionListener(e -> {
-            //browseAircrafts();
+            browseAircrafts();
         });
         manageAircraftButton.addActionListener(e -> {
             //manageAircrafts();
@@ -956,7 +957,6 @@ public class GUI extends JFrame implements LoginCallback{
         String[] columnNames = {"Flight Number", "Aircraft ID", "Departure Location", "Arrival Location", "Departure Date", "Arrival Date"};
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        int i = 1;
         // Add a row for each passenger
         for (Flights f : flightList){
             Object[] row = new Object[6];
@@ -966,6 +966,45 @@ public class GUI extends JFrame implements LoginCallback{
             row[3] = f.getArrivalLocation().toString();
             row[4] = f.getDepartureDate().toString();
             row[5] = f.getArrivalDate().toString();
+            model.addRow(row);
+        }
+        JTable table = new JTable(model);
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        // Add the scroll pane to the frame
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private void browseAircrafts(){
+        SystemAdmin admin = new SystemAdmin(username);
+        ArrayList<Aircraft> acList = admin.getAircraftList();
+        JFrame frame = new JFrame("Current List of Flights");
+
+        JButton button = new JButton("Go Back");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close only the current window
+                frame.dispose();
+            }
+        });
+        frame.add(button, BorderLayout.SOUTH);
+        //display the passengers in same window as table
+        // Create column names
+        String[] columnNames = {"Aircraft ID", "Manufacturer", "Model", "Seat Capacity", "Type"};
+        // Create a table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        // Add a row for each passenger
+        for (Aircraft a : acList){
+            Object[] row = new Object[5];
+            row[0] = a.getId();
+            row[1] = a.getCompany();
+            row[2] = a.getModel();
+            row[3] = a.getCapacity();
+            row[4] = a.getType() == 1 ? "Narrow Body" : "Wide Body";
             model.addRow(row);
         }
         JTable table = new JTable(model);
