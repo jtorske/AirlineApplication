@@ -161,7 +161,7 @@ public class Database {
     public static void main(String[] args) {
 
         // This is an example
-        List<List<String>> result = dbExecute("select username from admin");
+        List<List<String>> result = dbExecute("select * from CrewMember");
         System.out.print(result);
     }
 }

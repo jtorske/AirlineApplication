@@ -193,7 +193,25 @@ public class GUI extends JFrame implements LoginCallback{
         aircraftPanel.add(browseAircraftButton);
         aircraftPanel.add(manageAircraftButton);
 
-
+        //Implement buttons
+        browseCrewsButton.addActionListener(e -> {
+            browseCrews();
+        });
+        manageCrewsButton.addActionListener(e -> {
+            //manageCrews();
+        });
+        browseAircraftButton.addActionListener(e -> {
+            //browseAircrafts();
+        });
+        manageAircraftButton.addActionListener(e -> {
+            //manageAircrafts();
+        });
+        browseFlightButton.addActionListener(e -> {
+            //browseFlights();
+        });
+        manageFlightButton.addActionListener(e -> {
+            //manageFlights();
+        });
 
         panel.add(crewPanel);
         panel.add(flightPanel);
@@ -850,6 +868,42 @@ public class GUI extends JFrame implements LoginCallback{
             row[4] = p.getAddress().toString();
             row[5] = p.getEmail();
             row[6] = p.getPhoneNumber().toString();
+            model.addRow(row);
+        }
+        JTable table = new JTable(model);
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        // Add the scroll pane to the frame
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private void browseCrews(){
+        SystemAdmin admin = new SystemAdmin(username);
+        ArrayList<CrewMember> crewList = admin.getCrewList();
+        JFrame frame = new JFrame("Current Crew Members");
+
+        JButton button = new JButton("Go Back");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close only the current window
+                frame.dispose();
+            }
+        });
+        frame.add(button, BorderLayout.SOUTH);
+        //display the passengers in same window as table
+        // Create column names
+        String[] columnNames = {"Name", "Role"};
+        // Create a table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        // Add a row for each passenger
+        for (CrewMember c : crewList){
+            Object[] row = new Object[2];
+            row[0] = c.getName().toString();
+            row[1] = c.getRole();
             model.addRow(row);
         }
         JTable table = new JTable(model);
