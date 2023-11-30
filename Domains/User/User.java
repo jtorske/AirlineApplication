@@ -123,14 +123,40 @@ public class User {
 
     static public void BuyTicket(Passenger p, String cardNumber, Insurance policy)
             throws MessagingException {
-
+        
         double price = seat.GetPrice();
         if (GUI.getUsername() != null) {
             price = price * 0.9; // discount for members
         }
-
+        //go to database and get highest number of the ticketID
+        int ticketID = 0;
+        //dbexecute
+        String query = String.format("SELECT MAX(TicketID) FROM Ticket");
+        List<List<String>> dbResult = Database.dbExecute(query);
+        for (List<String> row : dbResult) {
+            ticketID = Integer.parseInt(row.get(0));
+        }
+        ticketID++;
+        Ticket.setTicNum(ticketID);
         Ticket t = new Ticket(flight, seat, p, policy, cardNumber);
-        // connect to the database to store the ticket
+        // check if passenger in the database by name, PassportID
+        // if not, add the passenger to the database
+        query = String.format("SELECT * FROM Passenger WHERE PassportID = \"%s\"", p.getPassport().getPassportNumber());
+        dbResult = Database.dbExecute(query);
+        if (dbResult.size() == 0) {
+            List<String> passengerInfo = new ArrayList<String>();
+            passengerInfo.add(p.getName().getFirstName());
+            passengerInfo.add(p.getName().getLastName());
+            passengerInfo.add(p.getName().getMiddleName());
+            String nameId=Database.dbInsert("name", passengerInfo);
+        }
+        //do the same for phone number
+
+        //do the same for passport
+
+        //do the same for address
+
+        
 
         t.getReceipt().Email();
         t.Email();
