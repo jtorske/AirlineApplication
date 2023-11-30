@@ -173,6 +173,22 @@ public class GUI extends JFrame implements LoginCallback{
         });
     }
 
+    private void createManageTicketsButton() {
+        JButton manageTicketsButton = new JButton("Manage Tickets");
+        manageTicketsButton.setPreferredSize(new Dimension(160, 30));
+        manageTicketsButton.setFont(new Font("Arial", Font.PLAIN, 10));
+        manageTicketsButton.addActionListener(e -> {
+            ManageTickets manageTicketsWindow = new ManageTickets();
+            manageTicketsWindow.setVisible(true);
+        });
+    
+        JPanel bottomLeftPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        bottomLeftPanel.add(manageTicketsButton);
+    
+        getContentPane().add(bottomLeftPanel, BorderLayout.SOUTH);
+    }
+    
+    
     private void createAdminView(JPanel panel){
         //Set up panels
         JPanel crewPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -281,6 +297,9 @@ public class GUI extends JFrame implements LoginCallback{
             topPanel.add(rightPanel, BorderLayout.EAST);
         
             mainContainer.add(topPanel, BorderLayout.NORTH);
+
+            createManageTicketsButton();
+
         }
 
         // Main panel
