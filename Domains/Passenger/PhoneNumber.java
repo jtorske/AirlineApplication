@@ -23,7 +23,9 @@ public class PhoneNumber {
     public void setCountryCode(int countryCode){this.countryCode = countryCode;}
     public void setAreaCode(int areaCode){this.areaCode = areaCode;}
     public void setPhoneNumber(int phoneNumber){this.phoneNumber = phoneNumber;}
-
+    public int getCountryCode(){return countryCode;}
+    public int getAreaCode(){return areaCode;}
+    public int getPhoneNumber(){return phoneNumber;}
     public String toString(){
         return "+" + countryCode + " " + areaCode + " " + phoneNumber;
     }
