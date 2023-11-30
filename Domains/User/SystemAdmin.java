@@ -61,4 +61,18 @@ public class SystemAdmin extends User{
 
         return ret;
     }
+
+    public ArrayList<Aircraft> getAircraftList(){
+        ArrayList<Aircraft> ret = new ArrayList<Aircraft>();
+
+        List<List<String>> aList = Database.dbExecute("select * from Aircraft");
+
+        for(int i = 0; i < aList.size(); i++){
+            List<String> curr = aList.get(i);
+            Aircraft toAdd = new Aircraft(curr.get(0), curr.get(1), curr.get(2), Integer.parseInt(curr.get(3)), Integer.parseInt(curr.get(4)));
+            ret.add(toAdd);
+        }
+
+        return ret;
+    }
 }
