@@ -75,4 +75,12 @@ public class SystemAdmin extends User{
 
         return ret;
     }
+
+    public void addCrewMember(String name, String role, String username, String password){
+
+    }
+
+    public void removeCrewMember(String id){
+
+    }
 }
