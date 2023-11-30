@@ -103,7 +103,7 @@ CREATE TABLE Admin (
 -- Passenger Table
 DROP TABLE IF EXISTS Passenger;
 CREATE TABLE Passenger (
-    PassengerID INT PRIMARY KEY,
+    PassengerID INT AUTO_INCREMENT PRIMARY KEY,
     NameID INT,
     PhoneID INT,
     AddressID INT,
@@ -116,7 +116,7 @@ CREATE TABLE Passenger (
 -- Phone Table
 DROP TABLE IF EXISTS Phone;
 CREATE TABLE Phone (
-    PhoneID INT PRIMARY KEY,
+    PhoneID INT AUTO_INCREMENT PRIMARY KEY,
     CountryCode VARCHAR(255),
     DistrictCode VARCHAR(255),
     Number VARCHAR(255)
@@ -124,7 +124,7 @@ CREATE TABLE Phone (
 -- Address Table
 DROP TABLE IF EXISTS Address;
 CREATE TABLE Address (
-    AddressID INT PRIMARY KEY,
+    AddressID INT AUTO_INCREMENT PRIMARY KEY,
     StreetName VARCHAR(255),
     District VARCHAR(255),
     PostalCode VARCHAR(255)
@@ -132,7 +132,7 @@ CREATE TABLE Address (
 -- Passport Table
 DROP TABLE IF EXISTS Passport;
 CREATE TABLE Passport (
-    PassportID INT PRIMARY KEY,
+    PassportID INT AUTO_INCREMENT PRIMARY KEY,
     IssueCountry VARCHAR(255),
     IssueDate DATE,
     ExpiryDate DATE
@@ -144,7 +144,7 @@ CREATE TABLE Ticket (
     FlightID INT,
     PassengerID INT,
     InsuranceID INT,
-    SeatType VARCHAR(255),
+    SeatTypeID INT,
     SeatRow INT,
     SeatColumn CHAR,
     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID),
@@ -162,8 +162,14 @@ CREATE TABLE SeatType (
     SeatTypeID INT PRIMARY KEY,
     Price DECIMAL(10, 2)
 );
--- Adding initializing data to Name and User Table
-INSERT INTO Name (NameID, FirstName, LastName, MiddleName)
-VALUES (1, '-----------', '-----------', '-----------');
-INSERT INTO User (UserID, NameID, Username, Password)
-VALUES (1, 1, '-----------', '-----------');
+-- Adding initializing data to AUTO_INCREMENT tables
+INSERT INTO User (UserID)
+VALUES (1);
+INSERT INTO Name (NameID)
+VALUES (1);
+INSERT INTO Phone (PhoneID)
+VALUES (1);
+INSERT INTO Address (AddressID)
+VALUES (1);
+INSERT INTO Passport (PassportID)
+VALUES (1);
