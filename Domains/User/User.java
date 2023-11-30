@@ -139,24 +139,103 @@ public class User {
         ticketID++;
         Ticket.setTicNum(ticketID);
         Ticket t = new Ticket(flight, seat, p, policy, cardNumber);
-        // check if passenger in the database by name, PassportID
-        // if not, add the passenger to the database
-        query = String.format("SELECT * FROM Passenger WHERE PassportID = \"%s\"", p.getPassport().getPassportNumber());
+        // check if name in database
+        // if not, add to database
+        query = String.format("SELECT * FROM name WHERE FirstName = '%s' AND LastName = '%s'", p.getName().getFirstName(), p.getName().getLastName());
         dbResult = Database.dbExecute(query);
+        String nameId="";
         if (dbResult.size() == 0) {
             List<String> passengerInfo = new ArrayList<String>();
             passengerInfo.add(p.getName().getFirstName());
             passengerInfo.add(p.getName().getLastName());
             passengerInfo.add(p.getName().getMiddleName());
-            String nameId=Database.dbInsert("name", passengerInfo);
+            nameId=Database.dbInsert(" name (FirstName, LastName, MiddleName)", passengerInfo);
+        } else {
+            for (List<String> row : dbResult) {
+                nameId = row.get(0);
+            }
         }
         //do the same for phone number
-
+        String phoneId="";
+        query = String.format("SELECT * FROM phone WHERE Number = '%s' AND CountryCode = '%s' AND DistrictCode = '%s'", Integer.toString(p.getPhoneNumberObj().getPhoneNumber()), Integer.toString(p.getPhoneNumberObj().getCountryCode()), Integer.toString(p.getPhoneNumberObj().getAreaCode()));
+        dbResult = Database.dbExecute(query);
+        if (dbResult.size() == 0) {
+            List<String> phoneInfo = new ArrayList<String>();
+            phoneInfo.add(Integer.toString(p.getPhoneNumberObj().getPhoneNumber()));
+            phoneInfo.add(Integer.toString(p.getPhoneNumberObj().getCountryCode()));
+            phoneInfo.add(Integer.toString(p.getPhoneNumberObj().getAreaCode()));
+            phoneId=Database.dbInsert("phone (CountryCode, DistrictCode, Number)", phoneInfo);
+        } else {
+            for (List<String> row : dbResult) {
+                phoneId = row.get(0);
+            }
+        }
         //do the same for passport
-
+        String passportId="";
+        query = String.format("SELECT * FROM passport WHERE PassportID = '%s' AND Country = '%s'", p.getPassport().getPassportNumber(), p.getPassport().getCountry());
+        dbResult = Database.dbExecute(query);
+        if (dbResult.size() == 0) {
+            List<String> passportInfo = new ArrayList<String>();
+            passportInfo.add(p.getPassport().getPassportNumber());
+            passportInfo.add(p.getPassport().getCountry());
+            passportInfo.add(p.getPassport().getIssueDate().toString());
+            passportInfo.add(p.getPassport().getExpiryDate().toString());
+            passportId=Database.dbInsert("passport (PassportID, IssueCountry, IssueDate dat, ExpiryDate date)", passportInfo);
+        } else {
+            for (List<String> row : dbResult) {
+                passportId = row.get(0);
+            }
+        }
         //do the same for address
-
+        String addressId="";
+        query = String.format("SELECT * FROM address WHERE AND StreetName = '%s' AND PostalCode = '%s'", p.getAddress().getStreetName(), p.getAddress().getPostalCode());
+        dbResult = Database.dbExecute(query);
+        if (dbResult.size() == 0) {
+            List<String> addressInfo = new ArrayList<String>();
+            addressInfo.add(p.getAddress().getStreetName());
+            addressInfo.add(p.getAddress().getProvDist());
+            addressInfo.add(p.getAddress().getPostalCode());
+            addressId=Database.dbInsert("address (StreetName, District, PostalCode)", addressInfo);
+        } else {
+            for (List<String> row : dbResult) {
+                addressId = row.get(0);
+            }
+        }
         
+        String passengerId="";
+        query = String.format("SELECT * FROM passenger WHERE NameID = '%s' AND PhoneID = '%s' AND PassportID = '%s' AND AddressID = '%s'", nameId, phoneId, passportId, addressId);
+        dbResult = Database.dbExecute(query);
+        if (dbResult.size() == 0) {
+            List<String> passengerInfo = new ArrayList<String>();
+            passengerInfo.add(nameId);
+            passengerInfo.add(phoneId);
+            passengerInfo.add(addressId);
+            passengerInfo.add(passportId);
+            passengerInfo.add("");
+            passengerInfo.add(p.getEmail());
+            passengerId=Database.dbInsert("passenger (NameID, PhoneID, AddressID, PassportID, UserID, Email)", passengerInfo);
+        } else {
+            for (List<String> row : dbResult) {
+                passengerId = row.get(0);
+            }
+        }
+        int InsuranceID = Integer.parseInt(policy.getPolicy());
+        int SeatType = 0;
+        if (seat.GetPrice()==50) {SeatType = 1;}        
+        else if (seat.GetPrice()==70) {SeatType = 2;}
+        else {SeatType = 3;}
+        int seatRows=seat.getRow();
+        char seatColumn=seat.getColumn();
+
+        List<String> ticketInfo = new ArrayList<String>();
+        ticketInfo.add(Integer.toString(ticketID));
+        ticketInfo.add(flight.getFlightNum());
+        ticketInfo.add(passengerId);
+        ticketInfo.add(Integer.toString(InsuranceID));
+        ticketInfo.add(Integer.toString(SeatType));
+        ticketInfo.add(Integer.toString(seatRows));
+        ticketInfo.add(Character.toString(seatColumn));
+        String tickStringID = Database.dbInsert("ticket (FlightID, PassengerID, InsuranceID, SeatTypeID, SeatRow, SeatColumn)", ticketInfo);
 
         t.getReceipt().Email();
         t.Email();
@@ -176,8 +255,9 @@ public class User {
             seatRow[i] = String.join("|", seatCol);
         }
         mapString = String.join("\n", seatRow);
-        flight.addPassenger(p);
         // update the flight in the database
+        query = String.format("UPDATE flight SET SeatMap = '%s' WHERE FlightID = '%s'", mapString, flight.getFlightNum());
+        dbResult = Database.dbExecute(query);
     }
 
     static public void CancelTicket(int ticketNum) {

@@ -179,7 +179,7 @@ public class GUI extends JFrame implements LoginCallback{
         manageTicketsButton.setPreferredSize(new Dimension(160, 30));
         manageTicketsButton.setFont(new Font("Arial", Font.PLAIN, 10));
         manageTicketsButton.addActionListener(e -> {
-            ManageTickets manageTicketsWindow = new ManageTickets();
+            ManageTickets manageTicketsWindow = new ManageTickets(username);
             manageTicketsWindow.setVisible(true);
         });
     
@@ -737,12 +737,12 @@ public class GUI extends JFrame implements LoginCallback{
                 flightPanel.add(new JLabel(User.GetFlight().getFlightNum()));
                 flightPanel.add(new JLabel("Departure Time:"));
                 flightPanel.add(new JLabel(User.GetFlight().getDepartureDate().toString()));
-                flightPanel.add(new JLabel("Arrival Time:"));
-                flightPanel.add(new JLabel(User.GetFlight().getArrivalDate().toString()));
-                flightPanel.add(new JLabel("Origin:"));
-                flightPanel.add(new JLabel(User.GetFlight().getDepartureLocation().toString()));
-                flightPanel.add(new JLabel("Destination:"));
-                flightPanel.add(new JLabel(User.GetFlight().getArrivalLocation().toString()));
+                flightPanel.add(new JLabel("Seat Type:"));
+                String seatType = "";
+                if (User.GetSeat().GetPrice()==50) {seatType = "Ordinary";}        
+                else if (User.GetSeat().GetPrice()==70) {seatType = "Comfort";}
+                else {seatType = "Business";}
+                flightPanel.add(new JLabel(seatType));
                 flightPanel.add(new JLabel("Seat Number:"));
                 flightPanel.add(new JLabel(User.GetSeat().Display()));
                 flightPanel.add(new JLabel("Price:"));

@@ -52,4 +52,5 @@ public class Passenger {
     public Address getAddress(){return address;}
     public String getEmail(){return email;}
     public String getPhoneNumber(){return phoneNumber.toString();}   
+    public PhoneNumber getPhoneNumberObj(){return phoneNumber;}
 }

@@ -153,6 +153,45 @@ public class Database {
 
         return idGenerated;
     }
+    /**
+     * This function is for removing items from the database
+     * @param tableName is the name of the table
+     * @param columnName is the name of the column
+     * @param columnValue is the value of the column
+     * 
+     * Its basically in the form of 
+     *  DELETE FROM tableName WHERE columnName = columnValue
+     */
+    public static void dbDelete(String tableName, String columnName, String columnValue) {
+        Database db = new Database();
+        Connection con;
+
+        try {
+            con = db.getConnection();
+
+            // Construct the SQL DELETE statement
+            String command = "DELETE FROM " + tableName + " WHERE " + columnName + " = ?";
+            PreparedStatement statement = con.prepareStatement(command);
+
+            // Set the parameter for the WHERE clause
+            statement.setString(1, columnValue);
+
+            System.out.println(statement.toString());
+            int rowsDeleted = statement.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                System.out.println(rowsDeleted + " row(s) deleted.");
+            } else {
+                System.out.println("No rows deleted. No matching records found.");
+            }
+
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not get connections");
+            System.exit(1);
+        }
+    }
 
     // Make a run function for running sql commands
     /*

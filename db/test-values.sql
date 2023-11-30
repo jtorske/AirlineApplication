@@ -116,15 +116,14 @@ VALUES (1, 1, 1, 1, 1, 10, 'A'),
         (2, 2, 2, 2, 3, 5, 'C'),
         (3, 3, 3, 3, 2, 8, 'B'),
         (4, 4, 4, 4, 1, 15, 'D'),
-        (5, 5, 5, 5, 3, 3, 'A');
+        (5, 5, 5, 4, 3, 3, 'A');
 
 -- Adding sample data to Insurance Table
 INSERT INTO Insurance (InsuranceID, Policy)
 VALUES (1, 'Basic Coverage'),
        (2, 'Premium Coverage'),
-       (3, 'Basic Coverage'),
-       (4, NULL),
-       (5, 'Basic Coverage');
+       (3, 'Premium Plus Coverage'),
+       (4, NULL);
 
 -- Adding sample data to SeatType Table
 INSERT INTO SeatType (SeatTypeID, Type, Price)
