@@ -100,4 +100,17 @@ public class CrewMember {
 
         return passengers;
     }
+
+    public String getFlightsWorking(){
+        String ret = "";
+
+        List<List<String>> flightsWorking = Database.dbExecute("select FlightID from CrewSchedule where CrewMemberID = " + "\"" + this.id + "\"");
+
+        for(int i = 0; i < flightsWorking.size(); i++){
+            String tmp = flightsWorking.get(i).get(0) + ", ";
+            ret += tmp;
+        }
+
+        return ret;
+    }
 }

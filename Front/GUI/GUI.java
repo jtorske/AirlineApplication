@@ -896,14 +896,17 @@ public class GUI extends JFrame implements LoginCallback{
         frame.add(button, BorderLayout.SOUTH);
         //display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Name", "Role"};
+        String[] columnNames = {"Name", "Role", "ID", "FlightsWorking"};
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        int i = 1;
         // Add a row for each passenger
         for (CrewMember c : crewList){
-            Object[] row = new Object[2];
+            Object[] row = new Object[4];
             row[0] = c.getName().toString();
             row[1] = c.getRole();
+            row[2] = i++;
+            row[3] = c.getFlightsWorking();
             model.addRow(row);
         }
         JTable table = new JTable(model);

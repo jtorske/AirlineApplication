@@ -25,7 +25,6 @@ public class SystemAdmin extends User{
 
         for(int i = 0; i < cMembers.size(); i++){
             List<String> curr = cMembers.get(i);
-            System.out.println(curr.get(1));
             String[] n = curr.get(1).split(" ");
             CrewMember cm = new CrewMember(n[0], n[1], n[2], curr.get(2), curr.get(0), this.Password);
             ret.add(cm);
