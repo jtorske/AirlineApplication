@@ -419,6 +419,7 @@ public class GUI extends JFrame implements LoginCallback{
             model.addRow(row);
         }
         JFrame frame = new JFrame("Flight Search Results");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //add a input box on top of the table
         JTextField input = new JTextField(20);
         JPanel panel = new JPanel();
@@ -456,7 +457,7 @@ public class GUI extends JFrame implements LoginCallback{
                         }
                     });
                     panel.add(button);
-                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame.pack();
                     frame.setVisible(true);
                     return;}//display error message
@@ -507,7 +508,7 @@ public class GUI extends JFrame implements LoginCallback{
         // Add the scroll pane to the frame
         frame.add(scrollPane, BorderLayout.CENTER);
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
 
@@ -520,9 +521,6 @@ public class GUI extends JFrame implements LoginCallback{
         if ("Return".equals(tripType) && returnDate != null) {
             System.out.println("Return Date: " + new SimpleDateFormat("dd/MM/yyyy").format(returnDate));
         }
-
-        // Placeholder for actual flight search functionality
-        JOptionPane.showMessageDialog(this, "Searching flights...");
     }
 
     private void SelectSeat(String seatNum) {
@@ -544,7 +542,7 @@ public class GUI extends JFrame implements LoginCallback{
                 }
             });
             panel.add(button);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
             return;
@@ -776,14 +774,14 @@ public class GUI extends JFrame implements LoginCallback{
                 });
                 panel.add(button);
                 //display the ticket
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
                 frame.repaint();
                 frame.setVisible(true);
             }
         });
         panel.add(button);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
@@ -810,7 +808,7 @@ public class GUI extends JFrame implements LoginCallback{
                 }
             });
             panel.add(button);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
             return;
@@ -831,7 +829,7 @@ public class GUI extends JFrame implements LoginCallback{
             }
         });
         panel.add(button);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
 
@@ -875,7 +873,7 @@ public class GUI extends JFrame implements LoginCallback{
         JScrollPane scrollPane = new JScrollPane(table);
         // Add the scroll pane to the frame
         frame.add(scrollPane, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
@@ -914,7 +912,7 @@ public class GUI extends JFrame implements LoginCallback{
         JScrollPane scrollPane = new JScrollPane(table);
         // Add the scroll pane to the frame
         frame.add(scrollPane, BorderLayout.CENTER);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
