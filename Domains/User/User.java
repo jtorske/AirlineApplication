@@ -14,6 +14,10 @@ import Domains.Flights.*;
 import Front.GUI.GUI;
 import Domains.Seats.*;
 import Database.Database.*;
+
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Date;
@@ -178,8 +182,20 @@ public class User {
             List<String> passportInfo = new ArrayList<String>();
             passportInfo.add(p.getPassport().getPassportNumber());
             passportInfo.add(p.getPassport().getCountry());
-            passportInfo.add(p.getPassport().getIssueDate().toString());
-            passportInfo.add(p.getPassport().getExpiryDate().toString());
+            //convert date to "year-month-day hour:minute:second" format
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            Date issueDate = p.getPassport().getIssueDate();
+            Date expiryDate = p.getPassport().getExpiryDate();
+
+            LocalDateTime issueDateTime = LocalDateTime.ofInstant(issueDate.toInstant(), ZoneId.systemDefault());
+            LocalDateTime expiryDateTime = LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault());
+
+            String formattedIssueDate = issueDateTime.format(formatter);
+            String formattedExpiryDate = expiryDateTime.format(formatter);
+            
+            passportInfo.add(formattedIssueDate);
+            passportInfo.add(formattedExpiryDate);
             passportId=Database.dbInsert("passport (PassportID, IssueCountry, IssueDate , ExpiryDate)", passportInfo);
         } else {
             for (List<String> row : dbResult) {
@@ -188,7 +204,7 @@ public class User {
         }
         //do the same for address
         String addressId="";
-        query = String.format("SELECT * FROM address WHERE AND StreetName = '%s' AND PostalCode = '%s'", p.getAddress().getStreetName(), p.getAddress().getPostalCode());
+        query = String.format("SELECT * FROM address WHERE StreetName = '%s' AND PostalCode = '%s'", p.getAddress().getStreetName(), p.getAddress().getPostalCode());
         dbResult = Database.dbExecute(query);
         if (dbResult.size() == 0) {
             List<String> addressInfo = new ArrayList<String>();
@@ -211,7 +227,7 @@ public class User {
             passengerInfo.add(phoneId);
             passengerInfo.add(addressId);
             passengerInfo.add(passportId);
-            passengerInfo.add("");
+            passengerInfo.add("1");
             passengerInfo.add(p.getEmail());
             passengerId=Database.dbInsert("passenger (NameID, PhoneID, AddressID, PassportID, UserID, Email)", passengerInfo);
         } else {
@@ -235,11 +251,9 @@ public class User {
         ticketInfo.add(Integer.toString(SeatType));
         ticketInfo.add(Integer.toString(seatRows));
         ticketInfo.add(Character.toString(seatColumn));
-        String tickStringID = Database.dbInsert("ticket (FlightID, PassengerID, InsuranceID, SeatTypeID, SeatRow, SeatColumn)", ticketInfo);
+        String tickStringID = Database.dbInsert("ticket (TicketID, FlightID, PassengerID, InsuranceID, SeatTypeID, SeatRow, SeatColumn)", ticketInfo);
 
-        t.getReceipt().Email();
-        t.Email();
-        seat.booked();
+
         String mapString = flight.getSeatMapString();
         // find the location of seat.Display() in the string seatMap and changed the "O"
         // that is in front of seatNum to "X"
@@ -254,6 +268,9 @@ public class User {
             }
             seatRow[i] = String.join("|", seatCol);
         }
+        t.getReceipt().Email();
+        t.Email();
+        seat.booked();
         mapString = String.join("\n", seatRow);
         // update the flight in the database
         query = String.format("UPDATE flight SET SeatMap = '%s' WHERE FlightID = '%s'", mapString, flight.getFlightNum());
