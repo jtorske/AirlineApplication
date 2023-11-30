@@ -179,7 +179,7 @@ public class GUI extends JFrame implements LoginCallback{
         manageTicketsButton.setPreferredSize(new Dimension(160, 30));
         manageTicketsButton.setFont(new Font("Arial", Font.PLAIN, 10));
         manageTicketsButton.addActionListener(e -> {
-            ManageTickets manageTicketsWindow = new ManageTickets();
+            ManageTickets manageTicketsWindow = new ManageTickets(username);
             manageTicketsWindow.setVisible(true);
         });
     
