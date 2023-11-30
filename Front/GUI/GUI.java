@@ -714,8 +714,8 @@ public class GUI extends JFrame implements LoginCallback{
         //ony 3 types, 1. basic 2. premium 3. premium plus
         JPanel insurancePanel = new JPanel();
         insurancePanel.setLayout(new BoxLayout(insurancePanel, BoxLayout.Y_AXIS));
-        JTextField insuranceTypeField = new JTextField(20);
-        insurancePanel.add(new JLabel("Insurance Type:\\n 2. Premium\\n 3. Premium Plus"));
+        JTextField insuranceTypeField = new JTextField(1);
+        insurancePanel.add(new JLabel("Insurance Type:\n 2. Premium\n 3. Premium Plus"));
         insurancePanel.add(insuranceTypeField);
         panel.add(insurancePanel);
 
