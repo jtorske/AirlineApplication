@@ -1,7 +1,7 @@
 -- Adding sample data to Aircraft Table
 INSERT INTO Aircraft (AircraftID, Company, Model, SeatCapacity, Type)
-VALUES (1, 'Boeing', '737', 800, 1),
-       (2, 'Boeing', '777', 300, 2);
+VALUES (1, 'Boeing', '737', 189, 1),
+       (2, 'Boeing', '777', 388, 2);
 
 -- Adding sample data to Location Table
 INSERT INTO Location (LocationID, Country, Province, City)
