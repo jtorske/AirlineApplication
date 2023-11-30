@@ -172,7 +172,7 @@ public class User {
         }
         //do the same for passport
         String passportId="";
-        query = String.format("SELECT * FROM passport WHERE PassportID = '%s' AND Country = '%s'", p.getPassport().getPassportNumber(), p.getPassport().getCountry());
+        query = String.format("SELECT * FROM passport WHERE PassportID = '%s' AND IssueCountry = '%s'", p.getPassport().getPassportNumber(), p.getPassport().getCountry());
         dbResult = Database.dbExecute(query);
         if (dbResult.size() == 0) {
             List<String> passportInfo = new ArrayList<String>();
@@ -180,7 +180,7 @@ public class User {
             passportInfo.add(p.getPassport().getCountry());
             passportInfo.add(p.getPassport().getIssueDate().toString());
             passportInfo.add(p.getPassport().getExpiryDate().toString());
-            passportId=Database.dbInsert("passport (PassportID, IssueCountry, IssueDate dat, ExpiryDate date)", passportInfo);
+            passportId=Database.dbInsert("passport (PassportID, IssueCountry, IssueDate , ExpiryDate)", passportInfo);
         } else {
             for (List<String> row : dbResult) {
                 passportId = row.get(0);
@@ -203,7 +203,7 @@ public class User {
         }
         
         String passengerId="";
-        query = String.format("SELECT * FROM passenger WHERE NameID = '%s' AND PhoneID = '%s' AND PassportID = '%s' AND AddressID = '%s'", nameId, phoneId, passportId, addressId);
+        query = String.format("SELECT * FROM passenger WHERE NameID = '%s' AND PhoneID = '%s' AND PassportID = '%s'", nameId, phoneId, passportId);
         dbResult = Database.dbExecute(query);
         if (dbResult.size() == 0) {
             List<String> passengerInfo = new ArrayList<String>();
