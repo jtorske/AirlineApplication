@@ -97,4 +97,22 @@ public class SystemAdmin extends User{
         Database.dbDelete("CrewSchedule", "CrewMemberID", id);
         Database.dbDelete("CrewMember", "CrewMemberID", id);
     }
+
+    public void addFlight(String aircraftID, String depID, String arrID, String depDate, String arrDate){
+        List<List<String>> prevEntries = Database.dbExecute("select * from Flights");
+        List<String> values = new ArrayList<String>();
+        values.add(String.valueOf(prevEntries.size() + 1));
+        values.add(aircraftID);
+        values.add(depID);
+        values.add(arrID);
+        values.add(depDate);
+        values.add(arrDate);
+        Database.dbInsert("Flight", values);
+    }
+
+    public void removeFlight(String id){
+        Database.dbDelete("Ticket", "FlightID", id);
+        Database.dbDelete("CrewSchedule", "FlightID", id);
+        Database.dbDelete("Flight", "FlightID", id);
+    }
 }
