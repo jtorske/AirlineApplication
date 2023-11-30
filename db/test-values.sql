@@ -54,14 +54,16 @@ INSERT INTO Name (NameID, FirstName, LastName, MiddleName)
 VALUES (2, 'Jane', 'Smith', 'B'),
         (3, 'Emma', 'Jones', 'C'),
         (4, 'Sam', 'Roberts', 'D'),
-        (5, 'Lily', 'Williams', 'E');
+        (5, 'Lily', 'Williams', 'E'),
+        (6, 'Lily', 'Will', 'F');
 
 -- Adding sample data to User Table
 INSERT INTO User (UserID, NameID, Username, Password)
 VALUES  (2, 2, 'jane_smith', 'securepass'),
         (3, 3, 'emma_jones', 'pass123'),
         (4, 4, 'sam_roberts', 'strongpass'),
-        (5, 5, 'lily_williams', 'secure123');
+        (5, 5, 'lily_williams', 'secure123'),
+        (6, 6, 'jane_smith2', 'securepass');
 
 -- Adding sample data to CreditCard Table
 INSERT INTO CreditCard (CreditCardID, UserID,CardNumber, CvvNumber, ExpiryDate)
@@ -78,7 +80,7 @@ VALUES (1, 'admin1', 'adminpass'),
 
 -- Adding sample data to Phone Table
 INSERT INTO Phone (PhoneID, CountryCode, DistrictCode, Number)
-VALUES (1, '+1', '123', '456-7890'),
+VALUES (6, '+1', '123', '456-7890'),
         (2, '+1', '456', '789-0123'),
         (3, '+1', '789', '012-3456'),
         (4, '+1', '012', '345-6789'),
@@ -86,7 +88,7 @@ VALUES (1, '+1', '123', '456-7890'),
 
 -- Adding sample data to Address Table
 INSERT INTO Address (AddressID, StreetName, District, PostalCode)
-VALUES (1, '123 Main St', 'Downtown', '12345'),
+VALUES (6, '123 Main St', 'Downtown', '12345'),
         (2, '456 Oak St', 'Uptown', '56789'),
         (3, '789 Pine St', 'Midtown', '67890'),
         (4, '210 Maple St', 'Westside', '78901'),
@@ -94,7 +96,7 @@ VALUES (1, '123 Main St', 'Downtown', '12345'),
 
 -- Adding sample data to Passport Table
 INSERT INTO Passport (PassportID, IssueCountry, IssueDate, ExpiryDate)
-VALUES (1, 'USA', '2020-01-01', '2030-01-01'),
+VALUES (6, 'USA', '2020-01-01', '2030-01-01'),
         (2, 'Canada', '2019-05-15', '2029-05-15'),
         (3, 'USA', '2022-03-01', '2032-03-01'),
         (4, 'Canada', '2021-08-10', '2031-08-10'),

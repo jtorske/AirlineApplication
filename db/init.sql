@@ -144,7 +144,7 @@ CREATE TABLE Ticket (
     FlightID INT,
     PassengerID INT,
     InsuranceID INT,
-    SeatType VARCHAR(255),
+    SeatTypeID INT,
     SeatRow INT,
     SeatColumn CHAR,
     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID),
@@ -164,12 +164,12 @@ CREATE TABLE SeatType (
 );
 -- Adding initializing data to AUTO_INCREMENT tables
 INSERT INTO User (UserID)
-VALUES (0);
+VALUES (1);
 INSERT INTO Name (NameID)
-VALUES (0);
+VALUES (1);
 INSERT INTO Phone (PhoneID)
-VALUES (0);
+VALUES (1);
 INSERT INTO Address (AddressID)
-VALUES (0);
+VALUES (1);
 INSERT INTO Passport (PassportID)
-VALUES (0);
+VALUES (1);
