@@ -209,6 +209,7 @@ public class GUI extends JFrame implements LoginCallback{
         aircraftPanel.add(browseAircraftButton);
         aircraftPanel.add(manageAircraftButton);
 
+        //TODO:
         //Implement buttons
         browseCrewsButton.addActionListener(e -> {
             browseCrews();
@@ -223,7 +224,7 @@ public class GUI extends JFrame implements LoginCallback{
             //manageAircrafts();
         });
         browseFlightButton.addActionListener(e -> {
-            //browseFlights();
+            browseFlights();
         });
         manageFlightButton.addActionListener(e -> {
             //manageFlights();
@@ -932,6 +933,47 @@ public class GUI extends JFrame implements LoginCallback{
         // Add the scroll pane to the frame
         frame.add(scrollPane, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    private void browseFlights(){
+        SystemAdmin admin = new SystemAdmin(username);
+        ArrayList<Flights> flightList = admin.getFlightList();
+        JFrame frame = new JFrame("Current List of Flights");
+
+        JButton button = new JButton("Go Back");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //close only the current window
+                frame.dispose();
+            }
+        });
+        frame.add(button, BorderLayout.SOUTH);
+        //display the passengers in same window as table
+        // Create column names
+        String[] columnNames = {"Flight Number", "Aircraft ID", "Departure Location", "Arrival Location", "Departure Date", "Arrival Date"};
+        // Create a table model
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0);
+        int i = 1;
+        // Add a row for each passenger
+        for (Flights f : flightList){
+            Object[] row = new Object[6];
+            row[0] = f.getFlightNum();
+            row[1] = f.getAircraft().getId();
+            row[2] = f.getDepartureLocation().toString();
+            row[3] = f.getArrivalLocation().toString();
+            row[4] = f.getDepartureDate().toString();
+            row[5] = f.getArrivalDate().toString();
+            model.addRow(row);
+        }
+        JTable table = new JTable(model);
+        // Add the table to a scroll pane
+        JScrollPane scrollPane = new JScrollPane(table);
+        // Add the scroll pane to the frame
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }
