@@ -23,7 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class GUI extends JFrame implements LoginCallback{
     //Component declarations
@@ -442,8 +443,10 @@ public class GUI extends JFrame implements LoginCallback{
         JFrame frame = new JFrame("Flight Search Results");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         //add a input box on top of the table
+        
         JTextField input = new JTextField(20);
         JPanel panel = new JPanel();
+        panel.add(new JLabel("Please Enter the Flight Number:"));
         panel.add(input);
         input.setBounds(0, 0, 100, 50);
         JButton button = new JButton("Select");
@@ -494,6 +497,7 @@ public class GUI extends JFrame implements LoginCallback{
 
                 JTextField inputSeat = new JTextField(20);
                 JPanel panel = new JPanel();
+                panel.add(new JLabel("Please Enter the Seat Number:"));
                 panel.add(inputSeat);
                 input.setBounds(0, 0, 100, 50);
                 frame.add(panel, BorderLayout.NORTH);
@@ -596,11 +600,65 @@ public class GUI extends JFrame implements LoginCallback{
         JTextField countryField = new JTextField(20);
         //int year, int month, int day
         JTextField expiryYearField = new JTextField(4);
+        expiryYearField.setText("yyyy");
+        expiryYearField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (expiryYearField.getText().equals("yyyy")) {
+                    expiryYearField.setText("");
+                }
+            }
+        });
         JTextField expiryMonthField = new JTextField(2);
+        expiryMonthField.setText("mm");
+        expiryMonthField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (expiryMonthField.getText().equals("mm")) {
+                    expiryMonthField.setText("");
+                }
+            }
+        });
         JTextField expiryDayField = new JTextField(2);
+        expiryDayField.setText("dd");
+        expiryDayField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (expiryDayField.getText().equals("dd")) {
+                    expiryDayField.setText("");
+                }
+            }
+        });
         JTextField issueYearField = new JTextField(4);
+        issueYearField.setText("yyyy");
+        issueYearField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (issueYearField.getText().equals("yyyy")) {
+                    issueYearField.setText("");
+                }
+            }
+        });
         JTextField issueMonthField = new JTextField(2);
+        issueMonthField.setText("mm");
+        issueMonthField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (issueMonthField.getText().equals("mm")) {
+                    issueMonthField.setText("");
+                }
+            }
+        });
         JTextField issueDayField = new JTextField(2);
+        issueDayField.setText("dd");
+        issueDayField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (issueDayField.getText().equals("dd")) {
+                    issueDayField.setText("");
+                }
+            }
+        });
         passportPanel.add(new JLabel("Passport Number:"));
         passportPanel.add(passportNumberField);
         passportPanel.add(new JLabel("Country:"));
@@ -645,9 +703,9 @@ public class GUI extends JFrame implements LoginCallback{
         JTextField phoneNumberField = new JTextField(20);
         contactPanel.add(new JLabel("Email:"));
         contactPanel.add(emailField);
-        contactPanel.add(new JLabel("Country Code:"));
+        contactPanel.add(new JLabel("Phone Country Code:"));
         contactPanel.add(countryCodeField);
-        contactPanel.add(new JLabel("Area Code:"));
+        contactPanel.add(new JLabel("Phone Area Code:"));
         contactPanel.add(areaCodeField);
         contactPanel.add(new JLabel("Phone Number:"));
         contactPanel.add(phoneNumberField);
@@ -655,9 +713,9 @@ public class GUI extends JFrame implements LoginCallback{
         //Insurance panel in horizontal box layout
         //ony 3 types, 1. basic 2. premium 3. premium plus
         JPanel insurancePanel = new JPanel();
-        insurancePanel.setLayout(new BoxLayout(insurancePanel, BoxLayout.X_AXIS));
+        insurancePanel.setLayout(new BoxLayout(insurancePanel, BoxLayout.Y_AXIS));
         JTextField insuranceTypeField = new JTextField(20);
-        insurancePanel.add(new JLabel("Insurance Type:\n 1. Basic\n 2. Premium\n 3. Premium Plus"));
+        insurancePanel.add(new JLabel("Insurance Type:\\n 2. Premium\\n 3. Premium Plus"));
         insurancePanel.add(insuranceTypeField);
         panel.add(insurancePanel);
 

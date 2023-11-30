@@ -192,6 +192,39 @@ public class Database {
             System.exit(1);
         }
     }
+    /**
+     * 
+     * @param updateQuery string for that update transaction 
+     * 
+     * Example: 
+     *  String query = "UPDATE table set col = 5 WHERE id = 4"
+     */
+    public static void dbUpdate(String updateQuery) {
+        Database db = new Database();
+        Connection con;
+
+        try {
+            con = db.getConnection();
+
+            // Construct the SQL UPDATE statement
+            PreparedStatement statement = con.prepareStatement(updateQuery);
+
+            System.out.println(statement.toString());
+            int rowsUpdated = statement.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                System.out.println(rowsUpdated + " row(s) updated.");
+            } else {
+                System.out.println("No rows updated. No matching records found.");
+            }
+
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not get connections");
+            System.exit(1);
+        }
+    }
 
     // Make a run function for running sql commands
     /*
