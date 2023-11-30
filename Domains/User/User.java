@@ -38,7 +38,7 @@ public class User {
         String query = String.format(
                 "SELECT f.FlightID, l.Country, l.Province, l.City, " +
                     "l2.Country as Country2, l2.Province as Province2, l2.City as City2, " +
-                    "f.DepartureDate, f.ArrivalDate, a.AircraftID, a.Company, a.Model, a.SeatCapacity, a.Type " +
+                    "f.DepartureDate, f.ArrivalDate, a.AircraftID, a.Company, a.Model, a.SeatCapacity, a.Type, f.SeatMap " +
                 "FROM flight AS f " +
                 "JOIN Location AS l ON f.DepartureLocationID = l.LocationID " +
                 "LEFT JOIN Location AS l2 ON f.ArrivalLocationID = l2.LocationID " +
@@ -61,6 +61,23 @@ public class User {
                     Integer.parseInt(row.get(13)));
             Flights flight = new Flights(flightID, departureDate, arrivalDate, originLocation, destinationLocation,
                     aircraft);
+            ArrayList<Seat> seats = new ArrayList<Seat>();
+            // get the seat map from the database
+            String seatMap = row.get(14);
+            if (seatMap != null) {
+                String[] seatRow = seatMap.split("\n");
+                for (int i = 0; i < seatRow.length; i++) {
+                    String[] seatCol = seatRow[i].split("\\|");
+                    for (int j = 1; j < seatCol.length; j++) {
+                        if (seatCol[j].contains("X")) {
+                            seats.add(new OrdinarySeat(i * seatCol.length + j + 1, i, (char) (j + 64), true));
+                        } else {
+                            seats.add(new OrdinarySeat(i * seatCol.length + j + 1, i, (char) (j + 64), false));
+                        }
+                    }
+                }
+                flight.setSeatList(seats);
+            }
             flights.add(flight);
         }
 
@@ -259,9 +276,9 @@ public class User {
         // that is in front of seatNum to "X"
         String[] seatRow = mapString.split("\n");
         for (int i = 0; i < seatRow.length; i++) {
-            String[] seatCol = seatRow[i].split("|");
+            String[] seatCol = seatRow[i].split("\\|");
             for (int j = 0; j < seatCol.length; j++) {
-                if (seatCol[j].contains(seat.Display())) {
+                if (seatCol[j].contains(" "+seat.Display())) {
                     seatCol[j] = seatCol[j].replace("O", "X");
                     break;
                 }
@@ -274,7 +291,7 @@ public class User {
         mapString = String.join("\n", seatRow);
         // update the flight in the database
         query = String.format("UPDATE flight SET SeatMap = '%s' WHERE FlightID = '%s'", mapString, flight.getFlightNum());
-        dbResult = Database.dbExecute(query);
+        Database.dbUpdate(query);
     }
 
     static public void CancelTicket(int ticketNum) {
