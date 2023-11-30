@@ -42,6 +42,14 @@ public class GUI extends JFrame implements LoginCallback{
     private JButton adminLoginButton;
     private JButton browsePassengerButton;
 
+    //Admin specific components
+    private JButton browseAircraftButton;
+    private JButton browseCrewsButton;
+    private JButton browseFlightButton;
+    private JButton manageFlightButton;
+    private JButton manageCrewsButton;
+    private JButton manageAircraftButton;
+
     static private String username=null;
     static private String identity=null;
     static private User user=null;
@@ -164,6 +172,34 @@ public class GUI extends JFrame implements LoginCallback{
            searchPassenger(); 
         });
     }
+
+    private void createAdminView(JPanel panel){
+        //Set up panels
+        JPanel crewPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        browseCrewsButton = new JButton("Browse Crews");
+        manageCrewsButton = new JButton("Manage Crews");
+        crewPanel.add(browseCrewsButton);
+        crewPanel.add(manageCrewsButton);
+
+        JPanel flightPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        browseFlightButton = new JButton("Browse Flights");
+        manageFlightButton = new JButton("Manage Flights");
+        flightPanel.add(browseFlightButton);
+        flightPanel.add(manageFlightButton);
+
+        JPanel aircraftPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        browseAircraftButton = new JButton("Browse Aircrafts");
+        manageAircraftButton = new JButton("Manage Aircrafts");
+        aircraftPanel.add(browseAircraftButton);
+        aircraftPanel.add(manageAircraftButton);
+
+
+
+        panel.add(crewPanel);
+        panel.add(flightPanel);
+        panel.add(aircraftPanel);
+    }
+
     // Creates and adds components to the frame
     private void createView() {
         System.out.println("Username: " + username);
@@ -228,102 +264,103 @@ public class GUI extends JFrame implements LoginCallback{
         
             mainContainer.add(topPanel, BorderLayout.NORTH);
         }
-        
 
-
-
-                
         // Main panel
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         mainContainer.add(panel, BorderLayout.CENTER);
 
-        // Panel for trip type and number of guests
-        JPanel tripAndGuestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        tripTypeComboBox = new JComboBox<>(new String[] { "One Way", "Return" });
-        tripAndGuestPanel.add(new JLabel("Trip Type:"));
-        tripAndGuestPanel.add(tripTypeComboBox);
-        guestNumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
-        tripAndGuestPanel.add(new JLabel("Number of Guests:"));
-        tripAndGuestPanel.add(guestNumberSpinner);
-        panel.add(tripAndGuestPanel);
+        if(identity == "Admin"){
+            createAdminView(panel);
+        }
+        else{
+            // Panel for trip type and number of guests
+            JPanel tripAndGuestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            tripTypeComboBox = new JComboBox<>(new String[] { "One Way", "Return" });
+            tripAndGuestPanel.add(new JLabel("Trip Type:"));
+            tripAndGuestPanel.add(tripTypeComboBox);
+            guestNumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 10, 1));
+            tripAndGuestPanel.add(new JLabel("Number of Guests:"));
+            tripAndGuestPanel.add(guestNumberSpinner);
+            panel.add(tripAndGuestPanel);
 
-        // Panel for origin information
-        JPanel originPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        originCountryTextArea = new JTextArea(1, 20);
-        originProvinceTextArea = new JTextArea(1, 20);
-        originCityTextArea = new JTextArea(1, 20);
-        originPanel.add(new JLabel("Origin Country:"));
-        originPanel.add(originCountryTextArea);
-        originPanel.add(new JLabel("Origin Province:"));
-        originPanel.add(originProvinceTextArea);
-        originPanel.add(new JLabel("Origin City:"));
-        originPanel.add(originCityTextArea);
-        panel.add(originPanel);
+            // Panel for origin information
+            JPanel originPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            originCountryTextArea = new JTextArea(1, 20);
+            originProvinceTextArea = new JTextArea(1, 20);
+            originCityTextArea = new JTextArea(1, 20);
+            originPanel.add(new JLabel("Origin Country:"));
+            originPanel.add(originCountryTextArea);
+            originPanel.add(new JLabel("Origin Province:"));
+            originPanel.add(originProvinceTextArea);
+            originPanel.add(new JLabel("Origin City:"));
+            originPanel.add(originCityTextArea);
+            panel.add(originPanel);
 
-        // Panel for destination information
-        JPanel destinationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        destinationCountryTextArea = new JTextArea(1, 20);
-        destinationProvinceTextArea = new JTextArea(1, 20);
-        destinationCityTextArea = new JTextArea(1, 20);
-        destinationPanel.add(new JLabel("Destination Country:"));
-        destinationPanel.add(destinationCountryTextArea);
-        destinationPanel.add(new JLabel("Destination Province:"));
-        destinationPanel.add(destinationProvinceTextArea);
-        destinationPanel.add(new JLabel("Destination City:"));
-        destinationPanel.add(destinationCityTextArea);
-        panel.add(destinationPanel);
+            // Panel for destination information
+            JPanel destinationPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            destinationCountryTextArea = new JTextArea(1, 20);
+            destinationProvinceTextArea = new JTextArea(1, 20);
+            destinationCityTextArea = new JTextArea(1, 20);
+            destinationPanel.add(new JLabel("Destination Country:"));
+            destinationPanel.add(destinationCountryTextArea);
+            destinationPanel.add(new JLabel("Destination Province:"));
+            destinationPanel.add(destinationProvinceTextArea);
+            destinationPanel.add(new JLabel("Destination City:"));
+            destinationPanel.add(destinationCityTextArea);
+            panel.add(destinationPanel);
 
-        // Panel for date selection
-        JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        Date initDate = calendar.getTime();
-        Date earliestDate = new Date(Long.MIN_VALUE);
-        Date latestDate = new Date(Long.MAX_VALUE);
+            // Panel for date selection
+            JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            Date initDate = calendar.getTime();
+            Date earliestDate = new Date(Long.MIN_VALUE);
+            Date latestDate = new Date(Long.MAX_VALUE);
 
-        // Date selectors
-        SpinnerDateModel departureDateModel = new SpinnerDateModel(initDate, earliestDate, latestDate,
-                Calendar.DAY_OF_MONTH);
-        departureDateField = new JSpinner(departureDateModel);
-        JSpinner.DateEditor departureDateEditor = new JSpinner.DateEditor(departureDateField, "dd/MM/yyyy");
-        departureDateField.setEditor(departureDateEditor);
-        SpinnerDateModel returnDateModel = new SpinnerDateModel(initDate, earliestDate, latestDate,
-                Calendar.DAY_OF_MONTH);
-        returnDateField = new JSpinner(returnDateModel);
-        JSpinner.DateEditor returnDateEditor = new JSpinner.DateEditor(returnDateField, "dd/MM/yyyy");
-        returnDateField.setEditor(returnDateEditor);
-        returnDateField.setVisible(false);
-        returnDateLabel = new JLabel("Return Date:");
-        returnDateLabel.setVisible(false);
-        datePanel.add(new JLabel("Departure Date:"));
-        datePanel.add(departureDateField);
-        datePanel.add(returnDateLabel);
-        datePanel.add(returnDateField);
-        panel.add(datePanel);
+            // Date selectors
+            SpinnerDateModel departureDateModel = new SpinnerDateModel(initDate, earliestDate, latestDate,
+                    Calendar.DAY_OF_MONTH);
+            departureDateField = new JSpinner(departureDateModel);
+            JSpinner.DateEditor departureDateEditor = new JSpinner.DateEditor(departureDateField, "dd/MM/yyyy");
+            departureDateField.setEditor(departureDateEditor);
+            SpinnerDateModel returnDateModel = new SpinnerDateModel(initDate, earliestDate, latestDate,
+                    Calendar.DAY_OF_MONTH);
+            returnDateField = new JSpinner(returnDateModel);
+            JSpinner.DateEditor returnDateEditor = new JSpinner.DateEditor(returnDateField, "dd/MM/yyyy");
+            returnDateField.setEditor(returnDateEditor);
+            returnDateField.setVisible(false);
+            returnDateLabel = new JLabel("Return Date:");
+            returnDateLabel.setVisible(false);
+            datePanel.add(new JLabel("Departure Date:"));
+            datePanel.add(departureDateField);
+            datePanel.add(returnDateLabel);
+            datePanel.add(returnDateField);
+            panel.add(datePanel);
 
-        // Dynamically display return date if return trip selected
-        tripTypeComboBox.addActionListener(e -> {
-            boolean isReturn = "Return".equals(tripTypeComboBox.getSelectedItem());
-            returnDateField.setVisible(isReturn);
-            returnDateLabel.setVisible(isReturn);
-        });
+            // Dynamically display return date if return trip selected
+            tripTypeComboBox.addActionListener(e -> {
+                boolean isReturn = "Return".equals(tripTypeComboBox.getSelectedItem());
+                returnDateField.setVisible(isReturn);
+                returnDateLabel.setVisible(isReturn);
+            });
 
-        // Search button setup
-        buttonSearch = new JButton("Search Flights");
-        buttonSearch.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchFlights();
+            // Search button setup
+            buttonSearch = new JButton("Search Flights");
+            buttonSearch.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    searchFlights();
+                }
+            });
+            panel.add(buttonSearch);
+            if (identity == "FA"){
+                createBrowsePassengerPanel(panel);
+                panel.add(browsePassengerButton);
             }
-        });
-        panel.add(buttonSearch);
-        if (identity == "FA"){
-            createBrowsePassengerPanel(panel);
-            panel.add(browsePassengerButton);
         }
     }
 
