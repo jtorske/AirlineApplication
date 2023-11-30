@@ -918,13 +918,12 @@ public class GUI extends JFrame implements LoginCallback{
         String[] columnNames = {"Name", "Role", "ID", "FlightsWorking"};
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        int i = 1;
         // Add a row for each passenger
         for (CrewMember c : crewList){
             Object[] row = new Object[4];
             row[0] = c.getName().toString();
             row[1] = c.getRole();
-            row[2] = i++;
+            row[2] = c.getId();
             row[3] = c.getFlightsWorking();
             model.addRow(row);
         }
@@ -1036,13 +1035,12 @@ public class GUI extends JFrame implements LoginCallback{
         String[] columnNames = {"Name", "Role", "ID", "FlightsWorking"};
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
-        int i = 1;
         // Add a row for each passenger
         for (CrewMember c : crewList){
             Object[] row = new Object[4];
             row[0] = c.getName().toString();
             row[1] = c.getRole();
-            row[2] = i++;
+            row[2] = c.getId();
             row[3] = c.getFlightsWorking();
             model.addRow(row);
         }
@@ -1052,12 +1050,12 @@ public class GUI extends JFrame implements LoginCallback{
         //Add a button to remove selected entries
         JButton rm = new JButton("Remove Selected Row");
         rm.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 // check for selected row first
                 if (table.getSelectedRow() != -1) {
                     // remove selected row from the model
+                    admin.removeCrewMember(table.getValueAt(table.getSelectedRow(), 2).toString());
                     model.removeRow(table.getSelectedRow());
                 }
             }
@@ -1073,6 +1071,17 @@ public class GUI extends JFrame implements LoginCallback{
         JTextArea usernameArea = new JTextArea(1, 20);
         JTextArea passwordArea = new JTextArea(1, 20);
         JButton addCrewButton = new JButton("Add");
+
+        addCrewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String n = nameArea.getText().toString();
+                String r = roleArea.getText().toString();
+                String u = usernameArea.getText().toString();
+                String p = passwordArea.getText().toString();
+                admin.addCrewMember(n, r, u, p);
+            }
+        });
 
         addPanel.add(new JLabel("Name:"));
         addPanel.add(nameArea);

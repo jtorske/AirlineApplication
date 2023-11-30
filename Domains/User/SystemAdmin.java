@@ -77,10 +77,24 @@ public class SystemAdmin extends User{
     }
 
     public void addCrewMember(String name, String role, String username, String password){
+        //Check for valid entries
+        if(name.split(" ").length != 3){
+            System.out.println("Invalid name provided");
+            return;
+        }
 
+        List<List<String>> prevEntries = Database.dbExecute("select * from CrewMember");
+        List<String> values = new ArrayList<String>();
+        values.add(String.valueOf(prevEntries.size() + 1));
+        values.add(name);
+        values.add(role);
+        values.add(username);
+        values.add(password);
+        Database.dbInsert("CrewMember", values);
     }
 
     public void removeCrewMember(String id){
-
+        Database.dbDelete("CrewSchedule", "CrewMemberID", id);
+        Database.dbDelete("CrewMember", "CrewMemberID", id);
     }
 }
