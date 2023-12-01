@@ -404,6 +404,9 @@ public class GUI extends JFrame implements LoginCallback{
         }
     }
 
+    private boolean containsIgnoreCase(String source, String target) {
+        return source.toLowerCase().contains(target.toLowerCase());
+    }
     // TODO: Implement actual flight search
     private void searchFlights() {
         // Collecting values inputted by user
@@ -423,6 +426,21 @@ public class GUI extends JFrame implements LoginCallback{
 
         ArrayList<Flights> flights = User.BrowseFlights(departure, origin, destination);
 
+        // Filter flights based on the parameters
+        ArrayList<Flights> filteredFlights = new ArrayList<>();
+        for (Flights flight : flights) {
+            Location departureLocation = flight.getDepartureLocation();
+            Location arrivalLocation = flight.getArrivalLocation();
+
+            if (containsIgnoreCase(departureLocation.getCountry(), originCountry)
+                    && containsIgnoreCase(departureLocation.getProvDist(), originProvince)
+                    && containsIgnoreCase(departureLocation.getCity(), originCity)
+                    && containsIgnoreCase(arrivalLocation.getCountry(), destinationCountry)
+                    && containsIgnoreCase(arrivalLocation.getProvDist(), destinationProvince)
+                    && containsIgnoreCase(arrivalLocation.getCity(), destinationCity)) {
+                filteredFlights.add(flight);
+            }
+        }
         //display the flights in same window as table
         // Create column names
         String[] columnNames = {"Flight Number", "Origin", "Destination", "Departure Time", "Arrival Time"};
@@ -431,7 +449,7 @@ public class GUI extends JFrame implements LoginCallback{
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         // Add a row for each flight
-        for (Flights flight : flights) {
+        for (Flights flight : filteredFlights) {
             Object[] row = new Object[columnNames.length];
             row[0] = flight.getFlightNum();
             row[1] = flight.getDepartureLocation().toString();
