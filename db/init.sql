@@ -163,14 +163,14 @@ CREATE TABLE SeatType (
     Type VARCHAR(255),
     Price DECIMAL(10, 2)
 );
--- Adding initializing data to AUTO_INCREMENT tables
-INSERT INTO User (UserID)
-VALUES (1);
-INSERT INTO Name (NameID)
-VALUES (1);
-INSERT INTO Phone (PhoneID)
-VALUES (1);
-INSERT INTO Address (AddressID)
-VALUES (1);
-INSERT INTO Passport (PassportID)
-VALUES (1);
+-- -- Adding initializing data to AUTO_INCREMENT tables
+-- INSERT INTO User (UserID)
+-- VALUES (1);
+-- INSERT INTO Name (NameID)
+-- VALUES (1);
+-- INSERT INTO Phone (PhoneID)
+-- VALUES (1);
+-- INSERT INTO Address (AddressID)
+-- VALUES (1);
+-- INSERT INTO Passport (PassportID)
+-- VALUES (1);
