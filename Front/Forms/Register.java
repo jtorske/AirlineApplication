@@ -16,9 +16,22 @@ import Domains.Passenger.*;
 
 public class Register implements Forms{
     static int membershipNum = 6;
+    static void setMembershipNum(int num){
+        membershipNum = num;
+    }
 
     public static String RegisterMembership(Name name, Address address, String email, String password){
         try{
+            //go to database and get highest number of the ticketID
+            int memNum = 0;
+            //dbexecute
+            String query = String.format("SELECT MAX(UserID) FROM user");
+            List<List<String>> dbResult = Database.dbExecute(query);
+            for (List<String> row : dbResult) {
+                memNum = Integer.parseInt(row.get(0));
+            }
+            memNum++;
+            setMembershipNum(memNum);
             String mn = String.valueOf(membershipNum);
             List<String> nameValues = List.of(mn, name.getFirstName(), name.getLastName(), name.getMiddleName());
             Database.dbInsert("Name", nameValues);

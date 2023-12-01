@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
@@ -292,10 +293,7 @@ public class GUI extends JFrame implements LoginCallback{
         
             createLogoutButton(this);
             rightPanel.add(loginButton);  
-        
-            createCancelButton();
-            rightPanel.add(cancelButton);
-        
+            
             rightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
             topPanel.add(rightPanel, BorderLayout.EAST);
         
@@ -357,7 +355,8 @@ public class GUI extends JFrame implements LoginCallback{
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
-            Date initDate = calendar.getTime();
+            // Date initDate = calendar.getTime();
+            Date initDate = new Date(0);
             Date earliestDate = new Date(Long.MIN_VALUE);
             Date latestDate = new Date(Long.MAX_VALUE);
 
@@ -404,6 +403,9 @@ public class GUI extends JFrame implements LoginCallback{
         }
     }
 
+    private boolean containsIgnoreCase(String source, String target) {
+        return source.toLowerCase().contains(target.toLowerCase());
+    }
     // TODO: Implement actual flight search
     private void searchFlights() {
         // Collecting values inputted by user
@@ -415,14 +417,42 @@ public class GUI extends JFrame implements LoginCallback{
         String destinationCity = destinationCityTextArea.getText();
         String tripType = (String) tripTypeComboBox.getSelectedItem();
         int numberOfGuests = (Integer) guestNumberSpinner.getValue();
+        // Dates
         Date departureDate = (Date) departureDateField.getValue();
         Date returnDate = (Date) returnDateField.getValue();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-d");
+        String departureDateString = formatter.format(departureDate);
+
+        // Default value for return date is considered null
+        // or if the date is before the current date
+        if (departureDateString.equals("1969-12-31") 
+                || departureDate.before(new Date())){
+            departureDateString = "";
+        }
         Location origin = new Location(originCountry, originProvince, originCity);
         Location destination = new Location(destinationCountry, destinationProvince, destinationCity);
         TimeDate departure = new TimeDate(departureDate);
 
         ArrayList<Flights> flights = User.BrowseFlights(departure, origin, destination);
+        
+        System.out.println(departureDateString);
 
+        // Filter flights based on the parameters
+        ArrayList<Flights> filteredFlights = new ArrayList<>();
+        for (Flights flight : flights) {
+            Location departureLocation = flight.getDepartureLocation();
+            Location arrivalLocation = flight.getArrivalLocation();
+            System.out.println(flight.getDepartureDate().toString());
+            if (containsIgnoreCase(departureLocation.getCountry(), originCountry)
+                    && containsIgnoreCase(departureLocation.getProvDist(), originProvince)
+                    && containsIgnoreCase(departureLocation.getCity(), originCity)
+                    && containsIgnoreCase(arrivalLocation.getCountry(), destinationCountry)
+                    && containsIgnoreCase(arrivalLocation.getProvDist(), destinationProvince)
+                    && containsIgnoreCase(arrivalLocation.getCity(), destinationCity)
+                    && containsIgnoreCase(flight.getDepartureDate().toString(), departureDateString)) {
+                filteredFlights.add(flight);
+            }
+        }
         //display the flights in same window as table
         // Create column names
         String[] columnNames = {"Flight Number", "Origin", "Destination", "Departure Time", "Arrival Time"};
@@ -431,7 +461,7 @@ public class GUI extends JFrame implements LoginCallback{
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
 
         // Add a row for each flight
-        for (Flights flight : flights) {
+        for (Flights flight : filteredFlights) {
             Object[] row = new Object[columnNames.length];
             row[0] = flight.getFlightNum();
             row[1] = flight.getDepartureLocation().toString();
@@ -714,8 +744,8 @@ public class GUI extends JFrame implements LoginCallback{
         //ony 3 types, 1. basic 2. premium 3. premium plus
         JPanel insurancePanel = new JPanel();
         insurancePanel.setLayout(new BoxLayout(insurancePanel, BoxLayout.Y_AXIS));
-        JTextField insuranceTypeField = new JTextField(20);
-        insurancePanel.add(new JLabel("Insurance Type:\\n 2. Premium\\n 3. Premium Plus"));
+        JTextField insuranceTypeField = new JTextField(1);
+        insurancePanel.add(new JLabel("Insurance Type:\n 2. Premium\n 3. Premium Plus"));
         insurancePanel.add(insuranceTypeField);
         panel.add(insurancePanel);
 
