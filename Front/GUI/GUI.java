@@ -1216,31 +1216,35 @@ public class GUI extends JFrame implements LoginCallback{
 
         //Panel and inputs for adding a new crew member
         JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JTextArea nameArea = new JTextArea(1, 20);
-        JTextArea roleArea = new JTextArea(1, 20);
-        JTextArea usernameArea = new JTextArea(1, 20);
-        JTextArea passwordArea = new JTextArea(1, 20);
+        JTextArea aircraftArea = new JTextArea(1, 20);
+        JTextArea depLocArea = new JTextArea(1, 20);
+        JTextArea arrLocArea = new JTextArea(1, 20);
+        JTextArea depDateArea = new JTextArea(1, 20);
+        JTextArea arrDateArea = new JTextArea(1, 20);
         JButton addCrewButton = new JButton("Add");
 
         addCrewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String n = nameArea.getText().toString();
-                String r = roleArea.getText().toString();
-                String u = usernameArea.getText().toString();
-                String p = passwordArea.getText().toString();
-                admin.addCrewMember(n, r, u, p);
+                String a = aircraftArea.getText().toString();
+                String dl = depLocArea.getText().toString();
+                String al = arrLocArea.getText().toString();
+                String dd = depDateArea.getText().toString();
+                String ad = arrDateArea.getText().toString();
+                admin.addFlight(a, dl, al, dd, ad);
             }
         });
 
-        addPanel.add(new JLabel("Name:"));
-        addPanel.add(nameArea);
-        addPanel.add(new JLabel("Role:"));
-        addPanel.add(roleArea);
-        addPanel.add(new JLabel("Username:"));
-        addPanel.add(usernameArea);
-        addPanel.add(new JLabel("Password:"));
-        addPanel.add(passwordArea);
+        addPanel.add(new JLabel("Aircraft ID:"));
+        addPanel.add(aircraftArea);
+        addPanel.add(new JLabel("Departure Location ID:"));
+        addPanel.add(depLocArea);
+        addPanel.add(new JLabel("Arrival Location ID:"));
+        addPanel.add(arrLocArea);
+        addPanel.add(new JLabel("Departure Date:"));
+        addPanel.add(depDateArea);
+        addPanel.add(new JLabel("Arrival Date:"));
+        addPanel.add(arrDateArea);
         addPanel.add(addCrewButton);
 
         modPanel.add(new JLabel("Add a new user:"), BorderLayout.CENTER);
