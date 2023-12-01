@@ -1285,9 +1285,9 @@ public class GUI extends JFrame implements LoginCallback {
 
         // Panel and inputs for adding a new crew member
         JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JTextArea aircraftArea = new JTextArea(1, 20);
-        JTextArea depLocArea = new JTextArea(1, 20);
-        JTextArea arrLocArea = new JTextArea(1, 20);
+        JTextArea aircraftArea = new JTextArea(1, 5);
+        JTextArea depLocArea = new JTextArea(1, 5);
+        JTextArea arrLocArea = new JTextArea(1, 5);
         JTextArea depDateArea = new JTextArea(1, 20);
         JTextArea arrDateArea = new JTextArea(1, 20);
         JButton addCrewButton = new JButton("Add");
@@ -1332,7 +1332,7 @@ public class GUI extends JFrame implements LoginCallback {
     private void manageAircrafts() {
         SystemAdmin admin = new SystemAdmin(username);
         ArrayList<Aircraft> acList = admin.getAircraftList();
-        JFrame frame = new JFrame("Current List of Flights");
+        JFrame frame = new JFrame("Current List of Aircrafts");
 
         JButton button = new JButton("Go Back");
         button.addActionListener(new ActionListener() {
