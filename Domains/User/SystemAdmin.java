@@ -131,4 +131,12 @@ public class SystemAdmin extends User{
         Database.dbDelete("CrewSchedule", "FlightID", id);
         Database.dbDelete("Flight", "FlightID", id);
     }
+
+    public void addAircraft(String aircraftID, String company, String model, String seatCapacity, String type){
+
+    }
+
+    public void removeAircraft(String id){
+        
+    }
 }
