@@ -23,8 +23,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
 
 public class GUI extends JFrame implements LoginCallback{
     //Component declarations
@@ -357,7 +359,8 @@ public class GUI extends JFrame implements LoginCallback{
             calendar.set(Calendar.MINUTE, 0);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
-            Date initDate = calendar.getTime();
+            // Date initDate = calendar.getTime();
+            Date initDate = new Date(0);
             Date earliestDate = new Date(Long.MIN_VALUE);
             Date latestDate = new Date(Long.MAX_VALUE);
 
@@ -418,26 +421,39 @@ public class GUI extends JFrame implements LoginCallback{
         String destinationCity = destinationCityTextArea.getText();
         String tripType = (String) tripTypeComboBox.getSelectedItem();
         int numberOfGuests = (Integer) guestNumberSpinner.getValue();
+        // Dates
         Date departureDate = (Date) departureDateField.getValue();
         Date returnDate = (Date) returnDateField.getValue();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-M-d");
+        String departureDateString = formatter.format(departureDate);
+
+        // Default value for return date is considered null
+        // or if the date is before the current date
+        if (departureDateString.equals("1969-12-31") 
+                || departureDate.before(new Date())){
+            departureDateString = "";
+        }
         Location origin = new Location(originCountry, originProvince, originCity);
         Location destination = new Location(destinationCountry, destinationProvince, destinationCity);
         TimeDate departure = new TimeDate(departureDate);
 
         ArrayList<Flights> flights = User.BrowseFlights(departure, origin, destination);
+        
+        System.out.println(departureDateString);
 
         // Filter flights based on the parameters
         ArrayList<Flights> filteredFlights = new ArrayList<>();
         for (Flights flight : flights) {
             Location departureLocation = flight.getDepartureLocation();
             Location arrivalLocation = flight.getArrivalLocation();
-
+            System.out.println(flight.getDepartureDate().toString());
             if (containsIgnoreCase(departureLocation.getCountry(), originCountry)
                     && containsIgnoreCase(departureLocation.getProvDist(), originProvince)
                     && containsIgnoreCase(departureLocation.getCity(), originCity)
                     && containsIgnoreCase(arrivalLocation.getCountry(), destinationCountry)
                     && containsIgnoreCase(arrivalLocation.getProvDist(), destinationProvince)
-                    && containsIgnoreCase(arrivalLocation.getCity(), destinationCity)) {
+                    && containsIgnoreCase(arrivalLocation.getCity(), destinationCity)
+                    && containsIgnoreCase(flight.getDepartureDate().toString(), departureDateString)) {
                 filteredFlights.add(flight);
             }
         }
