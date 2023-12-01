@@ -27,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-
 public class GUI extends JFrame implements LoginCallback{
     //Component declarations
     private JTextArea originCountryTextArea, destinationCountryTextArea, originProvinceTextArea, destinationProvinceTextArea, originCityTextArea, destinationCityTextArea, FlightNumArea;
@@ -294,10 +293,7 @@ public class GUI extends JFrame implements LoginCallback{
         
             createLogoutButton(this);
             rightPanel.add(loginButton);  
-        
-            createCancelButton();
-            rightPanel.add(cancelButton);
-        
+            
             rightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
             topPanel.add(rightPanel, BorderLayout.EAST);
         
