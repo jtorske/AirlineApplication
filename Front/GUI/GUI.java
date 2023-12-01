@@ -20,22 +20,22 @@ import Domains.Passenger.Passenger;
 import Domains.Tickets.Insurance;
 import Domains.User.*;
 import Domains.Flights.Location;
-
-
+import java.util.List;
+import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 
-public class GUI extends JFrame implements LoginCallback{
-    //Component declarations
-    private JTextArea originCountryTextArea, destinationCountryTextArea, originProvinceTextArea, destinationProvinceTextArea, originCityTextArea, destinationCityTextArea, FlightNumArea;
+public class GUI extends JFrame implements LoginCallback {
+    // Component declarations
+    private JTextArea originCountryTextArea, destinationCountryTextArea, originProvinceTextArea,
+            destinationProvinceTextArea, originCityTextArea, destinationCityTextArea, FlightNumArea;
 
     private JComboBox<String> tripTypeComboBox;
 
@@ -43,7 +43,7 @@ public class GUI extends JFrame implements LoginCallback{
 
     private JButton buttonSearch;
     private JLabel returnDateLabel;
-    
+
     private JButton loginButton;
     private JButton signUpButton;
     private JButton cancelButton;
@@ -51,7 +51,7 @@ public class GUI extends JFrame implements LoginCallback{
     private JButton adminLoginButton;
     private JButton browsePassengerButton;
 
-    //Admin specific components
+    // Admin specific components
     private JButton browseAircraftButton;
     private JButton browseCrewsButton;
     private JButton browseFlightButton;
@@ -59,31 +59,37 @@ public class GUI extends JFrame implements LoginCallback{
     private JButton manageCrewsButton;
     private JButton manageAircraftButton;
 
-    static private String username=null;
-    static private String identity=null;
-    static private User user=null;
+    static private String username = null;
+    static private String identity = null;
+    static private User user = null;
+    private static List<JFrame> openFrames = new ArrayList<>();
 
     @Override
     public void onLoginSuccess() {
-        this.dispose(); 
+        this.dispose();
     }
-    static public void setIdentity(String i){
+
+    static public void setIdentity(String i) {
         identity = i;
         GUI gui = new GUI();
         gui.setVisible(true);
     }
-    static public void setUsername(String u){
+
+    static public void setUsername(String u) {
         username = u;
-        //refresh the page
+        // refresh the page
         GUI gui = new GUI();
         gui.setVisible(true);
     }
-    static public String getUsername(){
+
+    static public String getUsername() {
         return username;
-    }  
-    static public void setUser(User u){
+    }
+
+    static public void setUser(User u) {
         user = u;
     }
+
     public GUI() {
         createView();
         setupFrame();
@@ -105,19 +111,20 @@ public class GUI extends JFrame implements LoginCallback{
     // Sets up the login button
     private void createLoginButton() {
         loginButton = new JButton("Login");
-        loginButton.setPreferredSize(new Dimension(80, 30)); 
-        loginButton.setFont(new Font("Arial", Font.PLAIN, 10)); 
+        loginButton.setPreferredSize(new Dimension(80, 30));
+        loginButton.setFont(new Font("Arial", Font.PLAIN, 10));
         loginButton.addActionListener(e -> {
             Login loginWindow = new Login();
             loginWindow.setLoginCallback(this); // Set the callback
             loginWindow.setVisible(true);
         });
     }
+
     // Sets up the flight attendent login button
     private void createFALoginButton() {
         crewMemberLoginButton = new JButton("Flight Attendant Login");
-        crewMemberLoginButton.setPreferredSize(new Dimension(160, 30)); 
-        crewMemberLoginButton.setFont(new Font("Arial", Font.PLAIN, 10)); 
+        crewMemberLoginButton.setPreferredSize(new Dimension(160, 30));
+        crewMemberLoginButton.setFont(new Font("Arial", Font.PLAIN, 10));
         crewMemberLoginButton.addActionListener(e -> {
             Login loginWindow = new FlightAttendantLogin();
             loginWindow.setVisible(true);
@@ -127,8 +134,8 @@ public class GUI extends JFrame implements LoginCallback{
     // Sets up the admin login button
     private void createAdminLoginButton() {
         adminLoginButton = new JButton("Admin Login");
-        adminLoginButton.setPreferredSize(new Dimension(100, 30)); 
-        adminLoginButton.setFont(new Font("Arial", Font.PLAIN, 10)); 
+        adminLoginButton.setPreferredSize(new Dimension(100, 30));
+        adminLoginButton.setFont(new Font("Arial", Font.PLAIN, 10));
         adminLoginButton.addActionListener(e -> {
             Login loginWindow = new AdminLogin();
             loginWindow.setVisible(true);
@@ -138,13 +145,14 @@ public class GUI extends JFrame implements LoginCallback{
     // Sets up the logout button
     private void createLogoutButton(GUI gui) {
         loginButton = new JButton("Logout");
-        loginButton.setPreferredSize(new Dimension(80, 30)); 
-        loginButton.setFont(new Font("Arial", Font.PLAIN, 10)); 
+        loginButton.setPreferredSize(new Dimension(80, 30));
+        loginButton.setFont(new Font("Arial", Font.PLAIN, 10));
         loginButton.addActionListener(e -> {
             setUsername(null);
             gui.dispose();
         });
     }
+
     // Sets up the cancel button
     private void createCancelButton() {
         cancelButton = new JButton("Cancel Flight");
@@ -166,7 +174,8 @@ public class GUI extends JFrame implements LoginCallback{
             signUpWindow.setVisible(true);
         });
     }
-        // Sets up the Sign Up button
+
+    // Sets up the Sign Up button
     private void createBrowsePassengerPanel(JPanel panel) {
         JPanel BrowsePassengerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         FlightNumArea = new JTextArea(1, 20);
@@ -178,7 +187,7 @@ public class GUI extends JFrame implements LoginCallback{
         browsePassengerButton.setPreferredSize(new Dimension(80, 30));
         browsePassengerButton.setFont(new Font("Arial", Font.PLAIN, 10));
         browsePassengerButton.addActionListener(e -> {
-           searchPassenger(); 
+            searchPassenger();
         });
     }
 
@@ -190,16 +199,15 @@ public class GUI extends JFrame implements LoginCallback{
             ManageTickets manageTicketsWindow = new ManageTickets(username);
             manageTicketsWindow.setVisible(true);
         });
-    
+
         JPanel bottomLeftPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomLeftPanel.add(manageTicketsButton);
-    
+
         getContentPane().add(bottomLeftPanel, BorderLayout.SOUTH);
     }
-    
-    
-    private void createAdminView(JPanel panel){
-        //Set up panels
+
+    private void createAdminView(JPanel panel) {
+        // Set up panels
         JPanel crewPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         browseCrewsButton = new JButton("Browse Crews");
         manageCrewsButton = new JButton("Manage Crews");
@@ -218,8 +226,8 @@ public class GUI extends JFrame implements LoginCallback{
         aircraftPanel.add(browseAircraftButton);
         aircraftPanel.add(manageAircraftButton);
 
-        //TODO:
-        //Implement buttons
+        // TODO:
+        // Implement buttons
         browseCrewsButton.addActionListener(e -> {
             browseCrews();
         });
@@ -252,12 +260,12 @@ public class GUI extends JFrame implements LoginCallback{
         JPanel mainContainer = new JPanel(new BorderLayout());
 
         getContentPane().add(mainContainer);
-        
+
         JPanel loginPanel = new JPanel(new BorderLayout());
         JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
-        if (username == null){
+        if (username == null) {
             // Login button
             createLoginButton();
             rightPanel.add(loginButton);
@@ -279,30 +287,27 @@ public class GUI extends JFrame implements LoginCallback{
             loginPanel.add(leftPanel, BorderLayout.SOUTH);
             mainContainer.add(loginPanel, BorderLayout.NORTH);
 
-                    
             // Cancel button
             createCancelButton();
             rightPanel.add(cancelButton);
             mainContainer.add(rightPanel, BorderLayout.NORTH);
-        }
-        else {
+        } else {
             JPanel topPanel = new JPanel(new BorderLayout());
-        
+
             JLabel userLabel = new JLabel("Welcome: " + username);
 
-            userLabel.setFont(new Font("Arial", Font.BOLD, 20)); 
+            userLabel.setFont(new Font("Arial", Font.BOLD, 20));
 
             leftPanel.add(userLabel);
-            
-        
+
             topPanel.add(leftPanel, BorderLayout.WEST);
-        
+
             createLogoutButton(this);
-            rightPanel.add(loginButton);  
-            
+            rightPanel.add(loginButton);
+
             rightPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
             topPanel.add(rightPanel, BorderLayout.EAST);
-        
+
             mainContainer.add(topPanel, BorderLayout.NORTH);
 
             createManageTicketsButton();
@@ -314,10 +319,9 @@ public class GUI extends JFrame implements LoginCallback{
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         mainContainer.add(panel, BorderLayout.CENTER);
 
-        if(identity == "Admin"){
+        if (identity == "Admin") {
             createAdminView(panel);
-        }
-        else{
+        } else {
             // Panel for trip type and number of guests
             JPanel tripAndGuestPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             tripTypeComboBox = new JComboBox<>(new String[] { "One Way", "Return" });
@@ -402,7 +406,7 @@ public class GUI extends JFrame implements LoginCallback{
                 }
             });
             panel.add(buttonSearch);
-            if (identity == "FA"){
+            if (identity == "FA") {
                 createBrowsePassengerPanel(panel);
                 panel.add(browsePassengerButton);
             }
@@ -412,6 +416,7 @@ public class GUI extends JFrame implements LoginCallback{
     private boolean containsIgnoreCase(String source, String target) {
         return source.toLowerCase().contains(target.toLowerCase());
     }
+
     // TODO: Implement actual flight search
     private void searchFlights() {
         // Collecting values inputted by user
@@ -431,8 +436,8 @@ public class GUI extends JFrame implements LoginCallback{
 
         // Default value for return date is considered null
         // or if the date is before the current date
-        if (departureDateString.equals("1969-12-31") 
-                || departureDate.before(new Date())){
+        if (departureDateString.equals("1969-12-31")
+                || departureDate.before(new Date())) {
             departureDateString = "";
         }
         Location origin = new Location(originCountry, originProvince, originCity);
@@ -440,7 +445,7 @@ public class GUI extends JFrame implements LoginCallback{
         TimeDate departure = new TimeDate(departureDate);
 
         ArrayList<Flights> flights = User.BrowseFlights(departure, origin, destination);
-        
+
         System.out.println(departureDateString);
 
         // Filter flights based on the parameters
@@ -459,9 +464,9 @@ public class GUI extends JFrame implements LoginCallback{
                 filteredFlights.add(flight);
             }
         }
-        //display the flights in same window as table
+        // display the flights in same window as table
         // Create column names
-        String[] columnNames = {"Flight Number", "Origin", "Destination", "Departure Time", "Arrival Time"};
+        String[] columnNames = { "Flight Number", "Origin", "Destination", "Departure Time", "Arrival Time" };
 
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
@@ -478,8 +483,8 @@ public class GUI extends JFrame implements LoginCallback{
         }
         JFrame frame = new JFrame("Flight Search Results");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        //add a input box on top of the table
-        
+        // add a input box on top of the table
+
         JTextField input = new JTextField(20);
         JPanel panel = new JPanel();
         panel.add(new JLabel("Please Enter the Flight Number:"));
@@ -489,21 +494,21 @@ public class GUI extends JFrame implements LoginCallback{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //get the value from the input box when user press enter
+                // get the value from the input box when user press enter
                 String flightNum = input.getText();
-                //get the flight object from the flight number
-                Flights flight=null;
+                // get the flight object from the flight number
+                Flights flight = null;
                 System.out.println(flightNum);
-                for (int i = 0; i < flights.size(); i++){
-                    if (flights.get(i).getFlightNum().equals(flightNum)){
+                for (int i = 0; i < flights.size(); i++) {
+                    if (flights.get(i).getFlightNum().equals(flightNum)) {
                         flight = flights.get(i);
                         break;
                     }
                 }
-                if (flight == null){
+                if (flight == null) {
                     System.out.println("Flight Not Found");
-                    //pop up a window to display error message
-                    //create a new window to show error message
+                    // pop up a window to display error message
+                    // create a new window to show error message
                     JFrame frame = new JFrame("Error");
                     JPanel panel = new JPanel();
                     panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -520,15 +525,16 @@ public class GUI extends JFrame implements LoginCallback{
                     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                     frame.pack();
                     frame.setVisible(true);
-                    return;}//display error message
-                //fix when go to database
+                    return;
+                } // display error message
+                // fix when go to database
                 User.SelectFlight(flight);
-                //get the seat map from the flight
+                // get the seat map from the flight
                 String seatMap = User.BrowseSeat(flight);
                 System.out.println(seatMap);
-                //clear the frame
+                // clear the frame
                 frame.getContentPane().removeAll();
-                //add in input box for seat selection
+                // add in input box for seat selection
                 System.out.println(flights.size());
 
                 JTextField inputSeat = new JTextField(20);
@@ -545,7 +551,7 @@ public class GUI extends JFrame implements LoginCallback{
                     }
                 });
                 panel.add(button);
-                //add in the seat map
+                // add in the seat map
                 JTextArea seatMapArea = new JTextArea(seatMap);
                 seatMapArea.setEditable(false);
                 frame.add(seatMapArea, BorderLayout.CENTER);
@@ -585,11 +591,11 @@ public class GUI extends JFrame implements LoginCallback{
     }
 
     private void SelectSeat(String seatNum) {
-        //get the seat object from the seat number
-        if (User.SelectSeat(seatNum)!=0){
+        // get the seat object from the seat number
+        if (User.SelectSeat(seatNum) != 0) {
             System.out.println("Seat Not Available");
-            //pop up a window to display error message
-            //create a new window to show error message
+            // pop up a window to display error message
+            // create a new window to show error message
             JFrame frame = new JFrame("Error");
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -607,16 +613,16 @@ public class GUI extends JFrame implements LoginCallback{
             frame.pack();
             frame.setVisible(true);
             return;
-        }//display error message};
+        } // display error message};
         System.out.println(User.GetSeat().Display());
 
-        //create a new window for asking passenger information
+        // create a new window for asking passenger information
         JFrame frame = new JFrame("Passenger Information");
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         frame.add(panel, BorderLayout.CENTER);
-        //create a text field for each information, need to add in the passenger class
-        //Name panel in horizontal box layout
+        // create a text field for each information, need to add in the passenger class
+        // Name panel in horizontal box layout
         JPanel namePanel = new JPanel();
         namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
         JTextField firstNameField = new JTextField(20);
@@ -629,12 +635,12 @@ public class GUI extends JFrame implements LoginCallback{
         namePanel.add(new JLabel("Last Name:"));
         namePanel.add(lastNameField);
         panel.add(namePanel);
-        //Passport panel in horizontal box layout
+        // Passport panel in horizontal box layout
         JPanel passportPanel = new JPanel();
         passportPanel.setLayout(new BoxLayout(passportPanel, BoxLayout.X_AXIS));
         JTextField passportNumberField = new JTextField(20);
         JTextField countryField = new JTextField(20);
-        //int year, int month, int day
+        // int year, int month, int day
         JTextField expiryYearField = new JTextField(4);
         expiryYearField.setText("yyyy");
         expiryYearField.addFocusListener(new FocusAdapter() {
@@ -708,7 +714,7 @@ public class GUI extends JFrame implements LoginCallback{
         passportPanel.add(issueMonthField);
         passportPanel.add(issueDayField);
         panel.add(passportPanel);
-        //Address panel in horizontal box layout
+        // Address panel in horizontal box layout
         JPanel addressPanel = new JPanel();
         addressPanel.setLayout(new BoxLayout(addressPanel, BoxLayout.X_AXIS));
         JTextField streetNumberField = new JTextField(20);
@@ -730,7 +736,7 @@ public class GUI extends JFrame implements LoginCallback{
         addressPanel.add(new JLabel("Postal Code:"));
         addressPanel.add(postalCodeField);
         panel.add(addressPanel);
-        //Contact panel in horizontal box layout
+        // Contact panel in horizontal box layout
         JPanel contactPanel = new JPanel();
         contactPanel.setLayout(new BoxLayout(contactPanel, BoxLayout.X_AXIS));
         JTextField emailField = new JTextField(20);
@@ -746,8 +752,8 @@ public class GUI extends JFrame implements LoginCallback{
         contactPanel.add(new JLabel("Phone Number:"));
         contactPanel.add(phoneNumberField);
         panel.add(contactPanel);
-        //Insurance panel in horizontal box layout
-        //ony 3 types, 1. basic 2. premium 3. premium plus
+        // Insurance panel in horizontal box layout
+        // ony 3 types, 1. basic 2. premium 3. premium plus
         JPanel insurancePanel = new JPanel();
         insurancePanel.setLayout(new BoxLayout(insurancePanel, BoxLayout.Y_AXIS));
         JTextField insuranceTypeField = new JTextField(1);
@@ -755,12 +761,12 @@ public class GUI extends JFrame implements LoginCallback{
         insurancePanel.add(insuranceTypeField);
         panel.add(insurancePanel);
 
-        //create a button for submit
+        // create a button for submit
         JButton button = new JButton("Submit");
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //get the value from the input box when user press enter
+                // get the value from the input box when user press enter
                 String firstName = firstNameField.getText();
                 String middleName = middleNameField.getText();
                 String lastName = lastNameField.getText();
@@ -794,8 +800,8 @@ public class GUI extends JFrame implements LoginCallback{
                 String countryAddress = countryAddressField.getText();
                 String postalCode = postalCodeField.getText();
                 String email = emailField.getText();
-                //check if the email is valid
-                if (!email.contains("@")){
+                // check if the email is valid
+                if (!email.contains("@")) {
                     System.out.println("Invalid Email");
                     return;
                 }
@@ -803,28 +809,28 @@ public class GUI extends JFrame implements LoginCallback{
                 int areaCode = Integer.parseInt(areaCodeField.getText());
                 int phoneNumber = Integer.parseInt(phoneNumberField.getText());
                 String insuranceType = insuranceTypeField.getText();
-                //clean the window and display the ticket
-                
+                // clean the window and display the ticket
+
                 JFrame frame = new JFrame("Ticket Preview");
-                //remover the submit button
+                // remover the submit button
                 frame.getContentPane().removeAll();
                 JPanel panel = new JPanel();
                 panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
                 frame.add(panel, BorderLayout.CENTER);
-                //create a text field for each information, need to add in the passenger class
-                //Name panel in horizontal box layout
+                // create a text field for each information, need to add in the passenger class
+                // Name panel in horizontal box layout
                 JPanel namePanel = new JPanel();
                 namePanel.setLayout(new BoxLayout(namePanel, BoxLayout.X_AXIS));
                 namePanel.add(new JLabel("Name:"));
                 namePanel.add(new JLabel(firstName + " " + middleName + " " + lastName));
                 panel.add(namePanel);
-                //Passport panel in horizontal box layout
+                // Passport panel in horizontal box layout
                 JPanel passportPanel = new JPanel();
                 passportPanel.setLayout(new BoxLayout(passportPanel, BoxLayout.X_AXIS));
                 passportPanel.add(new JLabel("Passport Number:"));
                 passportPanel.add(new JLabel(passportNumber));
                 panel.add(passportPanel);
-                //flight info, seat panel in vertical box layout
+                // flight info, seat panel in vertical box layout
                 JPanel flightPanel = new JPanel();
                 flightPanel.setLayout(new BoxLayout(flightPanel, BoxLayout.Y_AXIS));
                 flightPanel.add(new JLabel("Flight Number:"));
@@ -833,9 +839,13 @@ public class GUI extends JFrame implements LoginCallback{
                 flightPanel.add(new JLabel(User.GetFlight().getDepartureDate().toString()));
                 flightPanel.add(new JLabel("Seat Type:"));
                 String seatType = "";
-                if (User.GetSeat().GetPrice()==50) {seatType = "Ordinary";}        
-                else if (User.GetSeat().GetPrice()==70) {seatType = "Comfort";}
-                else {seatType = "Business";}
+                if (User.GetSeat().GetPrice() == 50) {
+                    seatType = "Ordinary";
+                } else if (User.GetSeat().GetPrice() == 70) {
+                    seatType = "Comfort";
+                } else {
+                    seatType = "Business";
+                }
                 flightPanel.add(new JLabel(seatType));
                 flightPanel.add(new JLabel("Seat Number:"));
                 flightPanel.add(new JLabel(User.GetSeat().Display()));
@@ -844,17 +854,18 @@ public class GUI extends JFrame implements LoginCallback{
                 flightPanel.add(new JLabel("Insurance Type:"));
                 flightPanel.add(new JLabel(insuranceType));
                 panel.add(flightPanel);
-                //contect panel in horizontal box layout
+                // contect panel in horizontal box layout
                 JPanel contactPanel = new JPanel();
                 contactPanel.setLayout(new BoxLayout(contactPanel, BoxLayout.Y_AXIS));
                 contactPanel.add(new JLabel("Email:"));
                 contactPanel.add(new JLabel(email));
                 contactPanel.add(new JLabel("Phone Number:"));
-                contactPanel.add(new JLabel(Integer.toString(countryCode) + Integer.toString(areaCode) + Integer.toString(phoneNumber)));
+                contactPanel.add(new JLabel(
+                        Integer.toString(countryCode) + Integer.toString(areaCode) + Integer.toString(phoneNumber)));
                 contactPanel.add(button);
                 panel.add(contactPanel);
 
-                //Ask for Credit card info
+                // Ask for Credit card info
                 JPanel creditCardPanel = new JPanel();
                 creditCardPanel.setLayout(new BoxLayout(creditCardPanel, BoxLayout.X_AXIS));
                 JTextField cardNumberField = new JTextField(20);
@@ -873,22 +884,23 @@ public class GUI extends JFrame implements LoginCallback{
                 expiryPanel.add(cvvField);
                 panel.add(expiryPanel);
 
-                //create a button for confirm
+                // create a button for confirm
                 JButton button = new JButton("Confirm");
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        Passenger p=new Passenger(firstName, middleName, lastName, 
-                            passportNumber, country, expireYear, expiryMonth, expiryDay, issueYear, issueMonth, issueDay, 
-                            streetNumber, streetName, city, province, countryAddress, postalCode, 
-                            email, countryCode, areaCode, phoneNumber);
-                        Insurance i=new Insurance(insuranceType);
+                        Passenger p = new Passenger(firstName, middleName, lastName,
+                                passportNumber, country, expireYear, expiryMonth, expiryDay, issueYear, issueMonth,
+                                issueDay,
+                                streetNumber, streetName, city, province, countryAddress, postalCode,
+                                email, countryCode, areaCode, phoneNumber);
+                        Insurance i = new Insurance(insuranceType);
 
-                        BuyTicket(p,i,cardNumberField.getText());
+                        BuyTicket(p, i, cardNumberField.getText());
                     }
                 });
                 panel.add(button);
-                //display the ticket
+                // display the ticket
                 frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 frame.pack();
                 frame.repaint();
@@ -900,15 +912,15 @@ public class GUI extends JFrame implements LoginCallback{
         frame.pack();
         frame.setVisible(true);
     }
-    private void BuyTicket(Passenger p, Insurance i, String cardString){
-        try{
+
+    private void BuyTicket(Passenger p, Insurance i, String cardString) {
+        try {
             System.out.println(User.GetSeat().GetPrice());
-            User.BuyTicket(p,cardString,i);
-        }
-        catch(Exception e){
+            User.BuyTicket(p, cardString, i);
+        } catch (Exception e) {
             System.out.println(e);
-            //display error message
-            //create a new window to show error message
+            // display error message
+            // create a new window to show error message
             JFrame frame = new JFrame("Error");
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -916,20 +928,29 @@ public class GUI extends JFrame implements LoginCallback{
             panel.add(new JLabel("Error: " + e));
             JButton button = new JButton("Go Back");
             button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    //close only the current window
-                    frame.dispose();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Window window : Window.getWindows()) {
+                    if (window instanceof JFrame) {
+                        window.dispose();
+                    }
                 }
-            });
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        new GUI().setVisible(true);
+                    }
+                });
+            }
+        });
             panel.add(button);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.pack();
             frame.setVisible(true);
             return;
         }
-        //display "email sent"
-        //create a new window 
+        // display "email sent"
+        // create a new window
         JFrame frame = new JFrame("Email Sent");
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -939,8 +960,17 @@ public class GUI extends JFrame implements LoginCallback{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //close only the current window
-                frame.dispose();
+                for (Window window : Window.getWindows()) {
+                    if (window instanceof JFrame) {
+                        window.dispose();
+                    }
+                }
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        new GUI().setVisible(true);
+                    }
+                });
             }
         });
         panel.add(button);
@@ -961,18 +991,19 @@ public class GUI extends JFrame implements LoginCallback{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //close only the current window
+                // close only the current window
                 frame.dispose();
             }
         });
         frame.add(button, BorderLayout.SOUTH);
-        //display the passengers in same window as table
+        // display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Name", "Passport Number", "Country", "Expiry Date", "address", "Email", "Phone Number"};
+        String[] columnNames = { "Name", "Passport Number", "Country", "Expiry Date", "address", "Email",
+                "Phone Number" };
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         // Add a row for each passenger
-        for (Passenger p:passengers){
+        for (Passenger p : passengers) {
             Object[] row = new Object[7];
             row[0] = p.getName().toString();
             row[1] = p.getPassport().getPassportNumber();
@@ -993,7 +1024,7 @@ public class GUI extends JFrame implements LoginCallback{
         frame.setVisible(true);
     }
 
-    private void browseCrews(){
+    private void browseCrews() {
         SystemAdmin admin = new SystemAdmin(username);
         ArrayList<CrewMember> crewList = admin.getCrewList();
         JFrame frame = new JFrame("Current Crew Members");
@@ -1002,18 +1033,18 @@ public class GUI extends JFrame implements LoginCallback{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //close only the current window
+                // close only the current window
                 frame.dispose();
             }
         });
         frame.add(button, BorderLayout.SOUTH);
-        //display the passengers in same window as table
+        // display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Name", "Role", "ID", "FlightsWorking"};
+        String[] columnNames = { "Name", "Role", "ID", "FlightsWorking" };
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         // Add a row for each passenger
-        for (CrewMember c : crewList){
+        for (CrewMember c : crewList) {
             Object[] row = new Object[4];
             row[0] = c.getName().toString();
             row[1] = c.getRole();
@@ -1031,7 +1062,7 @@ public class GUI extends JFrame implements LoginCallback{
         frame.setVisible(true);
     }
 
-    private void browseFlights(){
+    private void browseFlights() {
         SystemAdmin admin = new SystemAdmin(username);
         ArrayList<Flights> flightList = admin.getFlightList();
         JFrame frame = new JFrame("Current List of Flights");
@@ -1040,18 +1071,19 @@ public class GUI extends JFrame implements LoginCallback{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //close only the current window
+                // close only the current window
                 frame.dispose();
             }
         });
         frame.add(button, BorderLayout.SOUTH);
-        //display the passengers in same window as table
+        // display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Flight Number", "Aircraft ID", "Departure Location", "Arrival Location", "Departure Date", "Arrival Date"};
+        String[] columnNames = { "Flight Number", "Aircraft ID", "Departure Location", "Arrival Location",
+                "Departure Date", "Arrival Date" };
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         // Add a row for each passenger
-        for (Flights f : flightList){
+        for (Flights f : flightList) {
             Object[] row = new Object[6];
             row[0] = f.getFlightNum();
             row[1] = f.getAircraft().getId();
@@ -1071,7 +1103,7 @@ public class GUI extends JFrame implements LoginCallback{
         frame.setVisible(true);
     }
 
-    private void browseAircrafts(){
+    private void browseAircrafts() {
         SystemAdmin admin = new SystemAdmin(username);
         ArrayList<Aircraft> acList = admin.getAircraftList();
         JFrame frame = new JFrame("Current List of Flights");
@@ -1080,18 +1112,18 @@ public class GUI extends JFrame implements LoginCallback{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //close only the current window
+                // close only the current window
                 frame.dispose();
             }
         });
         frame.add(button, BorderLayout.SOUTH);
-        //display the passengers in same window as table
+        // display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Aircraft ID", "Manufacturer", "Model", "Seat Capacity", "Type"};
+        String[] columnNames = { "Aircraft ID", "Manufacturer", "Model", "Seat Capacity", "Type" };
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         // Add a row for each passenger
-        for (Aircraft a : acList){
+        for (Aircraft a : acList) {
             Object[] row = new Object[5];
             row[0] = a.getId();
             row[1] = a.getCompany();
@@ -1110,7 +1142,7 @@ public class GUI extends JFrame implements LoginCallback{
         frame.setVisible(true);
     }
 
-    private void manageCrews(){
+    private void manageCrews() {
         SystemAdmin admin = new SystemAdmin(username);
         ArrayList<CrewMember> crewList = admin.getCrewList();
         JFrame frame = new JFrame("Current Crew Members");
@@ -1119,18 +1151,18 @@ public class GUI extends JFrame implements LoginCallback{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //close only the current window
+                // close only the current window
                 frame.dispose();
             }
         });
         frame.add(button, BorderLayout.SOUTH);
-        //display the passengers in same window as table
+        // display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Name", "Role", "ID", "FlightsWorking"};
+        String[] columnNames = { "Name", "Role", "ID", "FlightsWorking" };
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         // Add a row for each passenger
-        for (CrewMember c : crewList){
+        for (CrewMember c : crewList) {
             Object[] row = new Object[4];
             row[0] = c.getName().toString();
             row[1] = c.getRole();
@@ -1141,7 +1173,7 @@ public class GUI extends JFrame implements LoginCallback{
         JTable table = new JTable(model);
         table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        //Add a button to remove selected entries
+        // Add a button to remove selected entries
         JButton rm = new JButton("Remove Selected Row");
         rm.addActionListener(new ActionListener() {
             @Override
@@ -1158,7 +1190,7 @@ public class GUI extends JFrame implements LoginCallback{
         JPanel modPanel = new JPanel(new BorderLayout());
         modPanel.add(rm, BorderLayout.NORTH);
 
-        //Panel and inputs for adding a new crew member
+        // Panel and inputs for adding a new crew member
         JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JTextArea nameArea = new JTextArea(1, 20);
         JTextArea roleArea = new JTextArea(1, 20);
@@ -1200,7 +1232,7 @@ public class GUI extends JFrame implements LoginCallback{
         frame.setVisible(true);
     }
 
-    private void manageFlights(){
+    private void manageFlights() {
         SystemAdmin admin = new SystemAdmin(username);
         ArrayList<Flights> flightList = admin.getFlightList();
         JFrame frame = new JFrame("Current List of Flights");
@@ -1209,18 +1241,19 @@ public class GUI extends JFrame implements LoginCallback{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //close only the current window
+                // close only the current window
                 frame.dispose();
             }
         });
         frame.add(button, BorderLayout.SOUTH);
-        //display the passengers in same window as table
+        // display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Flight Number", "Aircraft ID", "Departure Location", "Arrival Location", "Departure Date", "Arrival Date"};
+        String[] columnNames = { "Flight Number", "Aircraft ID", "Departure Location", "Arrival Location",
+                "Departure Date", "Arrival Date" };
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         // Add a row for each passenger
-        for (Flights f : flightList){
+        for (Flights f : flightList) {
             Object[] row = new Object[6];
             row[0] = f.getFlightNum();
             row[1] = f.getAircraft().getId();
@@ -1233,7 +1266,7 @@ public class GUI extends JFrame implements LoginCallback{
         JTable table = new JTable(model);
         table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        //Add a button to remove selected entries
+        // Add a button to remove selected entries
         JButton rm = new JButton("Remove Selected Row");
         rm.addActionListener(new ActionListener() {
             @Override
@@ -1250,7 +1283,7 @@ public class GUI extends JFrame implements LoginCallback{
         JPanel modPanel = new JPanel(new BorderLayout());
         modPanel.add(rm, BorderLayout.NORTH);
 
-        //Panel and inputs for adding a new crew member
+        // Panel and inputs for adding a new crew member
         JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JTextArea aircraftArea = new JTextArea(1, 20);
         JTextArea depLocArea = new JTextArea(1, 20);
@@ -1296,7 +1329,7 @@ public class GUI extends JFrame implements LoginCallback{
         frame.setVisible(true);
     }
 
-    private void manageAircrafts(){
+    private void manageAircrafts() {
         SystemAdmin admin = new SystemAdmin(username);
         ArrayList<CrewMember> crewList = admin.getCrewList();
         JFrame frame = new JFrame("Current Crew Members");
@@ -1305,18 +1338,18 @@ public class GUI extends JFrame implements LoginCallback{
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //close only the current window
+                // close only the current window
                 frame.dispose();
             }
         });
         frame.add(button, BorderLayout.SOUTH);
-        //display the passengers in same window as table
+        // display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Name", "Role", "ID", "FlightsWorking"};
+        String[] columnNames = { "Name", "Role", "ID", "FlightsWorking" };
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         // Add a row for each passenger
-        for (CrewMember c : crewList){
+        for (CrewMember c : crewList) {
             Object[] row = new Object[4];
             row[0] = c.getName().toString();
             row[1] = c.getRole();
@@ -1327,7 +1360,7 @@ public class GUI extends JFrame implements LoginCallback{
         JTable table = new JTable(model);
         table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
-        //Add a button to remove selected entries
+        // Add a button to remove selected entries
         JButton rm = new JButton("Remove Selected Row");
         rm.addActionListener(new ActionListener() {
             @Override
@@ -1344,7 +1377,7 @@ public class GUI extends JFrame implements LoginCallback{
         JPanel modPanel = new JPanel(new BorderLayout());
         modPanel.add(rm, BorderLayout.NORTH);
 
-        //Panel and inputs for adding a new crew member
+        // Panel and inputs for adding a new crew member
         JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JTextArea nameArea = new JTextArea(1, 20);
         JTextArea roleArea = new JTextArea(1, 20);
@@ -1385,7 +1418,6 @@ public class GUI extends JFrame implements LoginCallback{
         frame.pack();
         frame.setVisible(true);
     }
-
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
