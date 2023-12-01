@@ -1181,7 +1181,7 @@ public class GUI extends JFrame implements LoginCallback{
         addPanel.add(passwordArea);
         addPanel.add(addCrewButton);
 
-        modPanel.add(new JLabel("Add a new user:"), BorderLayout.CENTER);
+        modPanel.add(new JLabel("Add a new entry:"), BorderLayout.CENTER);
         modPanel.add(addPanel, BorderLayout.SOUTH);
 
         // Add the table to a scroll pane
@@ -1277,7 +1277,7 @@ public class GUI extends JFrame implements LoginCallback{
         addPanel.add(arrDateArea);
         addPanel.add(addCrewButton);
 
-        modPanel.add(new JLabel("Add a new user:"), BorderLayout.CENTER);
+        modPanel.add(new JLabel("Add a new entry:"), BorderLayout.CENTER);
         modPanel.add(addPanel, BorderLayout.SOUTH);
 
         // Add the table to a scroll pane
@@ -1292,8 +1292,8 @@ public class GUI extends JFrame implements LoginCallback{
 
     private void manageAircrafts(){
         SystemAdmin admin = new SystemAdmin(username);
-        ArrayList<CrewMember> crewList = admin.getCrewList();
-        JFrame frame = new JFrame("Current Crew Members");
+        ArrayList<Aircraft> acList = admin.getAircraftList();
+        JFrame frame = new JFrame("Current List of Flights");
 
         JButton button = new JButton("Go Back");
         button.addActionListener(new ActionListener() {
@@ -1306,16 +1306,17 @@ public class GUI extends JFrame implements LoginCallback{
         frame.add(button, BorderLayout.SOUTH);
         //display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Name", "Role", "ID", "FlightsWorking"};
+        String[] columnNames = {"Aircraft ID", "Manufacturer", "Model", "Seat Capacity", "Type"};
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         // Add a row for each passenger
-        for (CrewMember c : crewList){
-            Object[] row = new Object[4];
-            row[0] = c.getName().toString();
-            row[1] = c.getRole();
-            row[2] = c.getId();
-            row[3] = c.getFlightsWorking();
+        for (Aircraft a : acList){
+            Object[] row = new Object[5];
+            row[0] = a.getId();
+            row[1] = a.getCompany();
+            row[2] = a.getModel();
+            row[3] = a.getCapacity();
+            row[4] = a.getType() == 1 ? "Narrow Body" : "Wide Body";
             model.addRow(row);
         }
         JTable table = new JTable(model);
@@ -1329,7 +1330,7 @@ public class GUI extends JFrame implements LoginCallback{
                 // check for selected row first
                 if (table.getSelectedRow() != -1) {
                     // remove selected row from the model
-                    admin.removeCrewMember(table.getValueAt(table.getSelectedRow(), 2).toString());
+                    admin.removeAircraft(table.getValueAt(table.getSelectedRow(), 0).toString());
                     model.removeRow(table.getSelectedRow());
                 }
             }
@@ -1340,34 +1341,34 @@ public class GUI extends JFrame implements LoginCallback{
 
         //Panel and inputs for adding a new crew member
         JPanel addPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        JTextArea nameArea = new JTextArea(1, 20);
-        JTextArea roleArea = new JTextArea(1, 20);
-        JTextArea usernameArea = new JTextArea(1, 20);
-        JTextArea passwordArea = new JTextArea(1, 20);
+        JTextArea companyArea = new JTextArea(1, 20);
+        JTextArea modelArea = new JTextArea(1, 20);
+        JTextArea seatArea = new JTextArea(1, 20);
+        JTextArea typeArea = new JTextArea(1, 20);
         JButton addCrewButton = new JButton("Add");
 
         addCrewButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String n = nameArea.getText().toString();
-                String r = roleArea.getText().toString();
-                String u = usernameArea.getText().toString();
-                String p = passwordArea.getText().toString();
-                admin.addCrewMember(n, r, u, p);
+                String c = companyArea.getText().toString();
+                String m = modelArea.getText().toString();
+                String s = seatArea.getText().toString();
+                String t = typeArea.getText().toString();
+                admin.addAircraft(c, m, s, t);
             }
         });
 
-        addPanel.add(new JLabel("Name:"));
-        addPanel.add(nameArea);
-        addPanel.add(new JLabel("Role:"));
-        addPanel.add(roleArea);
-        addPanel.add(new JLabel("Username:"));
-        addPanel.add(usernameArea);
-        addPanel.add(new JLabel("Password:"));
-        addPanel.add(passwordArea);
+        addPanel.add(new JLabel("Company:"));
+        addPanel.add(companyArea);
+        addPanel.add(new JLabel("Model:"));
+        addPanel.add(modelArea);
+        addPanel.add(new JLabel("Seat Capacity:"));
+        addPanel.add(seatArea);
+        addPanel.add(new JLabel("Type:"));
+        addPanel.add(typeArea);
         addPanel.add(addCrewButton);
 
-        modPanel.add(new JLabel("Add a new user:"), BorderLayout.CENTER);
+        modPanel.add(new JLabel("Add a new entry:"), BorderLayout.CENTER);
         modPanel.add(addPanel, BorderLayout.SOUTH);
 
         // Add the table to a scroll pane

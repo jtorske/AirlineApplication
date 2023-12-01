@@ -116,11 +116,18 @@ public class SystemAdmin extends User{
         Database.dbDelete("Flight", "FlightID", id);
     }
 
-    public void addAircraft(String aircraftID, String company, String model, String seatCapacity, String type){
-
+    public void addAircraft(String company, String model, String seatCapacity, String type){
+        List<List<String>> prevEntries = Database.dbExecute("select * from Aircraft");
+        List<String> values = new ArrayList<String>();
+        values.add(String.valueOf(prevEntries.size() + 1));
+        values.add(company);
+        values.add(model);
+        values.add(seatCapacity);
+        values.add(type);
+        Database.dbInsert("Aircraft", values);
     }
 
     public void removeAircraft(String id){
-        
+        Database.dbDelete("Aircraft", "AircraftID", id);
     }
 }
