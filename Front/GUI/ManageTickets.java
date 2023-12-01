@@ -1,3 +1,12 @@
+/*
+@author 
+Chun Lok Chan
+Jordan Torske
+Mohamad Hussein
+Logan Nightingale
+@version: 1.0
+@since: 2023-11-23
+ */
 package Front.GUI;
 
 import javax.swing.*;
@@ -5,9 +14,7 @@ import Database.Database.Database;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ManageTickets extends JFrame {
     private JTextField ticketIdInput;

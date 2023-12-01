@@ -32,11 +32,13 @@ public class Register implements Forms{
             }
             memNum++;
             setMembershipNum(memNum);
+            //prepare values for insert
             String mn = String.valueOf(membershipNum);
             List<String> nameValues = List.of(mn, name.getFirstName(), name.getLastName(), name.getMiddleName());
             Database.dbInsert("Name", nameValues);
 
             List<String> userValues = List.of(mn, mn, email, password);
+            //insert into database
             Database.dbInsert("User", userValues);
             membershipNum++;
         }

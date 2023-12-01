@@ -1,3 +1,12 @@
+/*
+@author 
+Chun Lok Chan
+Jordan Torske
+Mohamad Hussein
+Logan Nightingale
+@version: 1.0
+@since: 2023-11-23
+ */
 package Domains.User;
 
 import java.util.ArrayList;
@@ -22,6 +31,9 @@ public class SystemAdmin extends User{
     public String getUsername() {return this.Username;}
     public String getPassword() {return this.Password;}
 
+    /*
+     * Returns a list of all crew members in the database
+     */
     public ArrayList<CrewMember> getCrewList(){
         ArrayList<CrewMember> ret = new ArrayList<CrewMember>();
         List<List<String>> cMembers = Database.dbExecute("select * from CrewMember");
@@ -35,7 +47,9 @@ public class SystemAdmin extends User{
 
         return ret;
     }
-
+    /*
+     * Returns a list of all flights in the database
+     */
     public ArrayList<Flights> getFlightList(){
         ArrayList<Flights> ret = new ArrayList<Flights>();
         List<List<String>> fList = Database.dbExecute("select * from Flight");
@@ -61,7 +75,9 @@ public class SystemAdmin extends User{
 
         return ret;
     }
-
+    /*
+     * Returns a list of all aircraft in the database
+     */
     public ArrayList<Aircraft> getAircraftList(){
         ArrayList<Aircraft> ret = new ArrayList<Aircraft>();
 

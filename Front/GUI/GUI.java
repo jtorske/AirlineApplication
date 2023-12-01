@@ -1,3 +1,12 @@
+/*
+@author 
+Chun Lok Chan
+Jordan Torske
+Mohamad Hussein
+Logan Nightingale
+@version: 1.0
+@since: 2023-11-23
+ */
 package Front.GUI;
 
 import javax.swing.*;
@@ -8,11 +17,8 @@ import Domains.Flights.Aircraft;
 import Domains.Flights.Flights;
 import Domains.Flights.TimeDate;
 import Domains.Passenger.Passenger;
-import Domains.Seats.Seat;
 import Domains.Tickets.Insurance;
-import Domains.Tickets.Ticket;
 import Domains.User.*;
-import Front.GUI.LoginCallback;
 import Domains.Flights.Location;
 
 

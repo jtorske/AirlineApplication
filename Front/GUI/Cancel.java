@@ -1,3 +1,12 @@
+/*
+@author 
+Chun Lok Chan
+Jordan Torske
+Mohamad Hussein
+Logan Nightingale
+@version: 1.0
+@since: 2023-11-23
+ */
 package Front.GUI;
 
 import javax.swing.*;
@@ -5,6 +14,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Database.Database.Database;
+import Domains.Tickets.Email;
+
 import java.util.List;
 
 public class Cancel extends JFrame {
@@ -99,6 +110,40 @@ public class Cancel extends JFrame {
 
                 if (inputFirstName.equalsIgnoreCase(firstName) && inputLastName.equalsIgnoreCase(lastName) &&
                         inputEmail.equalsIgnoreCase(email) && inputPassportID.equalsIgnoreCase(passportID)) {
+                    //take the flight id and seatmap from database
+                    String flightID = Database.dbExecute("SELECT FlightID FROM ticket WHERE TicketID = '" + ticketId + "'").get(0).get(0);
+                    String seatMap = Database.dbExecute("SELECT SeatMap FROM flight WHERE FlightID = '" + flightID + "'").get(0).get(0);
+                    //find the seat row and column from the ticket id
+                    String seatRows = Database.dbExecute("SELECT SeatRow FROM ticket WHERE TicketID = '" + ticketId + "'").get(0).get(0);
+                    String seatCols = Database.dbExecute("SELECT SeatColumn FROM ticket WHERE TicketID = '" + ticketId + "'").get(0).get(0);
+                    String seatNum = seatRows + seatCols;
+                    // find the location of seat.Display() in the string seatMap and changed the "O"
+                    // that is in front of seatNum to "X"
+                    String[] seatRow = seatMap.split("\n");
+                    for (int i = 0; i < seatRow.length; i++) {
+                        String[] seatCol = seatRow[i].split("\\|");
+                        for (int j = 0; j < seatCol.length; j++) {
+                            if (seatCol[j].contains(" "+seatNum)) {
+                                seatCol[j] = seatCol[j].replace("X", "O");
+                                break;
+                            }
+                        }
+                        seatRow[i] = String.join("|", seatCol);
+                    }
+                    // send email notification to user
+                    Email emailObject = new Email("Airline Ticket Cancelled", "Your ticket below been cancelled.\n"
+                        + "Ticket ID: " + ticketId + "\n" + "Flight ID: " + flightID + "\n" + "Seat: " + seatNum + "\n" + "Passenger Name: " + firstName + " " + lastName+ "\n");
+                    try{
+                        emailObject.send(email);
+                    } catch (Exception ex) {
+                        System.out.println("Error sending email: " + ex);
+                    }
+                    //joint the seatmap string back together
+                    seatMap = String.join("\n", seatRow);
+                    // update the flight in the database
+                    String query = String.format("UPDATE flight SET SeatMap = '%s' WHERE FlightID = '%s'", seatMap, flightID);
+                    Database.dbUpdate(query);
+                    
                     Database.dbDelete("Ticket", "TicketID", ticketId);
                     JOptionPane.showMessageDialog(confirmFrame, "Ticket cancelled successfully.");
                     confirmFrame.dispose(); // Close the confirmation window
