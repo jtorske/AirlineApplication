@@ -845,6 +845,28 @@ public class GUI extends JFrame implements LoginCallback {
                 int countryCode = Integer.parseInt(countryCodeField.getText());
                 int areaCode = Integer.parseInt(areaCodeField.getText());
                 int phoneNumber = Integer.parseInt(phoneNumberField.getText());
+                //check if the phone number is valid
+                if (countryCode < 1 || countryCode > 999 || areaCode < 1 || areaCode > 999 || phoneNumber < 1
+                        || phoneNumber > 9999999) {
+                    System.out.println("Invalid Phone Number");
+                    JFrame frame = new JFrame("Error");
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                    frame.add(panel, BorderLayout.CENTER);
+                    panel.add(new JLabel("Error: Invalid Phone Number"));
+                    JButton button = new JButton("Go Back");
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            frame.dispose();
+                        }
+                    });
+                    panel.add(button);
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.pack();
+                    frame.setVisible(true);
+                    return;
+                }
                 String insuranceType = insuranceTypeField.getText();
                 // check if the insurance type is valid
                 if (insuranceType != "1" && insuranceType != "2" && insuranceType != "3") {
