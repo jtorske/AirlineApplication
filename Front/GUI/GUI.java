@@ -757,7 +757,10 @@ public class GUI extends JFrame implements LoginCallback {
         JPanel insurancePanel = new JPanel();
         insurancePanel.setLayout(new BoxLayout(insurancePanel, BoxLayout.Y_AXIS));
         JTextField insuranceTypeField = new JTextField(1);
-        insurancePanel.add(new JLabel("Insurance Type:\n 2. Premium\n 3. Premium Plus"));
+        insurancePanel.add(new JLabel("Enter Insurance Type number:"));
+        insurancePanel.add(new JLabel("1- Basic"));
+        insurancePanel.add(new JLabel("2- Premium"));
+        insurancePanel.add(new JLabel("3- Premium Plus"));
         insurancePanel.add(insuranceTypeField);
         panel.add(insurancePanel);
 
@@ -790,6 +793,24 @@ public class GUI extends JFrame implements LoginCallback {
                 Date today = new Date();
                 if (expiryDate.before(today) || issueDate.after(today) || expiryDate.before(issueDate)) {
                     System.out.println("Passport Date Invalid");
+                    // pop up a window to display error message
+                    // create a new window to show error message
+                    JFrame frame = new JFrame("Error");
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                    frame.add(panel, BorderLayout.CENTER);
+                    panel.add(new JLabel("Error: Invalid Passport Date"));
+                    JButton button = new JButton("Go Back");
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            frame.dispose();
+                        }
+                    });
+                    panel.add(button);
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.pack();
+                    frame.setVisible(true);
                     return;
                 }
 
@@ -803,12 +824,49 @@ public class GUI extends JFrame implements LoginCallback {
                 // check if the email is valid
                 if (!email.contains("@")) {
                     System.out.println("Invalid Email");
+                    JFrame frame = new JFrame("Error");
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                    frame.add(panel, BorderLayout.CENTER);
+                    panel.add(new JLabel("Error: Invalid Email"));
+                    JButton button = new JButton("Go Back");
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            frame.dispose();
+                        }
+                    });
+                    panel.add(button);
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.pack();
+                    frame.setVisible(true);
                     return;
                 }
                 int countryCode = Integer.parseInt(countryCodeField.getText());
                 int areaCode = Integer.parseInt(areaCodeField.getText());
                 int phoneNumber = Integer.parseInt(phoneNumberField.getText());
                 String insuranceType = insuranceTypeField.getText();
+                // check if the insurance type is valid
+                if (insuranceType != "1" && insuranceType != "2" && insuranceType != "3") {
+                    System.out.println("Invalid Insurance Type");
+                    JFrame frame = new JFrame("Error");
+                    JPanel panel = new JPanel();
+                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                    frame.add(panel, BorderLayout.CENTER);
+                    panel.add(new JLabel("Error: Invalid Insurance Type"));
+                    JButton button = new JButton("Go Back");
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            frame.dispose();
+                        }
+                    });
+                    panel.add(button);
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.pack();
+                    frame.setVisible(true);
+                    return;
+                }
                 // clean the window and display the ticket
 
                 JFrame frame = new JFrame("Ticket Preview");
@@ -875,7 +933,25 @@ public class GUI extends JFrame implements LoginCallback {
                 JPanel expiryPanel = new JPanel();
                 expiryPanel.setLayout(new BoxLayout(expiryPanel, BoxLayout.X_AXIS));
                 JTextField expiryYearField = new JTextField(4);
+                expiryYearField.setText("yyyy");
+                expiryYearField.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        if (expiryYearField.getText().equals("yyyy")) {
+                            expiryYearField.setText("");
+                        }
+                    }
+                });
                 JTextField expiryMonthField = new JTextField(2);
+                expiryMonthField.setText("mm");
+                expiryMonthField.addFocusListener(new FocusAdapter() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        if (expiryMonthField.getText().equals("mm")) {
+                            expiryMonthField.setText("");
+                        }
+                    }
+                });
                 JTextField cvvField = new JTextField(3);
                 expiryPanel.add(new JLabel("Expiry Date:"));
                 expiryPanel.add(expiryYearField);
@@ -889,6 +965,37 @@ public class GUI extends JFrame implements LoginCallback {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        //assert if the credit card is valid (not expired)
+                        int cardNumber = Integer.parseInt(cardNumberField.getText());
+                        int expiryYear = Integer.parseInt(expiryYearField.getText());
+                        int expiryMonth = Integer.parseInt(expiryMonthField.getText());
+                        int cvv = Integer.parseInt(cvvField.getText());
+                        Calendar expiryCalendar = Calendar.getInstance();
+                        expiryCalendar.set(expiryYear, expiryMonth - 1, 1);
+                        Date expiryDate = expiryCalendar.getTime();
+                        Date today = new Date();
+                        if (expiryDate.before(today)) {
+                            System.out.println("Credit Card Expired");
+                            // pop up a window to display error message
+                            // create a new window to show error message
+                            JFrame frame = new JFrame("Error");
+                            JPanel panel = new JPanel();
+                            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+                            frame.add(panel, BorderLayout.CENTER);
+                            panel.add(new JLabel("Error: Credit Card Expired"));
+                            JButton button = new JButton("Go Back");
+                            button.addActionListener(new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    frame.dispose();
+                                }
+                            });
+                            panel.add(button);
+                            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                            frame.pack();
+                            frame.setVisible(true);
+                            return;
+                        }
                         Passenger p = new Passenger(firstName, middleName, lastName,
                                 passportNumber, country, expireYear, expiryMonth, expiryDay, issueYear, issueMonth,
                                 issueDay,
