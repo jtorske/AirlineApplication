@@ -32,7 +32,6 @@ public class Ticket {
         price = seat.GetPrice();
         this.passenger = owner;
         this.policy = null;
-        this.ID=TicNum++;
         this.ticketReceipt = new Receipt(TicNum, owner.getName().toString(), cardNumber, this);
     }
     public Ticket(){
@@ -50,7 +49,6 @@ public class Ticket {
         this.passenger = owner;
         this.policy = policy;
         this.price = seat.GetPrice();
-        this.ID=TicNum++;
         this.ticketReceipt = new Receipt(TicNum+Integer.parseInt(cardNumber.substring(0,4)), owner.getName().toString(), cardNumber, this);
     }
 
