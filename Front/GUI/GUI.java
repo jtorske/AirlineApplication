@@ -527,7 +527,7 @@ public class GUI extends JFrame implements LoginCallback {
                     frame.setVisible(true);
                     return;
                 } // display error message
-                // fix when go to database
+                  // fix when go to database
                 User.SelectFlight(flight);
                 // get the seat map from the flight
                 String seatMap = User.BrowseSeat(flight);
@@ -845,7 +845,7 @@ public class GUI extends JFrame implements LoginCallback {
                 int countryCode = Integer.parseInt(countryCodeField.getText());
                 int areaCode = Integer.parseInt(areaCodeField.getText());
                 int phoneNumber = Integer.parseInt(phoneNumberField.getText());
-                //check if the phone number is valid
+                // check if the phone number is valid
                 if (countryCode < 1 || countryCode > 999 || areaCode < 1 || areaCode > 999 || phoneNumber < 1
                         || phoneNumber > 9999999) {
                     System.out.println("Invalid Phone Number");
@@ -987,7 +987,7 @@ public class GUI extends JFrame implements LoginCallback {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //assert if the credit card is valid (not expired)
+                        // assert if the credit card is valid (not expired)
                         int cardNumber = Integer.parseInt(cardNumberField.getText());
                         int expiryYear = Integer.parseInt(expiryYearField.getText());
                         int expiryMonth = Integer.parseInt(expiryMonthField.getText());
@@ -1057,21 +1057,21 @@ public class GUI extends JFrame implements LoginCallback {
             panel.add(new JLabel("Error: " + e));
             JButton button = new JButton("Go Back");
             button.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                for (Window window : Window.getWindows()) {
-                    if (window instanceof JFrame) {
-                        window.dispose();
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    for (Window window : Window.getWindows()) {
+                        if (window instanceof JFrame) {
+                            window.dispose();
+                        }
                     }
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            new GUI().setVisible(true);
+                        }
+                    });
                 }
-                SwingUtilities.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        new GUI().setVisible(true);
-                    }
-                });
-            }
-        });
+            });
             panel.add(button);
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.pack();
@@ -1474,11 +1474,11 @@ public class GUI extends JFrame implements LoginCallback {
         frame.add(button, BorderLayout.SOUTH);
         // display the passengers in same window as table
         // Create column names
-        String[] columnNames = {"Aircraft ID", "Manufacturer", "Model", "Seat Capacity", "Type"};
+        String[] columnNames = { "Aircraft ID", "Manufacturer", "Model", "Seat Capacity", "Type" };
         // Create a table model
         DefaultTableModel model = new DefaultTableModel(columnNames, 0);
         // Add a row for each passenger
-        for (Aircraft a : acList){
+        for (Aircraft a : acList) {
             Object[] row = new Object[5];
             row[0] = a.getId();
             row[1] = a.getCompany();
