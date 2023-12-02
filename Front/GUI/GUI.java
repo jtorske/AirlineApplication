@@ -868,27 +868,6 @@ public class GUI extends JFrame implements LoginCallback {
                     return;
                 }
                 String insuranceType = insuranceTypeField.getText();
-                // check if the insurance type is valid
-                if (insuranceType != "1" && insuranceType != "2" && insuranceType != "3") {
-                    System.out.println("Invalid Insurance Type");
-                    JFrame frame = new JFrame("Error");
-                    JPanel panel = new JPanel();
-                    panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-                    frame.add(panel, BorderLayout.CENTER);
-                    panel.add(new JLabel("Error: Invalid Insurance Type"));
-                    JButton button = new JButton("Go Back");
-                    button.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            frame.dispose();
-                        }
-                    });
-                    panel.add(button);
-                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                    frame.pack();
-                    frame.setVisible(true);
-                    return;
-                }
                 // clean the window and display the ticket
 
                 JFrame frame = new JFrame("Ticket Preview");
@@ -987,11 +966,9 @@ public class GUI extends JFrame implements LoginCallback {
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // assert if the credit card is valid (not expired)
-                        int cardNumber = Integer.parseInt(cardNumberField.getText());
+                        //assert if the credit card is valid (not expired)
                         int expiryYear = Integer.parseInt(expiryYearField.getText());
                         int expiryMonth = Integer.parseInt(expiryMonthField.getText());
-                        int cvv = Integer.parseInt(cvvField.getText());
                         Calendar expiryCalendar = Calendar.getInstance();
                         expiryCalendar.set(expiryYear, expiryMonth - 1, 1);
                         Date expiryDate = expiryCalendar.getTime();
