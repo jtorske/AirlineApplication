@@ -123,6 +123,7 @@ public class SystemAdmin extends User{
         values.add(arrID);
         values.add(depDate);
         values.add(arrDate);
+        values.add(null);
         Database.dbInsert("Flight", values);
     }
 
