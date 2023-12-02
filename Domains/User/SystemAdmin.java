@@ -115,7 +115,7 @@ public class SystemAdmin extends User{
     }
 
     public void addFlight(String aircraftID, String depID, String arrID, String depDate, String arrDate){
-        List<List<String>> prevEntries = Database.dbExecute("select * from Flights");
+        List<List<String>> prevEntries = Database.dbExecute("select * from Flight");
         List<String> values = new ArrayList<String>();
         values.add(String.valueOf(prevEntries.size() + 1));
         values.add(aircraftID);
